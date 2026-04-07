@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meiro Clients Overview Dashboard</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chosen Palette: Slate and Indigo (Minimalist) -->
+    <!-- Application Structure Plan: Původní minimalistický grid doplněný o dynamické drop-down ("accordion") sekce s editovatelným obsahem. Obsah se ukládá do LocalStorage pro perzistenci dat. Toto uspořádání zajišťuje fixní pohled na statické metriky nahoře a variabilní prostor pro pracovní/provozní poznámky dole. -->
+    <!-- Visualization & Content Choices: 
+         - Goal: Organize/Inform -> Viz: Rozbalovací sekce s contenteditable (HTML/JS/Tailwind) -> Interaction: Kliknutí pro rozbalení, kliknutí do textu pro úpravu, oninput auto-save -> Justification: Nejlepší řešení pro textový reporting s nutností editace bez externí DB. Podklady Trioly uloženy do defaultního stavu JS.
+         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .editable-content {
+            min-height: 100px;
+        }
+        .editable-content p { margin-bottom: 0.75rem; }
+        .editable-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+        .editable-content li { margin-bottom: 0.25rem; }
+        .editable-content h4 { font-weight: 700; color: #1e293b; margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .editable-content a { color: #4f46e5; text-decoration: underline; }
+        
+        .editable-content:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #e2e8f0;
+            background-color: #ffffff;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            margin: -0.5rem;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-8 border-b-2 border-slate-200 pb-4">
+            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Přehled klientů v Meiro</h1>
+            <p class="text-slate-500 mt-2">Doplněno o editovatelné poznámky a úkoly (ukládají se lokálně).</p>
+        </header>
+
+        <div id="clients-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        </div>
+
+        <div class="space-y-4">
+            
+            <div class="border-2 border-slate-200 rounded-lg bg-white overflow-hidden shadow-sm">
+                <button onclick="toggleAccordion('section1')" class="w-full text-left px-6 py-4 font-bold text-slate-800 flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors">
+                    <span class="flex items-center gap-3">
+                        <span class="text-xl">📊</span> Reporting
+                        <span class="text-xs font-normal text-slate-400 bg-white px-2 py-1 rounded border border-slate-200">Auto-save</span>
+                    </span>
+                    <span id="icon-section1" class="text-slate-400">▼</span>
+                </button>
+                <div id="section1" class="hidden px-6 py-6 border-t border-slate-100">
+                    <div contenteditable="true" id="content-section1" class="editable-content text-sm text-slate-700" oninput="saveToLocalStorage('section1')">
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-2 border-slate-200 rounded-lg bg-white overflow-hidden shadow-sm">
+                <button onclick="toggleAccordion('section2')" class="w-full text-left px-6 py-4 font-bold text-slate-800 flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors">
+                    <span class="flex items-center gap-3">
+                        <span class="text-xl">⚡</span> Řešení problémů: Journey Canvas
+                        <span class="text-xs font-normal text-slate-400 bg-white px-2 py-1 rounded border border-slate-200">Auto-save</span>
+                    </span>
+                    <span id="icon-section2" class="text-slate-400">▼</span>
+                </button>
+                <div id="section2" class="hidden px-6 py-6 border-t border-slate-100">
+                    <div contenteditable="true" id="content-section2" class="editable-content text-sm text-slate-700" oninput="saveToLocalStorage('section2')">
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-2 border-slate-200 rounded-lg bg-white overflow-hidden shadow-sm">
+                <button onclick="toggleAccordion('section3')" class="w-full text-left px-6 py-4 font-bold text-slate-800 flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors">
+                    <span class="flex items-center gap-3">
+                        <span class="text-xl">📝</span> Status klientů & Poznámky
+                        <span class="text-xs font-normal text-slate-400 bg-white px-2 py-1 rounded border border-slate-200">Auto-save</span>
+                    </span>
+                    <span id="icon-section3" class="text-slate-400">▼</span>
+                </button>
+                <div id="section3" class="hidden px-6 py-6 border-t border-slate-100">
+                    <div contenteditable="true" id="content-section3" class="editable-content text-sm text-slate-700" oninput="saveToLocalStorage('section3')">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const clientsData = [
+            {
+                name: "Kalkulátor",
+                tes: 8.9, 
+                sourcesCount: 3,
+                sources: ["Web", "SmartEmailing", "CRM"],
+                destinationsCount: 3,
+                destinations: ["SmartEmailing", "Google Ads", "Facebook Ads"]
+            },
+            {
+                name: "Fotoškoda",
+                tes: 8.4,
+                sourcesCount: 3,
+                sources: ["Database", "Web", "SmartEmailing"],
+                destinationsCount: 3,
+                destinations: ["SmartEmailing", "Facebook Ads", "Google Ads"]
+            },
+            {
+                name: "Triola",
+                tes: 7.0,
+                sourcesCount: 3,
+                sources: ["Database", "Web", "SmartEmailing"],
+                destinationsCount: 3,
+                destinations: ["SmartEmailing", "Google Ads", "Facebook Ads"]
+            },
+            {
+                name: "Vyhraj",
+                tes: 5.6,
+                sourcesCount: 3,
+                sources: ["Database", "Web", "SmartEmailing"],
+                destinationsCount: 2,
+                destinations: ["SmartEmailing", "Pipedrive"],
+                destinationsNote: "Výhled: Criteo, RTB House"
+            },
+            {
+                name: "ERGO",
+                tes: 4.2,
+                sourcesCount: 4,
+                sources: ["Meiro mailing", "BigQuery", "DWH (MsSQL)", "Website"],
+                destinationsCount: 4,
+                destinations: ["DV360", "Facebook Ads", "Google Ads", "GA4"]
+            },
+            {
+                name: "Scaleupboard",
+                tes: 0.49,
+                tesDisplay: "492.9k",
+                sourcesCount: 3,
+                sources: ["Web", "Pipedrive", "SmartEmailing"],
+                destinationsCount: 2,
+                destinations: ["Pipedrive", "SmartEmailing"],
+                destinationsNote: "Nepoužívané: Facebook Ads, Google Ads"
+            }
+        ];
+
+        const defaultContents = {
+            'section1': `
+                <ul>
+                    <li><strong>Strategie:</strong> Meiro připraví reporting pro nativní kanály (primárně web + web bannery) zdarma. Ostatní data se reportují přes PowerBI / Looker Studio.</li>
+                    <li><strong>Hotovo:</strong> Kalkulátor, SCB (zcela zaplaceno).</li>
+                    <li><strong>Chybí:</strong> Fotoškoda (Nyní PRIO 1), Triola, Vyhraj.</li>
+                </ul>
+                <h4>Status: Fotoškoda</h4>
+                <ul>
+                    <li><strong>26. 11. 2025:</strong> První zadání reportingu (bez akce).</li>
+                    <li><strong>23. 2. 2026:</strong> Připomenutí (Jenda) – vypadalo to, že se na tom začne pracovat.</li>
+                    <li><strong>19. 3. 2026:</strong> Poslední info od Báry. Aktuálně se nedělá na žádném, ale první bude Fotoškoda.</li>
+                </ul>
+                <p><em>Akce na straně DC:</em> Nutno dodat podklady pro ostatní klienty dle otázek od Báry. Neblokuje to vývoj jako takový, ale je to potřeba pro finální výpočet (např. revenue).</p>
+                
+                <h4 style="color: #ea580c;">Cíl - kdy to bude hotové?</h4>
+                <p>[Doplnit datum / dohodu]</p>
+            `,
+            'section2': `
+                <p>Veškeré detaily jsou zaznamenány v <a href="https://meiro.slack.com/lists/T4YH5DJ5N/F09A3FL1HUP?record_id=Rec0AQ3P18CE4" target="_blank">ticketu na Slacku</a>.</p>
+                
+                <h4>Problém 1: Výpadek Journey Canvasu</h4>
+                <p>Několik dní JC vůbec nefungoval. Eventy chodily, ale nebyly žádné průchody ani exporty do MI. Nepřišel jediný error.</p>
+                <ul>
+                    <li><strong>Důkazy:</strong> Konkrétní <a href="https://cdp.fotoskoda.meiro.app/journeys/d98417df-9d9f-4176-8185-f458f052f9ed" target="_blank">Journey Canvas zde</a>.</li>
+                    <li><a href="https://mi.dataclub.meiro.app/workspaces/69" target="_blank">Workspace</a> běžel naposledy 25.3. (vůbec se nespustil, museli jsme switchnout na segment). Neexportovaly se profily s eventem z 26.3., které měly jít do SE. (Viz všechny profily ze <a href="https://cdp.fotoskoda.meiro.app/segments/custom/40" target="_blank">Segmentu 40</a>).</li>
+                    <li><strong>Neexportované profily:</strong> <a href="https://cdp.fotoskoda.meiro.app/profiles/74f66a76-1fb3-3312-61ce-2d92e7d5988c" target="_blank">Profil 1</a>, <a href="https://cdp.fotoskoda.meiro.app/profiles/6958bc49-79bf-928f-d7e4-912ac3031d61" target="_blank">Profil 2</a>, <a href="https://cdp.fotoskoda.meiro.app/profiles/5d494b7d-d8da-7cb7-4005-4b8817570a9d" target="_blank">Profil 3</a>.</li>
+                </ul>
+                <p><em>Závěr:</em> Řešil René s Jirkou Ketnerem, prý to mělo fungovat. Bližší info zatím nemám.</p>
+
+                <h4>Problém 2: Pomalost pro real-time use-cases (jednotky profilů)</h4>
+                <p>Většinou to teď chodí rychle, ale v některých případech odeslání e-mailu po vyplnění banneru trvá neúměrně dlouho:</p>
+                <ul>
+                    <li><a href="https://cdp.fotoskoda.meiro.app/profiles/22b81cb1-f5c8-ab7a-6516-d560e8d1a973" target="_blank">Profil A</a>: Submit 23.3. v 18:23:59 ➔ E-mail 18:30:11 <strong>(+ 6 minut)</strong></li>
+                    <li><a href="https://cdp.fotoskoda.meiro.app/profiles/466754df-0db0-3991-8725-0d3ce19b7117" target="_blank">Profil B</a>: Submit 24.3. ve 21:15:13 ➔ E-mail 21:22:16 <strong>(+ 7 minut)</strong></li>
+                    <li><a href="https://cdp.fotoskoda.meiro.app/profiles/2ce41ea4-44db-59c9-2e94-7fa8124b4c18" target="_blank">Profil C</a>: Submit 4.3. v 15:38:41 ➔ E-mail 16:01:59 <strong>(+ 23 minut!)</strong></li>
+                </ul>
+
+                <h4>Pak blok:</h4>
+                <p>Podmínka na bannery: cookie exists.</p>
+            `,
+            'section3': `
+                <h4>Kalkulátor</h4>
+                <ul>
+                    <li>Funguje, spokojený.</li>
+                    <li><strong>TOP:</strong> Návrat do rozdělané kalkulace.</li>
+                </ul>
+
+                <h4>FotoŠkoda</h4>
+                <ul>
+                    <li><strong>Problém:</strong> Týden nechodila data v JC - žádný error.</li>
+                </ul>
+
+                <h4>Triola</h4>
+                <ul>
+                    <li>Funguje, spokojený.</li>
+                    <li>Rekomendace.</li>
+                    <li>Personalizace.</li>
+                    <li>Casestudy - po migraci na nový eshop.</li>
+                    <li><strong>Detail rekomendace:</strong>
+                        <ul>
+                            <li><em>Na základě čeho:</em> Historické nákupy (poslední 3 transakce podprsenek). Vypočítává se preferovaný a sesterský střih, preferovaná a sesterská velikost a cenová citlivost. Pro deduplikaci se navíc udržuje historie již zakoupených produktů (fabas_history).</li>
+                            <li><em>Skórovací logika:</em> Model s prioritou (Střih > Velikost > Novinka > Cena), aplikovaný nad filtrovaným produktovým feedem ze skladových položek.</li>
+                            <li><em>Výstup:</em>Meta atribut obshaující preferované velikosti + sesterské, střihy + sesterské a cenovou hladiku. Uživatelské atributy, které jako výsledek obsahují seřazený seznam Top 15 ID doporučených produktů (faba kódů) připravených rovnou pro personalizaci.
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>Vyhraj</h4>
+                <ul>
+                    <li>Funguje.</li>
+                </ul>
+
+                <h4>Scaleupboard</h4>
+                <ul>
+                    <li>Funguje, rozvojově uspaný.</li>
+                </ul>
+
+                <h4>ERV - ERGO</h4>
+                <ul>
+                    <li>Zvládli jsme rebranding.</li>
+                    <li>Opravovali jsme Meiro usecases.</li>
+                    <li>Jsou spokojení.</li>
+                </ul>
+
+                <h4>DerTour</h4>
+                <ul>
+                    <li>Odešel Alex ➔ navazujeme vztah s novým člověkem.</li>
+                    <li>Implementujeme WhatsApp ➔ prokopáváme to.</li>
+                </ul>
+            `
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderClientCards();
+            loadFromLocalStorage();
+        });
+
+        function renderClientCards() {
+            const container = document.getElementById('clients-container');
+            
+            clientsData.forEach(client => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-lg shadow-sm border-2 border-slate-200 p-6 flex flex-col h-full";
+                
+                const sourcesHTML = client.sources.map(s => `<li class="text-sm text-slate-700 py-1 border-b border-slate-50 last:border-0">• ${s}</li>`).join('');
+                let destinationsHTML = client.destinations.map(d => `<li class="text-sm text-slate-700 py-1 border-b border-slate-50 last:border-0">• ${d}</li>`).join('');
+                
+                if (client.destinationsNote) {
+                    destinationsHTML += `<li class="text-xs text-amber-600 mt-2 font-medium border-t border-slate-100 pt-2">${client.destinationsNote}</li>`;
+                }
+
+                const tesValue = client.tesDisplay ? client.tesDisplay : client.tes + 'M';
+
+                card.innerHTML = `
+                    <div class="mb-4 pb-4 border-b-2 border-slate-100 flex justify-between items-start">
+                        <h2 class="text-2xl font-bold text-slate-900">${client.name}</h2>
+                        <div class="text-right">
+                            <span class="block text-2xl font-black text-indigo-600">${tesValue}</span>
+                            <span class="text-xs text-slate-500 uppercase tracking-wide font-semibold">TES</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-grow grid grid-cols-2 gap-4">
+                        <div>
+                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Sources (${client.sourcesCount})</h3>
+                            <ul class="space-y-1">
+                                ${sourcesHTML}
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Destinations (${client.destinationsCount})</h3>
+                            <ul class="space-y-1">
+                                ${destinationsHTML}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                icon.innerText = '▲';
+            } else {
+                el.classList.add('hidden');
+                icon.innerText = '▼';
+            }
+        }
+
+        function saveToLocalStorage(sectionId) {
+            const content = document.getElementById('content-' + sectionId).innerHTML;
+            localStorage.setItem('meiro_dash_v3_' + sectionId, content);
+        }
+
+        function loadFromLocalStorage() {
+            ['section1', 'section2', 'section3'].forEach(id => {
+                const saved = localStorage.getItem('meiro_dash_v3_' + id);
+                const contentDiv = document.getElementById('content-' + id);
+                
+                if (saved !== null) {
+                    contentDiv.innerHTML = saved;
+                } else {
+                    contentDiv.innerHTML = defaultContents[id];
+                }
+            });
+        }
+    </script>
+</body>
+</html>
