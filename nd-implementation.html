@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meiro CDP Implementation — SK & PL | Project Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0A2540;
+            --accent: #FF6B35;
+            --grey-light: #F3F4F6;
+            --grey-mid: #9CA3AF;
+            --grey-dark: #4B5563;
+            --text-main: #1F2937;
+            --bg-body: #F8FAFC;
+            --white: #FFFFFF;
+            
+            --dc-color: #0A2540;
+            --der-color: #FF6B35;
+            --meiro-color: #6B7280;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* HEADER & LOGOS */
+        header {
+            background-color: var(--white);
+            padding: 3rem 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border: 1px solid #E5E7EB;
+        }
+
+        .logos-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .logo-box img {
+            max-height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--grey-dark);
+            margin-bottom: 0;
+        }
+
+        /* SCOPE NOTICE */
+        .scope-notice {
+            background-color: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            color: #1E3A8A;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            text-align: left;
+        }
+        
+        .scope-notice svg {
+            flex-shrink: 0;
+        }
+
+        /* LEGEND */
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--grey-light);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--grey-dark);
+        }
+
+        .color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--white);
+        }
+
+        .badge-dc { background-color: var(--dc-color); }
+        .badge-der { background-color: var(--der-color); }
+        .badge-meiro { background-color: var(--meiro-color); }
+        .badge-shared-dc-der { background: linear-gradient(135deg, var(--dc-color) 50%, var(--der-color) 50%); }
+        .badge-shared-dc-meiro { background: linear-gradient(135deg, var(--dc-color) 50%, var(--meiro-color) 50%); }
+        
+        .dependency-badge {
+            font-size: 0.75rem;
+            color: var(--grey-dark);
+            background: var(--grey-light);
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            border: 1px dashed var(--grey-mid);
+            font-weight: 500;
+        }
+
+        /* TIMELINE LAYOUT */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 7px;
+            width: 2px;
+            background-color: #E2E8F0;
+        }
+
+        .phase-card {
+            position: relative;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 1.75rem 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            border: 1px solid #E5E7EB;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -2.25rem;
+            top: 2.25rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 3px solid var(--primary);
+            z-index: 2;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .phase-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .phase-title {
+            color: var(--primary);
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .phase-meta {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .task-list {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .task-list li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .task-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .task-list li strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .sub-list {
+            list-style: none;
+            margin-top: 0.25rem;
+            margin-bottom: 0.5rem;
+            padding-left: 1.25rem;
+        }
+
+        .sub-list li {
+            font-size: 0.9rem;
+            color: var(--grey-dark);
+            margin-bottom: 0.25rem;
+        }
+        
+        .sub-list li::before {
+            content: '-';
+            color: var(--grey-mid);
+        }
+
+        /* ATTRIBUTES EXPANDABLE */
+        details.attributes {
+            margin-top: 1.25rem;
+            background-color: var(--bg-body);
+            border-radius: 6px;
+            border: 1px solid var(--grey-light);
+        }
+
+        summary.attributes-summary {
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--primary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        summary.attributes-summary:hover {
+            background-color: #F3F4F6;
+        }
+
+        .attributes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 0.75rem;
+            padding: 1rem;
+            border-top: 1px solid var(--grey-light);
+        }
+
+        .attr-item {
+            display: flex;
+            flex-direction: column;
+            font-size: 0.85rem;
+        }
+
+        .attr-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .attr-desc {
+            color: var(--grey-dark);
+        }
+
+        /* ONGOING ACTIVITIES */
+        .ongoing-section {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+        }
+
+        .ongoing-section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .ongoing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .ongoing-card {
+            border-left: 2px solid rgba(255,255,255,0.2);
+            padding-left: 1rem;
+        }
+
+        .ongoing-card h3 {
+            color: var(--white);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .ongoing-card p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* TIME BUDGET TABLE */
+        .budget-section {
+            background: var(--white);
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .budget-section h2 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        table.budget-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        table.budget-table th, table.budget-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--grey-light);
+        }
+
+        table.budget-table th {
+            background-color: var(--bg-body);
+            color: var(--grey-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        table.budget-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table.budget-table td.hours-col {
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        table.budget-table tr.ongoing-row td {
+            background-color: #F9FAFB;
+        }
+
+        /* SOUHRN / DASHBOARD */
+        .dashboard {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .dash-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            background-color: #FFFaf8;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .dash-label {
+            font-size: 0.95rem;
+            color: var(--grey-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .dash-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .dash-note {
+            font-size: 0.85rem;
+            color: var(--grey-dark);
+            margin-top: 1rem;
+            line-height: 1.4;
+        }
+
+        /* POZNÁMKY */
+        .notes {
+            background-color: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            border-left: 3px solid var(--grey-mid);
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 3rem;
+            font-size: 0.9rem;
+            color: var(--grey-dark);
+        }
+
+        .notes p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .notes p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .timeline { padding-left: 1.5rem; }
+            .timeline::before { left: 6px; }
+            .timeline-dot { left: -1.7rem; width: 12px; height: 12px; top: 1.9rem; }
+            .phase-card { padding: 1.25rem; }
+            .logos-container { gap: 1.5rem; flex-direction: column; }
+            header { padding: 2rem 1.5rem; }
+            .budget-section { padding: 1.25rem; }
+            table.budget-table th, table.budget-table td { padding: 0.75rem 0.5rem; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logos-container">
+            <div class="logo-box">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczP2i54w3_uTOqIfMwTM-qQ-4wCLwpMh7LnFkhRVYHve0ztBqa68QlCoFCa4VRiSUD8iIPgGJJyoJ0OoFpf88j4WUP-fXX3NnfZdGJ-gGCGXHC0OEjYjx6rpR7GksFvbFih7CmwQFQmgXIPuDZOXMgx8=w450-h100-s-no-gm?authuser=0" alt="Data Club" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x50/0A2540/FFFFFF?text=DATA+CLUB';">
+            </div>
+            <div class="logo-box">
+                <img src="https://www.dertouristik.cz/Scripts/web/assets/image/logo/der-touristik.svg" alt="DER Touristik">
+            </div>
+            <div class="logo-box">
+                <img src="https://www.meiro.io/images/Meiro-logo-2026.svg" alt="Meiro">
+            </div>
+        </div>
+
+        <h1>Meiro CDP Implementation</h1>
+        <div class="subtitle">Project Roadmap & Time Budget</div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="color-dot" style="background-color: var(--dc-color);"></div>
+                Data Club
+            </div>
+            <div class="legend-item">
+                <div class="color-dot" style="background-color: var(--der-color);"></div>
+                DER Touristik
+            </div>
+            <div class="legend-item">
+                <div class="color-dot" style="background-color: var(--meiro-color);"></div>
+                Meiro DEV
+            </div>
+            <div class="legend-item">
+                <div class="color-dot" style="background: linear-gradient(135deg, var(--dc-color) 50%, var(--der-color) 50%);"></div>
+                Data Club & DER Touristik
+            </div>
+            <div class="legend-item">
+                <div class="color-dot" style="background: linear-gradient(135deg, var(--dc-color) 50%, var(--meiro-color) 50%);"></div>
+                Data Club & Meiro
+            </div>
+        </div>
+    </header>
+
+    <div class="scope-notice">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        <div><strong>Scope Notice:</strong> All activities and time estimates in this roadmap comprehensively cover both <strong>SK and PL</strong> markets combined.</div>
+    </div>
+
+    <main class="timeline">
+        
+        <!-- PHASE 1 -->
+        <div class="phase-card">
+            <div class="timeline-dot" style="border-color: var(--dc-color);"></div>
+            <div class="phase-header">
+                <div class="phase-title-group">
+                    <div class="phase-title">1. Preparation of requirements for web developers</div>
+                </div>
+                <div class="phase-meta">
+                    <span class="badge badge-dc">Data Club</span>
+                </div>
+            </div>
+            <ul class="task-list">
+                <li><strong>Basic SDK functionality requirements</strong></li>
+                <li><strong>DNS setup instructions</strong></li>
+                <li><strong>Definition and mapping of custom events</strong></li>
+            </ul>
+        </div>
+
+        <!-- PHASE 2 -->
+        <div class="phase-card" style="border-left: 3px solid var(--der-color);">
+            <div class="timeline-dot" style="border-color: var(--der-color);"></div>
+            <div class="phase-header">
+                <div class="phase-title-group">
+                    <div class="phase-title" style="color: var(--text-main);">2. Web Implementation</div>
+                </div>
+                <div class="phase-meta">
+                    <span class="badge badge-der">DER Touristik</span>
+                    <span class="dependency-badge">↳ Depends on: Phase 1</span>
+                </div>
+            </div>
+            <ul class="task-list">
+                <li><strong>Client deploys SDK + DNS</strong> based on the provided instructions.</li>
+            </ul>
+        </div>
+
+        <!-- PHASE 3 -->
+        <div class="phase-card">
+            <div class="timeline-dot" style="border-color: var(--dc-color);"></div>
+            <div class="phase-header">
+                <div class="phase-title-group">
+                    <div class="phase-title">3. Blacklist Preparation</div>
+                </div>
+                <div class="phase-meta">
+                    <span class="badge badge-shared-dc-der">DC & DER</span>
+                    <span class="dependency-badge">↳ Depends on: Phase 1</span>
+                </div>
+            </div>
+            <ul class="task-list">
+                <li><strong>Blacklist expansion</strong>
+                    <ul class="sub-list">
+                        <li>Gathering email addresses, domains, and affiliate domains to blacklist from the client.</li>
+                        <li>Identifying phone numbers for the blacklist.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- PHASE 4 -->
+        <div class="phase-card">
+            <div class="timeline-dot" style="border-color: var(--dc-color);"></div>
+            <div class="phase-header">
+                <div class="phase-title-group">
+                    <div class="phase-title">4. Meiro Setup Completion</div>
+                </div>
+                <div class="phase-meta">
+                    <span class="badge badge-shared-dc-meiro">DC & Meiro</span>
+                    <span class="dependency-badge">↳ Depends on: Phase 1, Phase 2</span>
+                </div>
+            </div>
+            <ul class="task-list">
+                <li><strong>Meiro completes setup on their end</strong>
+                    <ul class="sub-list">
+                        <li>Once the client deploys the DNS records, we notify Meiro DEV to finalize the setup.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- PHASE 5 -->
+        <div class="phase-card">
+            <div class="timeline-dot" style="border-color: var(--dc-color);"></div>
+            <div class="phase-header">
+                <div class="phase-title-group">
+                    <div class="phase-title">5. DC Implementation Check</div>
+                </div>
+                <div class="phase-meta">
+                    <span class="badge badge-dc">Data Club</span>
+                    <span class="dependency-badge">↳ Depends on: Phase 1, Phase 2, Phase 4</span>
+                </div>
+            </div>
+            <ul class="task-list">
+                <li><strong>Review basic SDK initialization and correct event firing</strong></li>
+                <li><strong>Check custom_payload in page_view events</strong></li>
+                <li><strong>Thoroughly test all custom events</strong></li>
+                <li><strong>Feedback to the client</strong> (depends on implementation quality):
+                    <ul class="sub-list">
+                        <li>Basic feedback</li>
+                        <li>Extended feedback and iterations in case of issues</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- PHASE 6 -->
+        <div class="phase-card">
+            <div class="timeline-dot" style="border-color: var(--dc-color);"></div>
+            <div class="phase-header">
+                <div class="phase-title-group">
+                    <div class="phase-title">6. Implementation in Meiro CDP</div>
+                </div>
+                <div class="phase-meta">
+                    <span class="badge badge-dc">Data Club</span>
+                    <span class="dependency-badge">↳ Depends on: Phases 1–5</span>
+                </div>
+            </div>
+            <ul class="task-list">
+                <li><strong>Setup of each event in Meiro CDP</strong></li>
+                <li><strong>Setup of identity stitching rules</strong></li>
+                <li><strong>Preparation of attributes from web data</strong></li>
+            </ul>
+
+            <details class="attributes">
+                <summary class="attributes-summary">
+                    View the list of 17 prepared attributes
+                </summary>
+                <div class="attributes-grid">
+                    <div class="attr-item"><span class="attr-name">All Checkout Steps</span><span class="attr-desc">All stages of checkout process, includes purchase stage</span></div>
+                    <div class="attr-item"><span class="attr-name">All Purchases</span><span class="attr-desc">All purchase events collected by Meiro</span></div>
+                    <div class="attr-item"><span class="attr-name">All Viewed Hotels</span><span class="attr-desc">All hotels that the customer has viewed</span></div>
+                    <div class="attr-item"><span class="attr-name">All Viewed Web Pages</span><span class="attr-desc">All unique web pages viewed by customers</span></div>
+                    <div class="attr-item"><span class="attr-name">Entry page</span><span class="attr-desc">First page ever where customer entered the website</span></div>
+                    <div class="attr-item"><span class="attr-name">Exit page</span><span class="attr-desc">Most recent page where customer left the website</span></div>
+                    <div class="attr-item"><span class="attr-name">Form Email submitted</span><span class="attr-desc">All emails submitted from the web banner/forms</span></div>
+                    <div class="attr-item"><span class="attr-name">Google Client ID</span><span class="attr-desc">All unique tracked Google client IDs</span></div>
+                    <div class="attr-item"><span class="attr-name">Last Checkout Step</span><span class="attr-desc">Last stage of checkout process, includes purchase stage</span></div>
+                    <div class="attr-item"><span class="attr-name">Last Searched Tour Params_v3</span><span class="attr-desc">The 5 latest sets of parameters searched</span></div>
+                    <div class="attr-item"><span class="attr-name">Last Visit</span><span class="attr-desc">Datetime of the last visit</span></div>
+                    <div class="attr-item"><span class="attr-name">Number of Events</span><span class="attr-desc">Total number of events for each customer entity</span></div>
+                    <div class="attr-item"><span class="attr-name">Number of Page Views per Visit</span><span class="attr-desc">Average number of pageviews per session</span></div>
+                    <div class="attr-item"><span class="attr-name">Product Added to Cart</span><span class="attr-desc">Product added to cart in the last 6 months</span></div>
+                    <div class="attr-item"><span class="attr-name">Product Added to Cart (funnels)</span><span class="attr-desc">Products added to cart with no time restriction</span></div>
+                    <div class="attr-item"><span class="attr-name">Total Number of Visits</span><span class="attr-desc">Total number of visits (sessions) made by customer</span></div>
+                    <div class="attr-item"><span class="attr-name">Total Pageviews</span><span class="attr-desc">Total pageviews on the website</span></div>
+                </div>
+            </details>
+        </div>
+
+    </main>
+
+    <!-- ONGOING ACTIVITIES -->
+    <section class="ongoing-section">
+        <h2>Ongoing Activities</h2>
+        <div class="ongoing-grid">
+            <div class="ongoing-card">
+                <h3>Project Management & Communication</h3>
+                <p>Ongoing project coordination, synchronizing with the client and Meiro.</p>
+            </div>
+            <div class="ongoing-card">
+                <h3>Process Documentation (Optional)</h3>
+                <p>Comprehensive documentation of events, attributes, and definitions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIME BUDGET SUMMARY TABLE -->
+    <section class="budget-section">
+        <h2>Time Budget Summary</h2>
+        <table class="budget-table">
+            <thead>
+                <tr>
+                    <th>Project Phase / Activity (SK & PL Combined)</th>
+                    <th>Estimated Hours</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Phase 1: Preparation of requirements for web developers</td>
+                    <td class="hours-col">4.0 h</td>
+                </tr>
+                <tr>
+                    <td>Phase 2: Web Implementation</td>
+                    <td class="hours-col" style="color: var(--grey-dark); font-weight: normal;">Client's scope</td>
+                </tr>
+                <tr>
+                    <td>Phase 3: Blacklist Preparation</td>
+                    <td class="hours-col">3.0 h</td>
+                </tr>
+                <tr>
+                    <td>Phase 4: Meiro Setup Completion</td>
+                    <td class="hours-col">0.5 h</td>
+                </tr>
+                <tr>
+                    <td>Phase 5: DC Implementation Check (Base QA)</td>
+                    <td class="hours-col">8.0 h</td>
+                </tr>
+                <tr>
+                    <td>
+                        Phase 5: Fixes & Iterations<br>
+                        <small style="color: var(--grey-dark); font-weight: normal;">*Triggered only if implementation issues occur (est. 3h/country)</small>
+                    </td>
+                    <td class="hours-col" style="color: var(--accent);">+ 6.0 h (Variable)</td>
+                </tr>
+                <tr>
+                    <td>Phase 6: Implementation in Meiro CDP <small style="color: var(--grey-dark); font-weight: normal;">(Assumes approx. 15 events)</small></td>
+                    <td class="hours-col">13.5 h</td>
+                </tr>
+                <tr class="ongoing-row">
+                    <td>Ongoing: Project Management & Communication</td>
+                    <td class="hours-col">4.0 h</td>
+                </tr>
+                <tr class="ongoing-row">
+                    <td><em>Optional: Process Documentation</em></td>
+                    <td class="hours-col"><em>8.0 h</em></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- DASHBOARD SUMMARY -->
+    <section>
+        <div class="dashboard">
+            <div class="dash-card highlight">
+                <div class="dash-label">Total Estimated Budget</div>
+                <div class="dash-value">33 hours</div>
+                <div class="dash-note">
+                    <strong>Note:</strong> This total covers the core implementation base. 
+                    If significant errors need to be addressed during Phase 5, an additional <strong>~6 hours</strong> may be billed for fixes and iterations. Process documentation (+8h) is excluded from this total.
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
