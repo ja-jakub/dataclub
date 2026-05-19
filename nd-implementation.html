@@ -708,8 +708,8 @@
                 <p>Ongoing project coordination, synchronizing with the client and Meiro.</p>
             </div>
             <div class="ongoing-card">
-                <h3>Process Documentation (Optional)</h3>
-                <p>Comprehensive documentation of events, attributes, and definitions.</p>
+                <h3>Buffer for Fixes & Iterations</h3>
+                <p>Reserved time for troubleshooting and post-deployment adjustments.</p>
             </div>
         </div>
     </section>
@@ -727,7 +727,7 @@
             <tbody>
                 <tr>
                     <td>Phase 1: Preparation of requirements for web developers</td>
-                    <td class="hours-col">4.0 h</td>
+                    <td class="hours-col">6.0 h</td>
                 </tr>
                 <tr>
                     <td>Phase 2: Web Implementation</td>
@@ -754,15 +754,15 @@
                 </tr>
                 <tr>
                     <td>Phase 6: Implementation in Meiro CDP <small style="color: var(--grey-dark); font-weight: normal;">(Assumes approx. 15 events)</small></td>
-                    <td class="hours-col">13.5 h</td>
+                    <td class="hours-col">16.0 h</td>
                 </tr>
                 <tr class="ongoing-row">
                     <td>Ongoing: Project Management & Communication</td>
                     <td class="hours-col">4.0 h</td>
                 </tr>
                 <tr class="ongoing-row">
-                    <td><em>Optional: Process Documentation</em></td>
-                    <td class="hours-col"><em>8.0 h</em></td>
+                    <td>Ongoing: Buffer for Fixes & Iterations</td>
+                    <td class="hours-col">4.0 h</td>
                 </tr>
             </tbody>
         </table>
@@ -773,94 +773,13 @@
         <div class="dashboard">
             <div class="dash-card highlight">
                 <div class="dash-label">Total Estimated Budget</div>
-                <div class="dash-value">33 hours</div>
+                <div class="dash-value">41.5 hours</div>
                 <div class="dash-note">
-                    <strong>Note:</strong> This total covers the core implementation base. 
-                    If significant errors need to be addressed during Phase 5, an additional <strong>~6 hours</strong> may be billed for fixes and iterations. Process documentation (+8h) is excluded from this total.
+                    <strong>Note:</strong> This total covers the core implementation base (incl. 4 hours reserve buffer). 
+                    If significant errors need to be addressed during Phase 5, an additional <strong>~6 hours</strong> may be billed for fixes and iterations.
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- INTERNÍ SEKCE -->
-    <hr class="internal-divider">
-    <section class="internal-section">
-        <h2>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            Interní záloha původního zadání (Není určeno pro klienta)
-        </h2>
-        
-        <ol>
-            <li>připravit zadání na nasazení SDK včetně custom events
-                <ol type="a">
-                    <li>funkce základního SDK (1h)</li>
-                    <li>zadání pro nasazení DNS (0,25 h)</li>
-                    <li>definování a soupis custom events (2 - 3 h)</li>
-                </ol>
-            </li>
-            <li>klient - nasadit sdk + dns</li>
-            <li>Rozšíření blacklistu (1,5 hodiny per country)
-                <ol type="a">
-                    <li>zjistit od klienta, aby nám předal adresy, které chce blacklistovat + domény provizáků např.</li>
-                    <li>telefonní čísla pro blacklist</li>
-                </ol>
-            </li>
-            <li>meiro - dokončit (0,25 h per country)
-                <ol type="a">
-                    <li>po nasazení DNS na straně klienta je potřeba informovat Meiro DEV, aby dokončili nastavení na straně ME</li>
-                </ol>
-            </li>
-            <li>DC kontrola
-                <ol type="a">
-                    <li>projít základní inicializaci SDK a správné firování eventů (1 hodina per country)</li>
-                    <li>zkontrolovat custom_payload v page_view eventech (0,5 hodiny per country)</li>
-                    <li>otestovat pořádně všechny custom events ( 2 - 4 hodiny per country)</li>
-                    <li>feedback na klienta (závisí na tom, jak se implementace na webu povede, rozsah je tedy 0,5 hodiny per country až řekněme 6 hod per country, když to bude hodně špatně)
-                        <ol type="i">
-                            <li>základní feedback 0,5 hodiny per country</li>
-                            <li>v případě problémů více, z našeho odhadu 3 - 6 hodin per country</li>
-                        </ol>
-                    </li>
-                </ol>
-            </li>
-            <li>DC - implementace v Meiro (events, stitching, attributes)
-                <ol type="a">
-                    <li>setup každého eventu v Meiro CDP (2x) (10 minut per event + country)</li>
-                    <li>setup stitching rules (2x) (5 minut per event + country)</li>
-                    <li>příprava atributů z webových dat (2x) - pokud budou data 100% stejná, pak úpravy budou jednoduché
-                        <ol type="i">
-                            <li>All Checkout Steps — All stage of checkout process, includes purchase stage</li>
-                            <li>All Purchases — All purchase events collected by Meiro</li>
-                            <li>All Viewed Hotels — All hotels that the customer has viewed</li>
-                            <li>All Viewed Web Pages — All unique web pages viewed by customers</li>
-                            <li>Entry page — First page ever where customer entered the website</li>
-                            <li>Exit page — Most recent page where customer left the website</li>
-                            <li>Form Email submitted — All emails submitted from the web banner</li>
-                            <li>Google Client ID — All unique tracked Google client IDs</li>
-                            <li>Last Checkout Step — Last stage of checkout process, includes purchase stage</li>
-                            <li>Last Searched Tour Parameters_v3 — The 5 latest sets of parameters that a customer has viewed or searched for on Fischer.cz</li>
-                            <li>Last Visit — Datetime of last visit to nev-dama.cz</li>
-                            <li>Number of Events — Total number of events from website Nev-dama.cz for each customer entities</li>
-                            <li>Number of Page Views per Visit — Average number of pageviews per session</li>
-                            <li>Product Added to Cart — Product added to cart in the last 6 month</li>
-                            <li>Product Added to Cart (funnels; no time restriction) — Products added to cart with no time restriction</li>
-                            <li>Total Number of Visits — Total number of visits (sessions) made by customer</li>
-                            <li>Total Pageviews — Total pageviews from nev-dama.cz</li>
-                        </ol>
-                    </li>
-                </ol>
-            </li>
-        </ol>
-
-        <p>Pokud budou data stejná, tak každý atribut 15 minut per jazyk. = celkem 8,5 hodiny</p>
-
-        <p>PM a komunikace 2 hodiny per country<br>
-        Buffer na bugy / iterace po nasazení (2 hod per country)</p>
-
-        <p>Optional:<br>
-        • dokumentace celého procesu (eventy + custom eventy, funkčnost, a tributy, atd.) ( 4 hodiny per country)</p>
-
-        <p>BTW co licenčně pro Meiro? Není potřeba něco vyřešit?</p>
     </section>
 
 </body>
