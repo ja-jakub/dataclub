@@ -236,7 +236,7 @@
 
   <!-- 4 ROZHODNUTI -->
   <section id="rozhodnuti">
-    <div class="sec-head"><span class="sec-num">4</span><div><h2>Rozhodnutí: A (zůstat) vs B (Sales Hub) — s reálnými cenami</h2><p class="sub">Rozdíl je jen €15/uživatel/měsíc. To mění doporučení.</p></div></div>
+    <div class="sec-head"><span class="sec-num">4</span><div><h2>Rozhodnutí: jdeme do Sales Hub Pro</h2><p class="sub">Po zjištění ceny (€90/seat) padlo rozhodnutí - rovnou Pro, ne úsporná varianta.</p></div></div>
     <div class="vgrid">
       <div class="variant">
         <div class="vhead"><div class="vk">Varianta A</div><div class="vt">Zůstat jak jsou</div><div class="small" style="margin-top:4px">Marketing Hub Enterprise, Core seat <b>€75</b>/uživatel/měs.</div></div>
@@ -251,7 +251,7 @@
         </div>
       </div>
       <div class="variant reco">
-        <div class="vhead"><div class="vk">Varianta B</div><div class="vt">+ Sales Hub<span class="recobadge">DOPORUČUJEME</span></div><div class="small" style="margin-top:4px">Sales seat <b>€90</b>/uživatel/měs (místo €75, ne navíc).</div></div>
+        <div class="vhead"><div class="vk">Varianta B</div><div class="vt">+ Sales Hub<span class="recobadge">ZVOLENO ✓</span></div><div class="small" style="margin-top:4px">Sales seat <b>€90</b>/uživatel/měs (místo €75, ne navíc).</div></div>
         <div class="vbody">
           <ul class="pm">
             <li class="p"><b>Objekt Leads + konverze</b> — přesně jak Pernička nakreslil</li>
@@ -263,19 +263,26 @@
         </div>
       </div>
     </div>
-    <div class="reco-note"><span style="font-size:18px">⭐</span><div><b>Doporučení se po reálných cenách překlápí na B.</b> Sales seat (€90) je <b>místo</b> Core (€75), ne navíc — reálný rozdíl je <b>jen €15/uživatel/měsíc</b>. Za to dostanou přesně to, co sami chtěli: nativní Lead→Deal model, per-rep cockpit a hotový reporting. A zůstává jako úsporná varianta jen při tlaku na nulové náklady nebo velkém týmu.</div></div>
-    <div class="decide"><div class="bignum"><span>Rozdíl B vs A:</span><b>€15</b><span>/ uživatel / měsíc</span></div><div style="margin-top:5px">U Domequ to jsou <b>3 lidé</b> → Varianta B navíc jen <b>+€45/měs</b> (3 × €15; ≈ €540/rok). Sales seat potřebují jen ti, co reálně prodávají. <i>(Ceny z portálu — ověřit jednorázový onboarding fee.)</i></div></div>
+    <div class="reco-note"><span style="font-size:18px">✅</span><div><b>Rozhodnuto: jdeme rovnou do Sales Hub Pro.</b> Sales workspace je na začátku náročnější (chce pořádné zaškolení a osvětu, ze začátku trochu overkill), ale samotné nastavení je 10 % - <b>90 % je udržet lidi v systému</b>. Pro je nejrychlejší způsob, jak je do něj „zamknout" a pak postupně rozšiřovat. Po zjištění ceny (€90/seat, jen +€15 oproti dnešku) nemá úsporná cesta smysl. Nabídneme i demo; po odsouhlasení pošleme CE.</div></div>
+    <div class="decide"><div class="bignum"><span>3 seaty Pro:</span><b>€90</b><span>/ osoba / měsíc</span></div><div style="margin-top:5px">Stačí koupit <b>3× Sales seat</b> (jen ti, co reálně prodávají). Pro běží na <b>roční commitment</b> - při koupi teď je mají do obnovy <b>8. 12.</b> <i>(Starter běží měsíčně, Pro ročně - potvrdit s Jakubem Plasem.)</i></div></div>
+    <div class="card" style="margin-top:14px"><p class="mini-h">Architektura (z meetingu)</p><ul class="tight small">
+      <li><b>Jedna pipeline</b> se základními fázemi + vlastní <b>list a štítky kontaktů</b> pro Domeq (oddělení od zbytku).</li>
+      <li>Lead fázi nese <b>dropdown property na kontaktu</b> (segment); při „Kvalifikováno" se obchod <b>založí ručně</b> - systém k tomu sám vyzve.</li>
+      <li>Sales workspace: jen <b>Leads a Deals</b> (ostatní funkce klidně až později).</li>
+      <li><b>Workflows:</b> auto follow-up po vyplnění formuláře, posun v lead pipeline, rozdělení <b>EN / CZ</b> (2× šablona).</li>
+      <li>+ mailová šablona / autoresponder a reporting.</li>
+    </ul></div>
   </section>
 
   <!-- 5 POSTUP -->
   <section id="postup">
     <div class="sec-head"><span class="sec-num">5</span><div><h2>Jak postupovat dál</h2><p class="sub">Call už proběhl, jejich e-mail je výstup z něj. Teď reagujeme na jejich data.</p></div></div>
     <ol class="steps">
-      <li style="opacity:.6"><b>✓ Konzultační call — proběhl</b><span class="small">Už máte za sebou.</span></li>
-      <li style="opacity:.6"><b>✓ Klient poslal svůj spec (jejich výstup)</b><span class="small">E-mail s poli, lost reasons, automatizacemi a flow diagramem.</span></li>
-      <li class="now"><b>3 · Odeslat reakci na jejich e-mail<span class="nowtag">TEĎ</span></b><span class="small">Hotový text máš v sekci „✉ Odpověď": potvrď model + doplň chybějící + doptej se (definice fází, Better Hotel po podpisu, formuláře, inbox, routing).</span></li>
-      <li><b>4 · Rozhodnout A vs B → nacenit → poslat nabídku</b><span class="small">Při rozdílu €15/seat doporučujeme B (malý tým).</span></li>
-      <li><b>5 · Realizace</b><span class="small">Postavit podle build checklistu (ve skillu).</span></li>
+      <li style="opacity:.6"><b>✓ Call + spec od klienta</b><span class="small">Proběhlo; e-mail s poli, lost reasons, automatizacemi a flow.</span></li>
+      <li style="opacity:.6"><b>✓ Rozhodnutí: Sales Hub Pro</b><span class="small">Z meetingu s HS konzultantem - jdeme rovnou do Pro (3 seaty).</span></li>
+      <li class="now"><b>3 · Odeslat reakci na e-mail<span class="nowtag">TEĎ</span></b><span class="small">Hotový text v sekci „✉ Odpověď".</span></li>
+      <li><b>4 · Připravit CE a projít interně s Bigtime</b><span class="small">Ideálně CE hotové <b>v pondělí / úterý</b>.</span></li>
+      <li><b>5 · Demo + odsouhlasení → pošleme CE → realizace</b><span class="small">Po odsouhlasení stavíme (cca 14 dní - 4 týdny).</span></li>
     </ol>
   </section>
 
@@ -300,20 +307,12 @@
 
   <!-- 7 NACENENI -->
   <section id="naceneni">
-    <div class="sec-head"><span class="sec-num">7</span><div><h2>Nacenění <span class="internal-flag">INTERNÍ PODKLAD</span></h2><p class="sub">Reálné ceny seatů. Doplň sazbu za práci; onboarding fee ověř v portálu.</p></div></div>
+    <div class="sec-head"><span class="sec-num">7</span><div><h2>Nacenění <span class="internal-flag">INTERNÍ</span></h2><p class="sub">Licence + rámec. Přesné CE poskládá Bigtime - tady jen orientačně.</p></div></div>
     <div class="card">
-      <table class="cost">
-        <thead><tr><th>Položka</th><th>A — zůstat (Core)</th><th>B — Sales Hub</th></tr></thead>
-        <tbody>
-          <tr><td>Cena za seat / měsíc</td><td>€75</td><td>€90</td></tr>
-          <tr><td>Rozdíl oproti dnešku</td><td>—</td><td><b>+€15 / seat / měs</b></td></tr>
-          <tr><td>Co tím získají</td><td>základní CRM</td><td>Leads objekt, workspace, sekvence, prebuilt reporting</td></tr>
-          <tr><td>Jednorázový onboarding HubSpot</td><td>—</td><td>dle HubSpotu — ověřit</td></tr>
-          <tr><td>Implementace (agentura, odhad)</td><td>~25–40 h</td><td>~35–55 h</td></tr>
-          <tr><td>Časová osa</td><td>~1–2 týdny</td><td>~2–3 týdny</td></tr>
-        </tbody>
-      </table>
-      <div class="caveat">Ceny seatů dle tvého portálu (€75 / €90). Sales seat je <b>místo</b> Core, ne navíc → reálný přírůstek €15/seat. Onboarding fee a počet zahrnutých seatů ověř v portálu / s CSM. Odhad hodin se ladí podle rozsahu.</div>
+      <p class="mini-h">Licence (HubSpot)</p>
+      <div class="small"><b>3× Sales seat Pro = €90 / osoba / měsíc.</b> Pro běží na roční commitment; při koupi teď platí do obnovy <b>8. 12.</b> (Starter měsíčně, Pro ročně - potvrdit s Jakubem Plasem.) Onboarding fee ověřit v portálu.</div>
+      <p class="mini-h" style="margin-top:14px">Implementace (agentura)</p>
+      <div class="small">Rámcově: pipeline setup, playground, napojení formulářů, owner / podmínky, workflows (vč. EN/CZ), šablony, dashboardy, workshop a PM. Časová osa <b>cca 14 dní - 4 týdny</b>. Přesné MD a cenu poskládá Bigtime - zatím <b>jen orientační odhady, ne finál</b>.</div>
     </div>
   </section>
 
