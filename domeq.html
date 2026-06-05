@@ -129,7 +129,7 @@
     <div class="eyebrow">Domeq · HubSpot CRM</div>
     <h1>Reakce na jejich data, rozkreslená flow, rozhodnutí a návrh odpovědi</h1>
     <p>Vše na jednom místě: sales pohled na Perničkův návrh, celý proces rozkreslený, logika formulářů + Better Hotel, rozhodnutí A/B s reálnými cenami a hotový e-mail k odeslání.</p>
-    <div class="gloss">📖 <b>PMS / booking nástroj</b> = <b>Better Hotel</b> (ze screenshotu „by Better Hotel" — <b>název ověřit u klienta</b>) — kam jde přímá rezervace a kam se ručně předá obchod po podpisu. Mews se nekoná. · <b>SLA</b> = cíl rychlosti první odpovědi (např. do 4 h). · slovníček dole ↓</div>
+    <div class="gloss">📖 <b>PMS / booking nástroj</b> = <b>Better Hotel</b> (ze screenshotu „by Better Hotel" — <b>název ověřit u klienta</b>) — kam jde přímá rezervace a kam se ručně předá obchod po podpisu. Mews se nekoná. · <b>SLA</b> = cíl rychlosti první odpovědi (např. do 4 h).</div>
   </div>
 </header>
 
@@ -143,7 +143,6 @@
     <a href="#potvrdit">Co potvrdit</a>
     <a href="#naceneni">Nacenění</a>
     <a href="#email">✉ Odpověď</a>
-    <a href="#slovnik">Slovníček</a>
   </div>
 </nav>
 
@@ -264,6 +263,15 @@
       </div>
     </div>
     <div class="reco-note"><span style="font-size:18px">✅</span><div><b>Rozhodnuto: jdeme rovnou do Sales Hub Pro.</b> Sales workspace je na začátku náročnější (chce pořádné zaškolení a osvětu, ze začátku trochu overkill), ale samotné nastavení je 10 % - <b>90 % je udržet lidi v systému</b>. Pro je nejrychlejší způsob, jak je do něj „zamknout" a pak postupně rozšiřovat. Po zjištění ceny (€90/seat, jen +€15 oproti dnešku) nemá úsporná cesta smysl. Nabídneme i demo; po odsouhlasení pošleme CE.</div></div>
+    <div class="card" style="margin-top:12px;border-color:var(--go-line);background:var(--go-bg)">
+      <p class="mini-h" style="color:var(--go)">Proč rovnou Pro (krátce)</p>
+      <ul class="tight small">
+        <li>Klient sám nakreslil model <b>Lead → Deal</b> - to je přesně nativní Sales Hub (objekt Leads), v Pro to jede „z krabice".</li>
+        <li>Chtějí <b>reporting</b> - v Sales workspace má každý přehledy hotové, nemusíme je stavět.</li>
+        <li>Cena je nízká - Sales seat <b>€90 je jen +€15</b> oproti dnešku a stačí <b>3 seaty</b>.</li>
+        <li>Úspornější varianta by Leads i workspace stejně musela pracně suplovat ručně → nevyplatí se.</li>
+      </ul>
+    </div>
     <div class="decide"><div class="bignum"><span>3 seaty Pro:</span><b>€90</b><span>/ osoba / měsíc</span></div><div style="margin-top:5px">Stačí koupit <b>3× Sales seat</b> (jen ti, co reálně prodávají). Pro běží na <b>roční commitment</b> - při koupi teď je mají do obnovy <b>8. 12.</b> <i>(Starter běží měsíčně, Pro ročně - potvrdit s Jakubem Plasem.)</i></div></div>
     <div class="card" style="margin-top:14px"><p class="mini-h">Architektura (z meetingu)</p><ul class="tight small">
       <li><b>Jedna pipeline</b> se základními fázemi + vlastní <b>list a štítky kontaktů</b> pro Domeq (oddělení od zbytku).</li>
@@ -312,7 +320,7 @@
       <p class="mini-h">Licence (HubSpot)</p>
       <div class="small"><b>3× Sales seat Pro = €90 / osoba / měsíc.</b> Pro běží na roční commitment; při koupi teď platí do obnovy <b>8. 12.</b> (Starter měsíčně, Pro ročně - potvrdit s Jakubem Plasem.) Onboarding fee ověřit v portálu.</div>
       <p class="mini-h" style="margin-top:14px">Implementace (agentura)</p>
-      <div class="small">Rámcově: pipeline setup, playground, napojení formulářů, owner / podmínky, workflows (vč. EN/CZ), šablony, dashboardy, workshop a PM. Časová osa <b>cca 14 dní - 4 týdny</b>. Přesné MD a cenu poskládá Bigtime - zatím <b>jen orientační odhady, ne finál</b>.</div>
+      <div class="small">Rozsah: playground, pipeline setup, napojení formulářů (spec pro vývojáře), owner / podmínky, workflows (vč. EN/CZ split), mailové šablony / autoresponder, dashboardy, workshop a PM. <b>Čas i cenu (CE) poskládáme my</b> a před odesláním klientovi ji projdeme s Bigtime.</div>
     </div>
   </section>
 
@@ -349,27 +357,6 @@ Na základě odpovědí připravíme odhad nákladů na implementaci a dvě vari
 
 Děkuji a hezký den,
 Jakub</pre>
-    </div>
-  </section>
-
-  <!-- 9 SLOVNIK -->
-  <section id="slovnik">
-    <div class="sec-head"><span class="sec-num">9</span><div><h2>Slovníček pojmů</h2><p class="sub">Rychlý překlad CRM/HubSpot termínů.</p></div></div>
-    <div class="card grid g2" style="gap:9px 20px">
-      <div class="small"><b style="color:var(--ink)">Lead</b> — zájemce v rané fázi, ještě nekvalifikovaný.</div>
-      <div class="small"><b style="color:var(--ink)">Deal (Obchod)</b> — konkrétní obchodní příležitost.</div>
-      <div class="small"><b style="color:var(--ink)">Pipeline</b> — „dráha" obchodu rozdělená na fáze.</div>
-      <div class="small"><b style="color:var(--ink)">Stage (Fáze)</b> — krok v pipeline.</div>
-      <div class="small"><b style="color:var(--ink)">Property (Pole)</b> — datové políčko na záznamu.</div>
-      <div class="small"><b style="color:var(--ink)">Workflow</b> — automatizace „když X, udělej Y".</div>
-      <div class="small"><b style="color:var(--ink)">SLA</b> — cíl rychlosti první reakce (např. do 4 h).</div>
-      <div class="small"><b style="color:var(--ink)">PMS / booking nástroj</b> — u Domequ <b>Better Hotel</b> (rezervace).</div>
-      <div class="small"><b style="color:var(--ink)">Seat (Přístup)</b> — placená licence: Core (€75) / Sales (€90).</div>
-      <div class="small"><b style="color:var(--ink)">Conversations / Inbox</b> — sdílená schránka pro psaní se zájemci.</div>
-      <div class="small"><b style="color:var(--ink)">Association label</b> — role vazby (Hlavní nájemce / Spolubydlící).</div>
-      <div class="small"><b style="color:var(--ink)">Sales workspace</b> — denní cockpit obchodníka (jen Sales Hub).</div>
-      <div class="small"><b style="color:var(--ink)">Forms API</b> — napojení webových formulářů do HubSpotu přes API (dělají vývojáři).</div>
-      <div class="small"><b style="color:var(--ink)">Dynamics</b> — hlavní firemní CRM CTP; Domeq od něj oddělen.</div>
     </div>
   </section>
 
