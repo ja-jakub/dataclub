@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Domeq — HubSpot CRM · Zadání klienta</title>
+<style>
+  :root{ --ink:#15181d; --muted:#6b7280; --line:#e6e8eb; --soft:#f6f7f8; --accent:#0e7490; }
+  *{box-sizing:border-box}
+  body{margin:0;background:#fff;color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:880px;margin:0 auto;padding:52px 28px 72px}
+
+  header .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  h1{font-size:29px;line-height:1.2;margin:8px 0 6px;font-weight:700;letter-spacing:-.015em}
+  header p{margin:0;color:var(--muted);font-size:15px}
+  .legend{margin-top:10px;font-size:13px;color:var(--muted)}
+  .legend .plus{color:var(--accent);font-weight:700}
+
+  section{padding:22px 0;border-top:1px solid var(--line)}
+  .label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 11px}
+  p{margin:0 0 9px}
+  ul{margin:0;padding-left:20px}
+  li{margin:5px 0}
+  .note{color:var(--muted);font-size:14px}
+  b{font-weight:650}
+
+  .sub{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:2px 0 6px}
+  .inline{font-size:14.5px}
+  .inline.muted{color:var(--muted)}
+  .dot{color:var(--line);margin:0 7px}
+
+  .kv{display:grid;grid-template-columns:130px 1fr;gap:5px 18px;font-size:14.5px}
+  @media(max-width:600px){.kv{grid-template-columns:1fr}}
+  .kv dt{color:var(--muted)}
+  .kv dd{margin:0}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px 28px;font-size:14.5px}
+  @media(max-width:600px){.grid2{grid-template-columns:1fr}}
+  .grid2 .opt{color:var(--muted);font-size:13px}
+  .add{color:var(--accent)}
+
+  /* flow */
+  .src{font-size:13.5px;color:var(--muted);margin-bottom:12px}
+  .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px}
+  .col{flex:1 1 250px;border:1px solid var(--line);border-radius:11px;padding:14px}
+  .col .h{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px}
+  .col ol{margin:0;padding-left:19px;font-size:14.5px}
+  .col li{margin:4px 0}
+  .col .off{color:var(--muted)}
+  .conv{align-self:center;color:var(--muted);font-weight:600;white-space:nowrap;font-size:13.5px}
+  .endrow{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
+  .pill{border:1px solid var(--line);border-radius:8px;padding:6px 11px;font-size:13.5px;background:var(--soft)}
+
+  footer{margin-top:28px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">Domeq · HubSpot CRM</div>
+    <h1>Zadání od klienta</h1>
+    <p>Co zadal klient (CTP / Domeq).</p>
+    <div class="legend">Položky s <span class="plus">+</span> jsou naše drobná doplnění zadání.</div>
+  </header>
+
+  <!-- ÚČEL -->
+  <section>
+    <p class="label">Účel</p>
+    <p>Nasadit HubSpot jako CRM pro zpracování poptávek po ubytování (coliving) — sbírat a vést poptávky od prvního kontaktu po uzavření.</p>
+    <ul>
+      <li>Leady z <b>webového formuláře</b>.</li>
+      <li>Ruční zadávání dealů (<b>offline</b> poptávky).</li>
+      <li>Vedení dealu s <b>historií, komunikací, stavem</b> (aktivní / neaktivní) a <b>statistikou</b>.</li>
+    </ul>
+    <p class="note" style="margin-top:8px">Není součástí: API napojení na rezervační systém. Po uzavření obchodu si rezervaci řeší klient ve vlastním nástroji (PMS).</p>
+  </section>
+
+  <!-- KONTEXT -->
+  <section>
+    <p class="label">Kontext</p>
+    <dl class="kv">
+      <dt>Objem</dt><dd>~20 dotazů denně</dd>
+      <dt>Kanály</dt><dd>web formulář, e-mail, WhatsApp, telefon, Booking, referral</dd>
+      <dt>Budovy</dt><dd>Ponávka · Domeq No.1 · Vlněna · Černovice</dd>
+      <dt>Po uzavření</dt><dd>obchod přechází do vlastního rezervačního systému (PMS)</dd>
+    </dl>
+  </section>
+
+  <!-- POLE -->
+  <section>
+    <p class="label">Pole u Lead / Deal</p>
+    <div class="sub">Základní</div>
+    <p class="inline">Jméno <span class="dot">·</span> Příjmení <span class="dot">·</span> E-mail <span class="dot">·</span> Telefon <span class="dot">·</span> Dotaz</p>
+    <div class="sub" style="margin-top:14px">Doplňková</div>
+    <div class="grid2">
+      <div><b>Termín od / do</b> <span class="opt">(nebo „od kdy" + délka pobytu)</span></div>
+      <div><b>Počet osob</b></div>
+      <div><b>Profil</b> <span class="opt">(student / pracující / pár / rodina / jiné)</span></div>
+      <div><b>Budova</b> <span class="opt">(Ponávka / Domeq No.1 / Vlněna / Černovice)</span></div>
+      <div><b>Jazyk</b> <span class="opt">(CZ / EN)</span></div>
+      <div><b>Zdroj</b> <span class="opt">(web / e-mail / WhatsApp / telefon / Booking / referral)</span></div>
+      <div class="add"><b>+ Vlastník / přiřazení poptávky</b></div>
+      <div class="add"><b>+ Hodnota obchodu</b></div>
+    </div>
+  </section>
+
+  <!-- DŮVODY ZTRÁTY -->
+  <section>
+    <p class="label">Důvody ztráty</p>
+    <p class="inline muted">Termín nedostupný <span class="dot">·</span> Mimo rozpočet <span class="dot">·</span> Vybral konkurenci <span class="dot">·</span> Chtěl klasický dlouhodobý nájem <span class="dot">·</span> Ghosting po nabídce <span class="dot">·</span> Ghosting po prohlídce <span class="dot">·</span> Změna plánů klienta <span class="dot">·</span> Duplicita</p>
+  </section>
+
+  <!-- AUTOMATIZACE -->
+  <section>
+    <p class="label">Automatizace</p>
+    <ul>
+      <li><b>Formulář → automatické založení leadu</b> (Nový dotaz / Nová poptávka podle pole „Co řešíte?").</li>
+      <li><b>SLA na první odpověď:</b> Nový dotaz &gt; 4 h → notifikace; Nová poptávka &gt; 2 h → notifikace.</li>
+      <li><b>Stojící obchody:</b> Nabídka odeslána &gt; 2 dny bez aktivity → follow-up úkol.</li>
+      <li><b>Closed Won →</b> předání do rezervačního systému (PMS) + platební podmínky.</li>
+      <li><b>Closed Lost →</b> re-engagement za 3 a 6 měsíců.</li>
+      <li class="add"><b>+ Automatický posun mezi fázemi</b> tam, kde to jde (např. po odpovědi leadu na zaslanou nabídku).</li>
+      <li class="add"><b>+ Autoresponder</b> — pro vybrané formuláře e-mailová šablona, která se leadu automaticky odešle.</li>
+    </ul>
+  </section>
+
+  <!-- FLOW -->
+  <section>
+    <p class="label">Flow (dle klienta)</p>
+    <div class="src">Formulář → Lead → (konverze) → Deal → PMS</div>
+    <div class="flow">
+      <div class="col">
+        <div class="h">Lead</div>
+        <ol>
+          <li>Nový dotaz</li>
+          <li>Nová poptávka</li>
+          <li>V komunikaci</li>
+          <li>Kvalifikováno</li>
+          <li class="off">Disqualified</li>
+        </ol>
+      </div>
+      <div class="conv">— konverze →</div>
+      <div class="col">
+        <div class="h">Deal</div>
+        <ol>
+          <li>Nabídka odeslána</li>
+          <li>Prohlídka (volitelná)</li>
+          <li>Po prohlídce</li>
+          <li>Smlouva + záloha</li>
+          <li>Zarezervováno</li>
+        </ol>
+      </div>
+    </div>
+    <div class="endrow">
+      <span class="pill">Zarezervováno → PMS</span>
+      <span class="pill">Closed Lost (s důvodem)</span>
+    </div>
+  </section>
+
+  <footer>
+    Domeq (CTP / Via Aurea) · domeq.cz — coliving · Zadání pro nastavení HubSpot CRM.
+  </footer>
+
+</div>
+</body>
+</html>
