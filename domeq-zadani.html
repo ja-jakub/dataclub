@@ -60,11 +60,12 @@
   details.ce[open]>summary::before{content:"▾"}
   .ce-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px}
   .ce-table th{text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:6px 12px;border-bottom:1px solid var(--line)}
+  .ce-table th.num,.ce-table td.num{text-align:right;white-space:nowrap;width:52px}
   .ce-table td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-  .ce-table td:first-child{font-weight:650;white-space:nowrap}
-  .ce-table td:last-child{color:var(--muted)}
+  .ce-table td b{font-weight:650}
+  .ce-table .d{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+  .ce-table tr.total td{border-top:2px solid var(--ink);border-bottom:0;font-weight:650;padding-top:10px}
   .ce-note{font-size:12.5px;color:var(--muted);margin-top:10px}
-  @media(max-width:600px){.ce-table td:first-child{white-space:normal}}
   footer{margin-top:28px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
 </style>
 </head>
@@ -176,17 +177,18 @@
   <details class="ce">
     <summary>Cost estimate — rozsah prací</summary>
     <table class="ce-table">
-      <thead><tr><th>Fáze</th><th>Co zahrnuje</th></tr></thead>
+      <thead><tr><th>Fáze</th><th class="num">Arch.</th><th class="num">Dev</th><th class="num">Škol.</th></tr></thead>
       <tbody>
-        <tr><td>0 · Architektura &amp; design</td><td>Návrh modelu Lead → Deal, definice properties, mapování obchodního procesu, kick-off.</td></tr>
-        <tr><td>1 · Základní konfigurace</td><td>Lead &amp; Deal pipeline, custom properties a dropdowny, konverzní logika Lead → Deal, uživatelé a oprávnění.</td></tr>
-        <tr><td>2 · Automatizace</td><td>Auto-create lead z formuláře, SLA notifikace, stuck deals (follow-up tasky), Closed Won handoff, Closed Lost re-engagement (+3 a +6 měsíců).</td></tr>
-        <tr><td>3 · E-maily &amp; grafika</td><td>E-mailové šablony CZ + EN, branding auto-reply po odeslání formuláře, kola revizí.</td></tr>
-        <tr><td>4 · Reporting</td><td>Sales dashboardy, konverzní a lost-reason reporty.</td></tr>
-        <tr><td>5 · Školení</td><td>Live zaškolení obchodního týmu a recepce + krátká dokumentace.</td></tr>
+        <tr><td><b>0 · Architektura &amp; design</b><span class="d">Návrh modelu Lead → Deal, definice properties, mapování obchodního procesu, kick-off.</span></td><td class="num">4</td><td class="num">—</td><td class="num">—</td></tr>
+        <tr><td><b>1 · Základní konfigurace</b><span class="d">Lead &amp; Deal pipeline, custom properties a dropdowny, konverzní logika Lead → Deal, uživatelé a oprávnění.</span></td><td class="num">1</td><td class="num">8</td><td class="num">—</td></tr>
+        <tr><td><b>2 · Automatizace</b><span class="d">Auto-create lead z formuláře, SLA notifikace, stuck deals (follow-up tasky), Closed Won handoff, Closed Lost re-engagement (+3 a +6 měsíců).</span></td><td class="num">1</td><td class="num">8</td><td class="num">—</td></tr>
+        <tr><td><b>3 · E-maily &amp; grafika</b><span class="d">E-mailové šablony CZ + EN, branding auto-reply po odeslání formuláře, kola revizí.</span></td><td class="num">—</td><td class="num">8</td><td class="num">—</td></tr>
+        <tr><td><b>4 · Reporting</b><span class="d">Sales dashboardy, konverzní a lost-reason reporty.</span></td><td class="num">—</td><td class="num">4</td><td class="num">—</td></tr>
+        <tr><td><b>5 · Školení</b><span class="d">Live zaškolení obchodního týmu a recepce + krátká dokumentace.</span></td><td class="num">—</td><td class="num">—</td><td class="num">8</td></tr>
+        <tr class="total"><td><b>Celkem · 42 hodin</b></td><td class="num">6</td><td class="num">28</td><td class="num">8</td></tr>
       </tbody>
     </table>
-    <p class="ce-note">Jen rozsah položek — bez částek a časových odhadů.</p>
+    <p class="ce-note">Rozsah a hodinová náročnost — bez částek.</p>
   </details>
 
   <footer>
