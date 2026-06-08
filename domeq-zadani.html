@@ -19,7 +19,8 @@
   .legend .plus{color:var(--accent);font-weight:700}
 
   section{padding:22px 0;border-top:1px solid var(--line)}
-  .label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 11px}
+  .label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 11px}
+  .label .n{color:var(--accent);font-weight:700;margin-right:8px}
   p{margin:0 0 9px}
   ul{margin:0;padding-left:20px}
   li{margin:5px 0}
@@ -41,7 +42,6 @@
   .grid2 .opt{color:var(--muted);font-size:13px}
   .add{color:var(--accent)}
 
-  /* flow */
   .src{font-size:13.5px;color:var(--muted);margin-bottom:12px}
   .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px}
   .col{flex:1 1 250px;border:1px solid var(--line);border-radius:11px;padding:14px}
@@ -61,75 +61,38 @@
 
   <header>
     <div class="kicker">Domeq · HubSpot CRM</div>
-    <h1>Zadání od klienta</h1>
-    <p>Co zadal klient (CTP / Domeq).</p>
+    <h1>Zadání pro CRM</h1>
+    <p>Podklad pro specialistu — co řešíme a co klient zadal.</p>
     <div class="legend">Položky s <span class="plus">+</span> jsou naše drobná doplnění zadání.</div>
   </header>
 
-  <!-- ÚČEL -->
+  <!-- 1 · CO JE DOMEQ -->
   <section>
-    <p class="label">Účel</p>
-    <p>Nasadit HubSpot jako CRM pro zpracování poptávek po ubytování (coliving) — sbírat a vést poptávky od prvního kontaktu po uzavření.</p>
-    <ul>
-      <li>Leady z <b>webového formuláře</b>.</li>
-      <li>Ruční zadávání dealů (<b>offline</b> poptávky).</li>
-      <li>Vedení dealu s <b>historií, komunikací, stavem</b> (aktivní / neaktivní) a <b>statistikou</b>.</li>
-    </ul>
-    <p class="note" style="margin-top:8px">Není součástí: API napojení na rezervační systém. Po uzavření obchodu si rezervaci řeší klient ve vlastním nástroji (PMS).</p>
+    <p class="label"><span class="n">1</span>Co je Domeq</p>
+    <p>Domeq je rezidenční / coliving brand společnosti <b>CTP</b>. Pronajímá zařízené pokoje a jednotky (studenti, pracující, páry, expati) ve <b>4 budovách v Brně</b> — Ponávka, Domeq No.1, Vlněna, Černovice. Web: domeq.cz.</p>
   </section>
 
-  <!-- KONTEXT -->
+  <!-- 2 · O CO JDE -->
   <section>
-    <p class="label">Kontext</p>
+    <p class="label"><span class="n">2</span>O co jde a co se má stát</p>
+    <p>Nasadit <b>HubSpot jako CRM</b> pro zpracování poptávek po ubytování. Poptávka přijde z webového formuláře nebo offline, tým ji vede od prvního kontaktu přes komunikaci a prohlídku až po uzavření — s <b>historií, stavem</b> (aktivní / neaktivní) a <b>statistikou</b>. Po uzavření obchodu přechází rezervace do <b>vlastního systému klienta (PMS)</b>.</p>
+    <p class="note">Není součástí: API napojení na rezervační systém ani migrace dat.</p>
+  </section>
+
+  <!-- 3 · KONTEXT -->
+  <section>
+    <p class="label"><span class="n">3</span>Kontext</p>
     <dl class="kv">
       <dt>Objem</dt><dd>~20 dotazů denně</dd>
       <dt>Kanály</dt><dd>web formulář, e-mail, WhatsApp, telefon, Booking, referral</dd>
-      <dt>Budovy</dt><dd>Ponávka · Domeq No.1 · Vlněna · Černovice</dd>
+      <dt>Tým</dt><dd>obchod + recepce (kdo vlastní které fáze, doladíme s klientem)</dd>
       <dt>Po uzavření</dt><dd>obchod přechází do vlastního rezervačního systému (PMS)</dd>
     </dl>
   </section>
 
-  <!-- POLE -->
+  <!-- 4 · FLOW -->
   <section>
-    <p class="label">Pole u Lead / Deal</p>
-    <div class="sub">Základní</div>
-    <p class="inline">Jméno <span class="dot">·</span> Příjmení <span class="dot">·</span> E-mail <span class="dot">·</span> Telefon <span class="dot">·</span> Dotaz</p>
-    <div class="sub" style="margin-top:14px">Doplňková</div>
-    <div class="grid2">
-      <div><b>Termín od / do</b> <span class="opt">(nebo „od kdy" + délka pobytu)</span></div>
-      <div><b>Počet osob</b></div>
-      <div><b>Profil</b> <span class="opt">(student / pracující / pár / rodina / jiné)</span></div>
-      <div><b>Budova</b> <span class="opt">(Ponávka / Domeq No.1 / Vlněna / Černovice)</span></div>
-      <div><b>Jazyk</b> <span class="opt">(CZ / EN)</span></div>
-      <div><b>Zdroj</b> <span class="opt">(web / e-mail / WhatsApp / telefon / Booking / referral)</span></div>
-      <div class="add"><b>+ Vlastník / přiřazení poptávky</b></div>
-      <div class="add"><b>+ Hodnota obchodu</b></div>
-    </div>
-  </section>
-
-  <!-- DŮVODY ZTRÁTY -->
-  <section>
-    <p class="label">Důvody ztráty</p>
-    <p class="inline muted">Termín nedostupný <span class="dot">·</span> Mimo rozpočet <span class="dot">·</span> Vybral konkurenci <span class="dot">·</span> Chtěl klasický dlouhodobý nájem <span class="dot">·</span> Ghosting po nabídce <span class="dot">·</span> Ghosting po prohlídce <span class="dot">·</span> Změna plánů klienta <span class="dot">·</span> Duplicita</p>
-  </section>
-
-  <!-- AUTOMATIZACE -->
-  <section>
-    <p class="label">Automatizace</p>
-    <ul>
-      <li><b>Formulář → automatické založení leadu</b> (Nový dotaz / Nová poptávka podle pole „Co řešíte?").</li>
-      <li><b>SLA na první odpověď:</b> Nový dotaz &gt; 4 h → notifikace; Nová poptávka &gt; 2 h → notifikace.</li>
-      <li><b>Stojící obchody:</b> Nabídka odeslána &gt; 2 dny bez aktivity → follow-up úkol.</li>
-      <li><b>Closed Won →</b> předání do rezervačního systému (PMS) + platební podmínky.</li>
-      <li><b>Closed Lost →</b> re-engagement za 3 a 6 měsíců.</li>
-      <li class="add"><b>+ Automatický posun mezi fázemi</b> tam, kde to jde (např. po odpovědi leadu na zaslanou nabídku).</li>
-      <li class="add"><b>+ Autoresponder</b> — pro vybrané formuláře e-mailová šablona, která se leadu automaticky odešle.</li>
-    </ul>
-  </section>
-
-  <!-- FLOW -->
-  <section>
-    <p class="label">Flow (dle klienta)</p>
+    <p class="label"><span class="n">4</span>Flow procesu (schema)</p>
     <div class="src">Formulář → Lead → (konverze) → Deal → PMS</div>
     <div class="flow">
       <div class="col">
@@ -158,6 +121,43 @@
       <span class="pill">Zarezervováno → PMS</span>
       <span class="pill">Closed Lost (s důvodem)</span>
     </div>
+  </section>
+
+  <!-- 4 · AUTOMATIZACE -->
+  <section>
+    <p class="label"><span class="n">5</span>Co se má dít — automatizace</p>
+    <ul>
+      <li><b>Formulář → automatické založení leadu</b> (Nový dotaz / Nová poptávka podle pole „Co řešíte?").</li>
+      <li><b>SLA na první odpověď:</b> Nový dotaz &gt; 4 h → notifikace; Nová poptávka &gt; 2 h → notifikace.</li>
+      <li><b>Stojící obchody:</b> Nabídka odeslána &gt; 2 dny bez aktivity → follow-up úkol.</li>
+      <li><b>Closed Won →</b> předání do rezervačního systému (PMS) + platební podmínky.</li>
+      <li><b>Closed Lost →</b> re-engagement za 3 a 6 měsíců.</li>
+      <li class="add"><b>+ Automatický posun mezi fázemi</b> tam, kde to jde (např. po odpovědi leadu na zaslanou nabídku).</li>
+      <li class="add"><b>+ Autoresponder</b> — pro vybrané formuláře e-mailová šablona, která se leadu automaticky odešle.</li>
+    </ul>
+  </section>
+
+  <!-- 5 · DETAILY -->
+  <section>
+    <p class="label"><span class="n">6</span>Detaily — pole &amp; důvody ztráty</p>
+
+    <div class="sub">Pole · základní</div>
+    <p class="inline">Jméno <span class="dot">·</span> Příjmení <span class="dot">·</span> E-mail <span class="dot">·</span> Telefon <span class="dot">·</span> Dotaz</p>
+
+    <div class="sub" style="margin-top:14px">Pole · doplňková</div>
+    <div class="grid2">
+      <div><b>Termín od / do</b> <span class="opt">(nebo „od kdy" + délka pobytu)</span></div>
+      <div><b>Počet osob</b></div>
+      <div><b>Profil</b> <span class="opt">(student / pracující / pár / rodina / jiné)</span></div>
+      <div><b>Budova</b> <span class="opt">(Ponávka / Domeq No.1 / Vlněna / Černovice)</span></div>
+      <div><b>Jazyk</b> <span class="opt">(CZ / EN)</span></div>
+      <div><b>Zdroj</b> <span class="opt">(web / e-mail / WhatsApp / telefon / Booking / referral)</span></div>
+      <div class="add"><b>+ Vlastník / přiřazení poptávky</b></div>
+      <div class="add"><b>+ Hodnota obchodu</b></div>
+    </div>
+
+    <div class="sub" style="margin-top:16px">Důvody ztráty</div>
+    <p class="inline muted">Termín nedostupný <span class="dot">·</span> Mimo rozpočet <span class="dot">·</span> Vybral konkurenci <span class="dot">·</span> Chtěl klasický dlouhodobý nájem <span class="dot">·</span> Ghosting po nabídce <span class="dot">·</span> Ghosting po prohlídce <span class="dot">·</span> Změna plánů klienta <span class="dot">·</span> Duplicita</p>
   </section>
 
   <footer>
