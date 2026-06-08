@@ -53,6 +53,18 @@
   .endrow{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
   .pill{border:1px solid var(--line);border-radius:8px;padding:6px 11px;font-size:13.5px;background:var(--soft)}
 
+  details.ce{margin-top:24px;border-top:1px solid var(--line);padding-top:14px}
+  details.ce>summary{cursor:pointer;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;list-style:none;outline:none}
+  details.ce>summary::-webkit-details-marker{display:none}
+  details.ce>summary::before{content:"▸";margin-right:7px;font-size:10px}
+  details.ce[open]>summary::before{content:"▾"}
+  .ce-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px}
+  .ce-table th{text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:6px 12px;border-bottom:1px solid var(--line)}
+  .ce-table td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  .ce-table td:first-child{font-weight:650;white-space:nowrap}
+  .ce-table td:last-child{color:var(--muted)}
+  .ce-note{font-size:12.5px;color:var(--muted);margin-top:10px}
+  @media(max-width:600px){.ce-table td:first-child{white-space:normal}}
   footer{margin-top:28px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
 </style>
 </head>
@@ -159,6 +171,23 @@
     <div class="sub" style="margin-top:16px">Důvody ztráty</div>
     <p class="inline muted">Termín nedostupný <span class="dot">·</span> Mimo rozpočet <span class="dot">·</span> Vybral konkurenci <span class="dot">·</span> Chtěl klasický dlouhodobý nájem <span class="dot">·</span> Ghosting po nabídce <span class="dot">·</span> Ghosting po prohlídce <span class="dot">·</span> Změna plánů klienta <span class="dot">·</span> Duplicita</p>
   </section>
+
+  <!-- COST ESTIMATE (skryté pod dropdownem) -->
+  <details class="ce">
+    <summary>Cost estimate — rozsah prací</summary>
+    <table class="ce-table">
+      <thead><tr><th>Fáze</th><th>Co zahrnuje</th></tr></thead>
+      <tbody>
+        <tr><td>0 · Architektura &amp; design</td><td>Návrh modelu Lead → Deal, definice properties, mapování obchodního procesu, kick-off.</td></tr>
+        <tr><td>1 · Základní konfigurace</td><td>Lead &amp; Deal pipeline, custom properties a dropdowny, konverzní logika Lead → Deal, uživatelé a oprávnění.</td></tr>
+        <tr><td>2 · Automatizace</td><td>Auto-create lead z formuláře, SLA notifikace, stuck deals (follow-up tasky), Closed Won handoff, Closed Lost re-engagement (+3 a +6 měsíců).</td></tr>
+        <tr><td>3 · E-maily &amp; grafika</td><td>E-mailové šablony CZ + EN, branding auto-reply po odeslání formuláře, kola revizí.</td></tr>
+        <tr><td>4 · Reporting</td><td>Sales dashboardy, konverzní a lost-reason reporty.</td></tr>
+        <tr><td>5 · Školení</td><td>Live zaškolení obchodního týmu a recepce + krátká dokumentace.</td></tr>
+      </tbody>
+    </table>
+    <p class="ce-note">Jen rozsah položek — bez částek a časových odhadů.</p>
+  </details>
 
   <footer>
     Domeq (CTP / Via Aurea) · domeq.cz — coliving · Zadání pro nastavení HubSpot CRM.
