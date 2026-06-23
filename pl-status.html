@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meiro × EXIM - příprava na meeting 24. 6.</title>
+<style>
+  :root{
+    --bg:#f4f5f7; --card:#fff; --ink:#1d2433; --muted:#6b7280; --line:#e6e8ec;
+    --accent:#c20063; --red:#dc2626; --amber:#d97706; --blue:#2563eb; --green:#15803d; --slate:#64748b;
+    --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.04);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:0 18px 90px}
+
+  .toolbar{position:sticky;top:0;z-index:50;background:rgba(244,245,247,.93);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+    display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding:10px 18px;margin-bottom:20px}
+  .toolbar .nm{font-weight:700;font-size:13.5px;color:var(--muted);margin-right:auto}
+  button.btn{border:0;border-radius:9px;padding:8px 13px;font-size:13px;font-weight:600;cursor:pointer;
+    background:#fff;color:var(--ink);border:1px solid var(--line);transition:.15s}
+  button.btn:hover{border-color:#c7ccd4}
+
+  header.head{padding:4px 2px 0}
+  .kicker{color:var(--accent);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:12px}
+  h1{font-size:25px;margin:6px 0 14px;line-height:1.2}
+
+  .cheat{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:12px;box-shadow:var(--shadow);padding:14px 18px;margin:6px 0 8px}
+  .cheat-head{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--accent)}
+  .cheat-head span{font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;font-size:12px;margin-left:8px}
+  .cline{padding:9px 0;border-top:1px dashed var(--line)}
+  .ct{display:inline-block;font-weight:800;font-size:14.5px;color:var(--ink);text-decoration:none}
+  .ct:hover{color:var(--accent)}
+  .ct .arr{color:var(--accent);font-weight:600;font-size:12px;margin-left:6px;opacity:.7}
+  .cline ul{margin:3px 0 0;padding-left:19px}
+  .cline li{margin:2px 0;font-size:13.5px;color:#374151}
+  .cline li b{color:var(--ink)}
+
+  .sechead{display:flex;align-items:baseline;gap:10px;margin:28px 2px 6px}
+  .sechead h2{font-size:19px;margin:0}
+  .sechead .hint{font-size:13px;color:var(--muted)}
+
+  .otopic{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--slate);
+    border-radius:12px;box-shadow:var(--shadow);padding:16px 19px;margin:12px 0;scroll-margin-top:64px}
+  .otopic.b{border-left-color:var(--red)} .otopic.d{border-left-color:var(--amber)}
+  .otopic.s{border-left-color:var(--blue)} .otopic.f{border-left-color:var(--slate)}
+  .ohead{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}
+  .onum{font-size:13px;font-weight:800;color:#fff;background:var(--slate);border-radius:7px;
+    min-width:24px;height:24px;display:grid;place-items:center;margin-top:1px}
+  .otopic.b .onum{background:var(--red)} .otopic.d .onum{background:var(--amber)}
+  .otopic.s .onum{background:var(--blue)}
+  .otitle{flex:1;min-width:220px;font-size:17px;font-weight:700;margin-top:0}
+  .tag{font-size:11px;font-weight:800;border-radius:999px;padding:3px 10px;white-space:nowrap;text-transform:uppercase;letter-spacing:.02em}
+  .tag-b{background:#fde8e8;color:var(--red)} .tag-d{background:#fdf0dc;color:var(--amber)}
+  .tag-s{background:#e6effe;color:var(--blue)} .tag-f{background:#eef0f3;color:var(--slate)}
+
+  .subjs{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0 2px}
+  .subj{font-size:12px;font-weight:600;color:#1e3a8a;background:#eaf0ff;border:1px solid #d3e0ff;
+    border-radius:6px;padding:2px 9px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .subj:before{content:"\2709  "}
+
+  .grp{margin-top:11px}
+  .grp-l{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .grp-l.go{color:var(--accent)}
+  .otopic ul{margin:4px 0 0;padding-left:20px}
+  .otopic li{margin:4px 0;font-size:14px}
+  .otopic li b{font-weight:700}
+  .mono{background:#eef1f4;border-radius:5px;padding:1px 5px;font-size:12.5px;font-family:ui-monospace,monospace}
+
+  .cmt-wrap{margin-top:12px}
+  .cmt-l{font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:#9a8a3e;margin-bottom:5px}
+  .cmt{width:100%;min-height:44px;border:1.5px dashed #e3cf72;border-radius:9px;padding:9px 12px;
+    font:inherit;font-size:13.5px;line-height:1.5;resize:vertical;outline:none;background:#fffdf3;overflow:hidden}
+  .cmt:focus{border-style:solid;border-color:#d4b73a;background:#fffdf0;box-shadow:0 0 0 3px rgba(232,207,90,.16)}
+  .cmt::placeholder{color:#c2b270}
+
+  details.res{background:#fbfdfb;border:1px solid #d9e8de;border-radius:10px;margin:9px 0;overflow:hidden}
+  details.res>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:12px 15px;font-weight:600;user-select:none}
+  details.res>summary::-webkit-details-marker{display:none}
+  details.res>summary:before{content:"\25B8";color:var(--green);font-weight:700;transition:.15s}
+  details.res[open]>summary:before{transform:rotate(90deg)}
+  details.res>summary:hover{background:#f3faf5}
+  .rsubj{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;font-weight:700;color:#14532d}
+  .rout{font-size:12px;color:var(--green);font-weight:700;margin-left:auto;background:#e4f5ea;border-radius:999px;padding:2px 10px}
+  .rbody{padding:2px 16px 14px 34px}
+  .rbody ul{margin:6px 0 0;padding-left:18px}
+  .rbody li{margin:4px 0;font-size:13.5px;color:#374151}
+
+  .notes{margin-top:18px}
+  .notes label{font-size:12px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+  #notes{width:100%;min-height:110px;border:1.5px dashed #cfd4dc;border-radius:10px;padding:13px 15px;
+    font:inherit;font-size:14.5px;line-height:1.55;resize:vertical;outline:none;background:#fffef9}
+  #notes:focus{border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(194,0,99,.1)}
+
+  footer{color:var(--muted);font-size:12px;text-align:center;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+  #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:#111827;color:#fff;
+    padding:10px 17px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media print{.toolbar,#toast{display:none}details.res{break-inside:avoid}.cmt,#notes{border:1px solid #ccc;background:#fff}body{background:#fff}}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="nm">Meiro × EXIM · call 24. 6.</span>
+  <button class="btn" onclick="copyAgenda()">📋 Kopírovat (detail + komentáře)</button>
+  <button class="btn" onclick="toggleRes(true)">⬇︎ Rozbalit vyřešené</button>
+  <button class="btn" onclick="toggleRes(false)">⬆︎ Sbalit</button>
+  <button class="btn" onclick="window.print()">🖨️ PDF</button>
+</div>
+
+<div class="wrap">
+
+<header class="head">
+  <div class="kicker">Příprava na call · středa 24. 6.</div>
+  <h1>Meiro × EXIM - co projít zítra</h1>
+</header>
+
+<!-- ============ QUICK CHEAT-SHEET ============ -->
+<section class="cheat">
+  <div class="cheat-head">🎯 Rychlá příprava na call <span>klikni na téma pro detail ↓</span></div>
+
+  <div class="cline">
+    <a class="ct" href="#d1">1 · Sales Manago<span class="arr">detail ↓</span></a>
+    <ul>
+      <li><b>Blocker - persoo hash:</b> jde použít SM contact ID (UUID), nebo ho musí vygenerovat DACO? → Vojta</li>
+      <li>Čekáme na Ewu: formát <span class="mono">Birthday</span> + rozdíl <span class="mono">Tags</span> vs <span class="mono">Tags (score)</span> → pak cenovka</li>
+    </ul>
+  </div>
+
+  <div class="cline">
+    <a class="ct" href="#d2">2 · DACO / DER<span class="arr">detail ↓</span></a>
+    <ul>
+      <li><b>BV (≈ ATCOM?):</b> až bude BV-DACO hotové, ať dají vědět → zkontrolujeme implementaci</li>
+      <li><b>Dotaz:</b> budou transakce z BV i v CRM? Máme napojené jen CRM (ne DACO) → možná dodělat u nás</li>
+      <li>Status od Vojty: blacklist v DACO, import DB z BV; unsub + consent history = jejich interní call (proběhl?)</li>
+    </ul>
+  </div>
+
+  <div class="cline">
+    <a class="ct" href="#d3">3 · DACO - chodí nová data?<span class="arr">detail ↓</span></a>
+    <ul>
+      <li>Od <b>9. 6.</b> nepřišel žádný nový záznam (dnes 23. 6.) -> <b>stojí DACO feed?</b></li>
+    </ul>
+  </div>
+
+  <div class="cline">
+    <a class="ct" href="#d4">4 · Native bannery<span class="arr">detail ↓</span></a>
+    <ul>
+      <li><b>HLAVNÍ úkol:</b> rozseknout - dělá use-case Meiro, nebo ne?</li>
+      <li>Pokud ano → potřebujeme <b>potvrzení od Mirka Matese</b></li>
+    </ul>
+  </div>
+
+  <div class="cline">
+    <a class="ct" href="#d5">5 · Reporty<span class="arr">detail ↓</span></a>
+    <ul>
+      <li><b>Náš tah:</b> nabídnout, že reporting uděláme my + připravíme cenovku</li>
+    </ul>
+  </div>
+
+  <div class="cline">
+    <a class="ct" href="#d6">6 · GDPR potvrzovací maily<span class="arr">detail ↓</span></a>
+    <ul>
+      <li><b>Úkol:</b> zjistit od nich, co chtějí personalizovat (je to na nich)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ DETAIL ============ -->
+<div class="sechead"><h2>📋 Detail k tématům</h2><span class="hint">kontext + místo na komentář</span></div>
+
+<!-- d1 Sales Manago -->
+<div class="otopic b" id="d1">
+  <div class="ohead"><span class="onum">1</span><span class="otitle">Sales Manago - import leadů do Meira</span><span class="tag tag-b">Blocker</span></div>
+  <div class="subjs"><span class="subj">Sales Manago import</span><span class="subj">Incorrect unsubscribe links</span></div>
+  <div class="grp"><div class="grp-l">Stav</div>
+    <ul>
+      <li>Dohodnuto: <b>import všeho najednou</b> (1 CSV přes náš SFTP, ~120 tis. leadů)</li>
+      <li>Import rychlý (1-2 dny); čas řídí <b>počet atributů</b>, ne velikost souboru</li>
+      <li>B2C vs B2B = přes tag <span class="mono">agent</span></li>
+    </ul>
+  </div>
+  <div class="grp"><div class="grp-l go">Probrat / rozhodnout</div>
+    <ul>
+      <li><b>Persoo hash = blocker</b> (bez něj nefunguje odhlašování). SM má vlastní contact ID (UUID), ale <b>není to persoo hash</b> -> jde použít, nebo ho musí vygenerovat DACO? → Vojta</li>
+      <li>Proces (návrh): kontakty nahrát do <b>DACO</b> (consent + persoo hash) -> sync do Meira; <b>zároveň</b> SM soubor (tagy, jména) přímo do Meira -> Vojta potvrdí proveditelnost</li>
+      <li>Po vyjasnění rozsahu: připravit <b>cenovou nabídku</b></li>
+    </ul>
+  </div>
+  <div class="grp"><div class="grp-l go">Odesláno Ewě - čeká se na odpověď (k souboru)</div>
+    <ul>
+      <li>Formát pole <span class="mono">Birthday</span> (DD-MM nebo DD-MM-YYYY?) + pár příkladů</li>
+      <li>Rozdíl mezi sloupci <span class="mono">Tags</span> a <span class="mono">Tags (score)</span></li>
+      <li>Jinak je obsah souboru <b>jasný</b></li>
+    </ul>
+  </div>
+  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d1" placeholder="Komentář / poznámka…"></textarea></div>
+</div>
+
+<!-- d2 DACO / DER -->
+<div class="otopic s" id="d2">
+  <div class="ohead"><span class="onum">2</span><span class="otitle">DACO / DER - závislosti + přístupy</span><span class="tag tag-s">Status · DER</span></div>
+  <div class="subjs"><span class="subj">Meiro implementation</span></div>
+  <div class="grp"><div class="grp-l">Stav (Vojta 17. 6.)</div>
+    <ul>
+      <li>DACO import: práce <b>začne příští týden</b> (napřed jiné projekty + vylepšení blacklistu)</li>
+      <li>BV-DACO integrace (souhlasy z BlueVenda do DACO): dokončení cca <b>24. 6.</b></li>
+    </ul>
+  </div>
+  <div class="grp"><div class="grp-l go">Náš postup + dotaz na ně</div>
+    <ul>
+      <li><b>BV ≈ ATCOM?</b> (ověřit) - až bude BV-DACO hotové, řekneme jim, ať <b>dají vědět</b> -> my <b>zkontrolujeme implementaci</b></li>
+      <li><b>Dotaz:</b> budou transakce z BV i v <b>CRM</b>? Aktuálně máme napojené transakce jen z CRM (ne z DACO) -> případně budeme muset <b>dodělat i u nás</b></li>
+    </ul>
+  </div>
+  <div class="grp"><div class="grp-l go">Zeptat se Vojty (z Ewiny pozvánky)</div>
+    <ul>
+      <li>Status <b>vylepšení blacklistu</b> v DACO? <i>(co přesně to je - z mailů neplyne)</i></li>
+      <li>Proběhl <b>import zákaznické DB z BV</b> bez problémů?</li>
+    </ul>
+  </div>
+  <div class="grp"><div class="grp-l go">Jen zkontrolovat (DER interní)</div>
+    <ul>
+      <li>Unsub logika + consent change history (EXIM přístup k Jira; termín úpravy DACO od <b>M. Lachmana</b>) - DER si to bere na <b>interní call</b> (Vojta + Schlesinger + Martin Sýkora) - <b>proběhl už? blokuje to něco?</b></li>
+    </ul>
+  </div>
+  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d2" placeholder="Komentář / poznámka…"></textarea></div>
+</div>
+
+<!-- d3 DACO data flow -->
+<div class="otopic b" id="d3">
+  <div class="ohead"><span class="onum">3</span><span class="otitle">DACO - chodí vůbec nová data?</span><span class="tag tag-b">Blocker?</span></div>
+  <div class="grp"><div class="grp-l">Fakta (export z DACO, dnes 23. 6.)</div>
+    <ul>
+      <li>Poslední záznam: <b>9. 6. 2026 12:29</b> -> dnes je 23. 6., čili <b>~2 týdny nic nového</b></li>
+      <li>V exportu jen 6 testovacích adres Ewy (vše <span class="mono">MKT</span>, <span class="mono">EXIM_PL</span>, statusvalue = 1)</li>
+    </ul>
+  </div>
+  <div class="grp"><div class="grp-l go">Dotaz na Vojtu / DACO</div>
+    <ul>
+      <li><b>Posílá DACO vůbec nová data? Nestojí export / feed?</b></li>
+      <li>Když se někdo přihlásí na webu, dorazí to do DACO (a k nám)? Proč od 9. 6. nic?</li>
+    </ul>
+  </div>
+  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d3" placeholder="Komentář / poznámka…"></textarea></div>
+</div>
+
+<!-- d4 Native banners -->
+<div class="otopic d" id="d4">
+  <div class="ohead"><span class="onum">4</span><span class="otitle">Native bannery / naposledy prohlížené nabídky</span><span class="tag tag-d">Rozhodnutí</span></div>
+  <div class="subjs"><span class="subj">Dynamic offers on page in native banners</span></div>
+  <div class="grp"><div class="grp-l">Stav</div>
+    <ul>
+      <li>DER to chce řešit na <b>nové HP jako web feature</b> (ne přes Meiro) -> projekt <b>on hold</b>, řeší interně (Mirek Mates)</li>
+      <li>Ewa tlačí na <b>prozatímní řešení přes Meiro</b> („každý den = ztracený zloty")</li>
+      <li>Data Club má řešení <b>připravené</b> (banner + API na dostupnost hotelu)</li>
+    </ul>
+  </div>
+  <div class="grp"><div class="grp-l go">HLAVNÍ úkol - rozhodnout</div>
+    <ul>
+      <li>Rozseknout: <b>dělá use-case Meiro, nebo ne?</b></li>
+      <li>Pokud ano -> potřebujeme <b>potvrzení od Mirka Matese</b></li>
+    </ul>
+  </div>
+  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d4" placeholder="Komentář / poznámka…"></textarea></div>
+</div>
+
+<!-- d5 Reporting -->
+<div class="otopic s" id="d5">
+  <div class="ohead"><span class="onum">5</span><span class="otitle">Rozbité reporty (audience i email)</span><span class="tag tag-s">Status · Meiro</span></div>
+  <div class="subjs"><span class="subj">Problem with email reporting</span></div>
+  <div class="grp"><div class="grp-l">Stav</div>
+    <ul>
+      <li>Vlastní <b>Meiro</b> (Jakub Nožička), <b>ne</b> Data Club</li>
+      <li>Příčina: postupné změny zdrojových dat -> reporty potřebují přepracování + údržbu</li>
+      <li>Blokuje vyjednávání <b>consulting balíčku</b> (Václav Málek, Meiro) + spojení s Mirkem Matesem (DER)</li>
+    </ul>
+  </div>
+  <div class="grp"><div class="grp-l go">Náš tah</div>
+    <ul>
+      <li>Nabídnout, že <b>reporting uděláme my</b> + připravíme cenovku <i>(interně: přes Martina)</i></li>
+    </ul>
+  </div>
+  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d5" placeholder="Komentář / poznámka…"></textarea></div>
+</div>
+
+<!-- d6 GDPR emails -->
+<div class="otopic d" id="d6">
+  <div class="ohead"><span class="onum">6</span><span class="otitle">Personalizace GDPR potvrzovacích e-mailů</span><span class="tag tag-d">K implementaci</span></div>
+  <div class="subjs"><span class="subj">Meiro implementation</span></div>
+  <div class="grp"><div class="grp-l">Stav</div>
+    <ul>
+      <li>Z Ewiny pozvánky: <b>„to be implemented"</b> - zatím neřešeno</li>
+      <li>Potvrzovací (DOI) mail běží přes <b>DACO + Infobip</b> = spíš DER, Data Club poradí</li>
+    </ul>
+  </div>
+  <div class="grp"><div class="grp-l go">Úkol</div>
+    <ul>
+      <li>Zjistit od nich, <b>co chtějí personalizovat</b> (jméno / jazyk / nabídka) - je to na nich, jak si to představují</li>
+    </ul>
+  </div>
+  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d6" placeholder="Komentář / poznámka…"></textarea></div>
+</div>
+
+<!-- ============ RESOLVED ============ -->
+<div class="sechead"><h2>✅ Vyřešeno</h2><span class="hint">per e-mailový předmět - rozklikni detail</span></div>
+
+<details class="res">
+  <summary><span class="rsubj">✉ PD: Meiro v. Daco v. BV sync of consents _ PL</span><span class="rout">consent sync hotový</span></summary>
+  <div class="rbody"><ul>
+    <li><b>Problém:</b> souhlasy z DACO se do Meira syncovaly jen <b>2×denně</b> -> pro PL právo nedostatečné (hrozil mail po odhlášení)</li>
+    <li><b>Fix:</b> sync přes event „Email Subscription Imported" nastaven na <b>~10 min</b> (z DACO do Meira)</li>
+    <li><b>Ewa (8. 6.) potvrdila:</b> 10-30 min je dostatečné, blocker odstraněn</li>
+    <li>Pozn.: integrace souhlasů z <b>BlueVenda do DACO</b> je jiná věc - běží dál na straně DER (~24. 6.), viz bod 2</li>
+  </ul></div>
+</details>
+
+<details class="res">
+  <summary><span class="rsubj">✉ Incorrect unsubscribe links</span><span class="rout">unsub funguje</span></summary>
+  <div class="rbody"><ul>
+    <li><b>Problém:</b> u <span class="mono">ewa38016</span> + <span class="mono">ewa26470</span> nešel unsubscribe („…must first verify your email address")</li>
+    <li><b>Příčina:</b> v URL chyběl <b>hash_persoo</b> (interní hash e-mailu z DACO)</li>
+    <li><b>Fix:</b> atribut „Last hash persoo" upraven, aby bral hash z víc zdrojů; přepočet do 7 dní</li>
+    <li><b>22. 6. Ewa potvrdila:</b> unsubscribe funguje</li>
+    <li>Pozn.: persoo hash pro <b>importované</b> kontakty -> řeší se u Sales Manago (bod 1)</li>
+  </ul></div>
+</details>
+
+<details class="res">
+  <summary><span class="rsubj">✉ sending emails doesn't work</span><span class="rout">vyřešeno</span></summary>
+  <div class="rbody"><ul>
+    <li><b>Problém:</b> Meiro ukazovalo odesláno, ale e-maily nedorazily (žádné logy v Infobip/SMTP)</li>
+    <li><b>Příčina:</b> expirovaný API klíč v integraci (i na backendu)</li>
+    <li><b>Fix:</b> vyměněn (expirace nastavena na 2090), otestováno - odesílání OK</li>
+  </ul></div>
+</details>
+
+<details class="res">
+  <summary><span class="rsubj">✉ No profiles in Meiro</span><span class="rout">vysvětleno</span></summary>
+  <div class="rbody"><ul>
+    <li><b>Problém:</b> adresy <span class="mono">@exim.pl</span> / <span class="mono">@eximtours.pl</span> se neobjevily v Meiro</li>
+    <li><b>Příčina:</b> domény jsou na Meiro <b>blacklistu</b> (záměrně - brání slití přeposlaných/interních adres do jednoho mega-profilu)</li>
+    <li><b>Řešení:</b> pro test flow používat soukromé adresy (Gmail); Ewa vzala na vědomí</li>
+  </ul></div>
+</details>
+
+<details class="res">
+  <summary><span class="rsubj">✉ questions about Meiro</span><span class="rout">rozděleno do vláken</span></summary>
+  <div class="rbody"><ul>
+    <li><b>Co to bylo:</b> sběrné vlákno s mnoha tématy najednou</li>
+    <li>Na žádost Vojty <b>rozděleno na samostatná vlákna</b>; Jakub odpovídá v každém zvlášť</li>
+    <li>Mobile push: <b>parkováno</b> - čeká na appku EXIMu</li>
+  </ul></div>
+</details>
+
+<details class="res">
+  <summary><span class="rsubj">✉ Supporting hours for Exim.pl</span><span class="rout">předáno na Vojtu</span></summary>
+  <div class="rbody"><ul>
+    <li><b>Co to bylo:</b> fakturace podpůrných hodin (~18 h od prosince / 32 400 CZK) + dotaz na rozsah u 3 faktur</li>
+    <li>Jan doplnil <b>rozsah prací</b>; objednávky T153083 + T153144 řešeny napřímo s CZ týmem (re-fakturace)</li>
+    <li>Zbylé faktury Ewa <b>doladí s Vojtou</b> po jeho návratu z dovolené</li>
+  </ul></div>
+</details>
+
+<!-- notes -->
+<div class="notes">
+  <label for="notes">📝 Obecné poznámky z callu (ukládá se v prohlížeči)</label>
+  <textarea id="notes" data-k="notes" placeholder="Sem si piš během callu - rozhodnutí, úkoly, termíny…"></textarea>
+</div>
+
+<footer>Podklad pro call 24. 6. 2026 · sloučeno z 10 e-mailových vláken (do 22. 6.)</footer>
+
+</div>
+
+<div id="toast">Zkopírováno</div>
+
+<script>
+  function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
+    clearTimeout(window.__t);window.__t=setTimeout(function(){t.classList.remove('show')},2000);}
+
+  function toggleRes(open){document.querySelectorAll('details.res').forEach(function(d){d.open=open;});}
+
+  function copyAgenda(){
+    var out=['MEIRO × EXIM - příprava na call (středa 24. 6. 2026)',''];
+    document.querySelectorAll('.otopic').forEach(function(c){
+      out.push(c.querySelector('.onum').textContent.trim()+') '+c.querySelector('.otitle').textContent.trim());
+      var subs=[].map.call(c.querySelectorAll('.subj'),function(s){return s.textContent.trim();});
+      if(subs.length) out.push('   Předmět: '+subs.join(' / '));
+      c.querySelectorAll('.grp').forEach(function(g){
+        var l=g.querySelector('.grp-l'); if(l) out.push('   ['+l.textContent.trim()+']');
+        g.querySelectorAll('li').forEach(function(li){ out.push('   - '+li.textContent.replace(/\s+/g,' ').trim()); });
+      });
+      var cm=c.querySelector('.cmt'); if(cm&&cm.value.trim()) out.push('   >> KOMENTÁŘ: '+cm.value.trim());
+      out.push('');
+    });
+    var rc=[];
+    document.querySelectorAll('details.res').forEach(function(d){
+      var cm=d.querySelector('.cmt');
+      if(cm&&cm.value.trim()) rc.push('- '+d.querySelector('.rsubj').textContent.trim()+': '+cm.value.trim());
+    });
+    if(rc.length){ out.push('VYŘEŠENO - komentáře:'); rc.forEach(function(x){out.push(x);}); out.push(''); }
+    var n=document.getElementById('notes').value.trim();
+    if(n){ out.push('OBECNÉ POZNÁMKY:'); out.push(n); }
+    var txt=out.join('\n');
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){toast('Zkopírováno ✓')},fallback);}
+    else fallback();
+    function fallback(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.left='-9999px';
+      document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Zkopírováno ✓')}catch(e){toast('Kopírování selhalo')}document.body.removeChild(ta);}
+  }
+
+  (function(){
+    var K='meiro_exim_board_v4';
+    var fields=[].slice.call(document.querySelectorAll('.cmt, #notes'));
+    function grow(el){ if(el.classList.contains('cmt')){ el.style.height='auto'; el.style.height=(el.scrollHeight+2)+'px'; } }
+    try{ var s=JSON.parse(localStorage.getItem(K)||'{}');
+      fields.forEach(function(el){ var k=el.getAttribute('data-k'); if(s[k]!=null) el.value=s[k]; });
+    }catch(e){}
+    fields.forEach(grow);
+    var t;
+    function save(){ try{ var d={}; fields.forEach(function(el){ d[el.getAttribute('data-k')]=el.value; }); localStorage.setItem(K,JSON.stringify(d)); }catch(e){} }
+    fields.forEach(function(el){ el.addEventListener('input',function(){ grow(el); clearTimeout(t); t=setTimeout(save,400); }); });
+  })();
+</script>
+</body>
+</html>
