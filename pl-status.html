@@ -41,7 +41,18 @@
   .cline li{margin:2px 0;font-size:13.5px;color:#374151}
   .cline li b{color:var(--ink)}
 
-  .sechead{display:flex;align-items:baseline;gap:10px;margin:28px 2px 6px}
+  .runsheet{background:#fff;border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);padding:14px 18px;margin:6px 0 8px}
+  .rs-head{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--ink)}
+  .rs-head span{font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;font-size:12px;margin-left:8px}
+  .runsheet ol{margin:8px 0 0;padding-left:0;list-style:none;counter-reset:rs}
+  .runsheet li{counter-increment:rs;padding:5px 0;font-size:14px;border-top:1px solid #f1f2f4}
+  .runsheet li:first-child{border-top:0}
+  .runsheet li:before{content:counter(rs)". ";font-weight:800;color:var(--muted);font-size:12.5px}
+  .runsheet a{color:var(--ink);text-decoration:none;font-weight:600}
+  .runsheet a:hover{color:var(--accent);text-decoration:underline}
+  .runsheet li.done a{color:#15803d}
+  .runsheet li.end{color:var(--muted);font-weight:600}
+  .sechead{display:flex;align-items:baseline;gap:10px;margin:28px 2px 6px;scroll-margin-top:64px}
   .sechead h2{font-size:19px;margin:0}
   .sechead .hint{font-size:13px;color:var(--muted)}
 
@@ -122,6 +133,24 @@
   <h1>Meiro × EXIM - co projít zítra</h1>
 </header>
 
+<!-- ============ RUN SHEET (vedení callu) ============ -->
+<section class="runsheet">
+  <div class="rs-head">🗣️ Vedení callu <span>klik = skok na detail ↓</span></div>
+  <ol>
+    <li class="done"><a href="#vyreseno">Unsubscribe linky - hotovo</a></li>
+    <li class="done"><a href="#vyreseno">Odesílání e-mailů - hotovo</a></li>
+    <li class="done"><a href="#vyreseno">Consent sync DACO→Meiro (~10 min) - hotovo</a></li>
+    <li class="done"><a href="#vyreseno">Profily / blacklist - vysvětleno</a></li>
+    <li><a href="#d1">Sales Manago - persoo hash (blocker) + nový lead scoring</a></li>
+    <li><a href="#d2">DACO / DER - dotazy na Vojtu (BV, CRM, blacklist)</a></li>
+    <li><a href="#d3">DACO - chodí vůbec nová data? (od 9. 6. nic)</a></li>
+    <li><a href="#d4">Native bannery - dělá use-case Meiro, nebo ne?</a></li>
+    <li><a href="#d5">Reporty - nabídneme, že uděláme my</a></li>
+    <li><a href="#d6">GDPR maily - co chtějí personalizovat?</a></li>
+    <li class="end">Závěr - rozdělit úkoly + termíny</li>
+  </ol>
+</section>
+
 <!-- ============ QUICK CHEAT-SHEET ============ -->
 <section class="cheat">
   <div class="cheat-head">🎯 Rychlá příprava na call <span>klikni na téma pro detail ↓</span></div>
@@ -130,7 +159,7 @@
     <a class="ct" href="#d1">1 · Sales Manago<span class="arr">detail ↓</span></a>
     <ul>
       <li><b>Blocker - persoo hash:</b> jde použít SM contact ID (UUID), nebo ho musí vygenerovat DACO? → Vojta</li>
-      <li>Čekáme na Ewu: formát <span class="mono">Birthday</span> + rozdíl <span class="mono">Tags</span> vs <span class="mono">Tags (score)</span> → pak cenovka</li>
+      <li>Soubor vyjasněn (Birthday DD.MM.YYYY; <span class="mono">Tags (score)</span> + owner vynecháme). <b>Nově:</b> chtějí rozjet lead scoring nad Meiro daty? → nascopovat</li>
     </ul>
   </div>
 
@@ -194,11 +223,17 @@
       <li>Po vyjasnění rozsahu: připravit <b>cenovou nabídku</b></li>
     </ul>
   </div>
-  <div class="grp"><div class="grp-l go">Odesláno Ewě - čeká se na odpověď (k souboru)</div>
+  <div class="grp"><div class="grp-l go">Od Ewy - vyjasněno (soubor) ✓</div>
     <ul>
-      <li>Formát pole <span class="mono">Birthday</span> (DD-MM nebo DD-MM-YYYY?) + pár příkladů</li>
-      <li>Rozdíl mezi sloupci <span class="mono">Tags</span> a <span class="mono">Tags (score)</span></li>
-      <li>Jinak je obsah souboru <b>jasný</b></li>
+      <li>Datum narození = formát <b>DD.MM.YYYY</b></li>
+      <li>Tagy importujeme (pro segmentaci); sloupec <span class="mono">Tags (score)</span> <b>vynecháme</b> - nepoužívali na současném exim.pl, jen na starém webu do 2023</li>
+      <li><b>Main contact owner</b> taky netřeba</li>
+    </ul>
+  </div>
+  <div class="grp"><div class="grp-l go">Příležitost - lead scoring (k probrání)</div>
+    <ul>
+      <li>Obecný <b>lead score</b> (engagement: nákup &gt; návštěva webu...) v SM mají. Chtějí ho rozjet znovu <b>nad Meiro daty</b> (= nastavit lead scoring na Meiro eventech)?</li>
+      <li>Pokud ano -> <b>nascopujeme to</b> (práce navíc / naše nabídka)</li>
     </ul>
   </div>
   <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d1" placeholder="Komentář / poznámka…"></textarea></div>
@@ -310,7 +345,7 @@
 </div>
 
 <!-- ============ RESOLVED ============ -->
-<div class="sechead"><h2>✅ Vyřešeno</h2><span class="hint">per e-mailový předmět - rozklikni detail</span></div>
+<div class="sechead" id="vyreseno"><h2>✅ Vyřešeno</h2><span class="hint">per e-mailový předmět - rozklikni detail</span></div>
 
 <details class="res">
   <summary><span class="rsubj">✉ PD: Meiro v. Daco v. BV sync of consents _ PL</span><span class="rout">consent sync hotový</span></summary>
