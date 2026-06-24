@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meiro × EXIM - příprava na meeting 24. 6.</title>
+<title>Meiro × EXIM - status &amp; příprava</title>
 <style>
   :root{
     --bg:#f4f5f7; --card:#fff; --ink:#1d2433; --muted:#6b7280; --line:#e6e8ec;
-    --accent:#c20063; --red:#dc2626; --amber:#d97706; --blue:#2563eb; --green:#15803d; --slate:#64748b;
+    --accent:#c20063; --red:#dc2626; --amber:#d97706; --blue:#2563eb; --green:#15803d; --slate:#64748b; --violet:#6d28d9;
     --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.04);
   }
   *{box-sizing:border-box}
@@ -19,15 +19,61 @@
 
   .toolbar{position:sticky;top:0;z-index:50;background:rgba(244,245,247,.93);
     backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
-    display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding:10px 18px;margin-bottom:20px}
+    display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding:10px 18px}
   .toolbar .nm{font-weight:700;font-size:13.5px;color:var(--muted);margin-right:auto}
   button.btn{border:0;border-radius:9px;padding:8px 13px;font-size:13px;font-weight:600;cursor:pointer;
     background:#fff;color:var(--ink);border:1px solid var(--line);transition:.15s}
   button.btn:hover{border-color:#c7ccd4}
 
-  header.head{padding:4px 2px 0}
+  /* tabs */
+  .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:18px 0 4px}
+  .tab{border:0;background:none;padding:10px 16px;font-size:14px;font-weight:700;color:var(--muted);
+    cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+  .tab:hover{color:var(--ink)}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .page{display:none}
+  .page.active{display:block}
+
+  header.head{padding:8px 2px 0}
   .kicker{color:var(--accent);font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:12px}
-  h1{font-size:25px;margin:6px 0 14px;line-height:1.2}
+  h1{font-size:24px;margin:6px 0 4px;line-height:1.2}
+  .lead{color:var(--muted);font-size:14.5px;max-width:760px;margin:0 0 6px}
+
+  /* ===== STATUS PAGE ===== */
+  .blocker{background:#fef2f2;border:1px solid #f6c9c9;border-left:4px solid var(--red);border-radius:12px;padding:15px 18px;margin:14px 0 6px}
+  .blocker .bt{font-size:13.5px;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.02em;margin-bottom:7px}
+  .blocker ul{margin:6px 0 0;padding-left:20px}
+  .blocker li{margin:4px 0;font-size:14px;color:#43282a}
+  .blocker li b{color:#7a1f1f}
+
+  .statgrp{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:22px 2px 6px}
+  .srow{background:#fff;border:1px solid var(--line);border-radius:11px;box-shadow:var(--shadow);
+    padding:12px 16px;margin:8px 0;display:flex;gap:13px;align-items:flex-start}
+  .srow .sb{flex:0 0 auto;margin-top:2px}
+  .srow .sbody{flex:1;min-width:0}
+  .srow .st{font-size:15px;font-weight:700;margin:0 0 3px}
+  .srow .sd{font-size:13.5px;color:#374151;margin:0}
+  .srow .sd b{color:var(--ink)}
+  .sb{font-size:11px;font-weight:800;border-radius:999px;padding:3px 10px;white-space:nowrap;text-transform:uppercase;letter-spacing:.02em}
+  .sb-block{background:#fde8e8;color:var(--red)} .sb-wait{background:#fdf0dc;color:var(--amber)}
+  .sb-go{background:#e4f5ea;color:var(--green)} .sb-new{background:#ede9fe;color:var(--violet)}
+  .sb-later{background:#eef0f3;color:var(--slate)} .sb-out{background:#f1f2f4;color:#9aa1ab}
+  .srow.dim{opacity:.6}
+  .donelist{font-size:13px;color:#4b5563;background:#f7f8fa;border:1px solid var(--line);border-radius:10px;padding:11px 15px;margin-top:4px}
+  .donelist b{color:#374151}
+
+  /* ===== PREP PAGE (cheat-sheet, run sheet, detail, resolved) ===== */
+  .runsheet{background:#fff;border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);padding:14px 18px;margin:14px 0 8px}
+  .rs-head{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--ink)}
+  .rs-head span{font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;font-size:12px;margin-left:8px}
+  .runsheet ol{margin:8px 0 0;padding-left:0;list-style:none;counter-reset:rs}
+  .runsheet li{counter-increment:rs;padding:5px 0;font-size:14px;border-top:1px solid #f1f2f4}
+  .runsheet li:first-child{border-top:0}
+  .runsheet li:before{content:counter(rs)". ";font-weight:800;color:var(--muted);font-size:12.5px}
+  .runsheet a{color:var(--ink);text-decoration:none;font-weight:600}
+  .runsheet a:hover{color:var(--accent);text-decoration:underline}
+  .runsheet li.done a{color:#15803d}
+  .runsheet li.end{color:var(--muted);font-weight:600}
 
   .cheat{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);
     border-radius:12px;box-shadow:var(--shadow);padding:14px 18px;margin:6px 0 8px}
@@ -41,17 +87,6 @@
   .cline li{margin:2px 0;font-size:13.5px;color:#374151}
   .cline li b{color:var(--ink)}
 
-  .runsheet{background:#fff;border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);padding:14px 18px;margin:6px 0 8px}
-  .rs-head{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--ink)}
-  .rs-head span{font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;font-size:12px;margin-left:8px}
-  .runsheet ol{margin:8px 0 0;padding-left:0;list-style:none;counter-reset:rs}
-  .runsheet li{counter-increment:rs;padding:5px 0;font-size:14px;border-top:1px solid #f1f2f4}
-  .runsheet li:first-child{border-top:0}
-  .runsheet li:before{content:counter(rs)". ";font-weight:800;color:var(--muted);font-size:12.5px}
-  .runsheet a{color:var(--ink);text-decoration:none;font-weight:600}
-  .runsheet a:hover{color:var(--accent);text-decoration:underline}
-  .runsheet li.done a{color:#15803d}
-  .runsheet li.end{color:var(--muted);font-weight:600}
   .sechead{display:flex;align-items:baseline;gap:10px;margin:28px 2px 6px;scroll-margin-top:64px}
   .sechead h2{font-size:19px;margin:0}
   .sechead .hint{font-size:13px;color:var(--muted)}
@@ -105,7 +140,7 @@
 
   .notes{margin-top:18px}
   .notes label{font-size:12px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
-  #notes{width:100%;min-height:110px;border:1.5px dashed #cfd4dc;border-radius:10px;padding:13px 15px;
+  #notes{width:100%;min-height:90px;border:1.5px dashed #cfd4dc;border-radius:10px;padding:13px 15px;
     font:inherit;font-size:14.5px;line-height:1.55;resize:vertical;outline:none;background:#fffef9}
   #notes:focus{border-style:solid;border-color:var(--accent);box-shadow:0 0 0 3px rgba(194,0,99,.1)}
 
@@ -113,14 +148,14 @@
   #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:#111827;color:#fff;
     padding:10px 17px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:100}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-  @media print{.toolbar,#toast{display:none}details.res{break-inside:avoid}.cmt,#notes{border:1px solid #ccc;background:#fff}body{background:#fff}}
+  @media print{.toolbar,.tabs,#toast{display:none}.page{display:block!important}details.res{break-inside:avoid}.cmt,#notes{border:1px solid #ccc;background:#fff}body{background:#fff}}
 </style>
 </head>
 <body>
 
 <div class="toolbar">
-  <span class="nm">Meiro × EXIM · call 24. 6.</span>
-  <button class="btn" onclick="copyAgenda()">📋 Kopírovat (detail + komentáře)</button>
+  <span class="nm">Meiro × EXIM</span>
+  <button class="btn" onclick="copyActive()">📋 Kopírovat aktivní list</button>
   <button class="btn" onclick="toggleRes(true)">⬇︎ Rozbalit vyřešené</button>
   <button class="btn" onclick="toggleRes(false)">⬆︎ Sbalit</button>
   <button class="btn" onclick="window.print()">🖨️ PDF</button>
@@ -128,289 +163,378 @@
 
 <div class="wrap">
 
-<header class="head">
-  <div class="kicker">Příprava na call · středa 24. 6.</div>
-  <h1>Meiro × EXIM - co projít zítra</h1>
-</header>
+  <div class="tabs">
+    <button class="tab active" data-tab="status" onclick="showTab('status')">📊 Status (přehled)</button>
+    <button class="tab" data-tab="prep" onclick="showTab('prep')">🗣️ Příprava na call</button>
+  </div>
 
-<!-- ============ RUN SHEET (vedení callu) ============ -->
-<section class="runsheet">
-  <div class="rs-head">🗣️ Vedení callu <span>klik = skok na detail ↓</span></div>
-  <ol>
-    <li class="done"><a href="#vyreseno">Unsubscribe linky - hotovo</a></li>
-    <li class="done"><a href="#vyreseno">Odesílání e-mailů - hotovo</a></li>
-    <li class="done"><a href="#vyreseno">Consent sync DACO→Meiro (~10 min) - hotovo</a></li>
-    <li class="done"><a href="#vyreseno">Profily / blacklist - vysvětleno</a></li>
-    <li><a href="#d1">Sales Manago - persoo hash (blocker) + nový lead scoring</a></li>
-    <li><a href="#d2">DACO / DER - dotazy na Vojtu (BV, CRM, blacklist)</a></li>
-    <li><a href="#d3">DACO - chodí vůbec nová data? (od 9. 6. nic)</a></li>
-    <li><a href="#d4">Native bannery - dělá use-case Meiro, nebo ne?</a></li>
-    <li><a href="#d5">Reporty - nabídneme, že uděláme my</a></li>
-    <li><a href="#d6">GDPR maily - co chtějí personalizovat?</a></li>
-    <li class="end">Závěr - rozdělit úkoly + termíny</li>
-  </ol>
-</section>
+<!-- ===================== PAGE: STATUS ===================== -->
+<div class="page active" id="page-status">
 
-<!-- ============ QUICK CHEAT-SHEET ============ -->
-<section class="cheat">
-  <div class="cheat-head">🎯 Rychlá příprava na call <span>klikni na téma pro detail ↓</span></div>
+  <header class="head">
+    <div class="kicker">Stav projektu · aktualizováno po callu</div>
+    <h1>Meiro × EXIM - kde to stojí (24. 6. 2026)</h1>
+    <p class="lead"><b>Ve zkratce:</b> čekáme na datový základ z DACO (na straně DerTouristik). Dokud nepoteče, nezačínáme. Jakmile poteče, jedeme <b>basic use-cases</b>.</p>
+  </header>
 
-  <div class="cline">
-    <a class="ct" href="#d1">1 · Sales Manago<span class="arr">detail ↓</span></a>
+  <div class="blocker">
+    <div class="bt">🔴 Hlavní blocker - datový základ v DACO (na straně DerTouristik)</div>
     <ul>
-      <li><b>Blocker - persoo hash:</b> jde použít SM contact ID (UUID), nebo ho musí vygenerovat DACO? → Vojta</li>
-      <li>Soubor vyjasněn (Birthday DD.MM.YYYY; <span class="mono">Tags (score)</span> + owner vynecháme). <b>Nově:</b> chtějí rozjet lead scoring nad Meiro daty? → nascopovat</li>
+      <li>Dokud nepotečou <b>kontakty + consenty z DACO do Meira</b>, prakticky <b>nelze nic spustit</b>.</li>
+      <li>Příští týden <b>jednorázový import</b>; průběžná <b>automatizace až později</b> - termín neznámý.</li>
+      <li>DACO = <b>jen kontakty + consenty</b> (žádné transakce - ty jdou přes CRM). <b>DACO není ATCOM.</b></li>
+      <li>Nová data do DACO přijdou až s integrací <b>BV → DACO</b>; proto je teď export prázdný (od 9. 6. nic) - <b>očekávané, ne chyba</b>.</li>
     </ul>
   </div>
 
-  <div class="cline">
-    <a class="ct" href="#d2">2 · DACO / DER<span class="arr">detail ↓</span></a>
-    <ul>
-      <li><b>BV (≈ ATCOM?):</b> až bude BV-DACO hotové, ať dají vědět → zkontrolujeme implementaci</li>
-      <li><b>Dotaz:</b> budou transakce z BV i v CRM? Máme napojené jen CRM (ne DACO) → možná dodělat u nás</li>
-      <li>Status od Vojty: blacklist v DACO, import DB z BV; unsub + consent history = jejich interní call (proběhl?)</li>
-    </ul>
+  <div class="statgrp">🟢 Na nás (Data Club) - rozjedeme, jakmile potečou data</div>
+
+  <div class="srow">
+    <span class="sb sb-wait">Čeká</span>
+    <div class="sbody"><p class="st">Sales Manago - import leadů</p>
+    <p class="sd">Čeká na <b>persoo hash</b>. Jakub píše <b>Sýkorovi + Vojtovi</b> s návrhem (persoo hash doplnit a vrátit, nebo nechat v DACO a Meiro si ho natáhne) → pak doplnit data z CSV od Ewy. Soubor vyjasněn (Birthday DD.MM.YYYY; <span class="mono">Tags (score)</span> + contact owner vynecháme; tagy importujeme). Možná: lead scoring nad Meiro daty.</p></div>
   </div>
 
-  <div class="cline">
-    <a class="ct" href="#d3">3 · DACO - chodí nová data?<span class="arr">detail ↓</span></a>
-    <ul>
-      <li>Od <b>9. 6.</b> nepřišel žádný nový záznam (dnes 23. 6.) -> <b>stojí DACO feed?</b></li>
-    </ul>
+  <div class="srow">
+    <span class="sb sb-go">Start sem</span>
+    <div class="sbody"><p class="st">Basic use-cases - tady začneme</p>
+    <p class="sd"><b>last minute pop-up</b> · <b>exit intent pop-up</b> · <b>digest</b> · <b>buying window</b>. Spustíme hned, jak potečou data (po hlavním blockeru).</p></div>
   </div>
 
-  <div class="cline">
-    <a class="ct" href="#d4">4 · Native bannery<span class="arr">detail ↓</span></a>
-    <ul>
-      <li><b>HLAVNÍ úkol:</b> rozseknout - dělá use-case Meiro, nebo ne?</li>
-      <li>Pokud ano → potřebujeme <b>potvrzení od Mirka Matese</b></li>
-    </ul>
+  <div class="srow">
+    <span class="sb sb-new">Nové</span>
+    <div class="sbody"><p class="st">Facebook leads → CRM</p>
+    <p class="sd">Nový zájem klienta. <b>Poslat jim cenovku (CE)</b> podle toho, kolik to stálo v ČR.</p></div>
   </div>
 
-  <div class="cline">
-    <a class="ct" href="#d5">5 · Reporty<span class="arr">detail ↓</span></a>
-    <ul>
-      <li><b>Náš tah:</b> nabídnout, že reporting uděláme my + připravíme cenovku</li>
-    </ul>
+  <div class="srow">
+    <span class="sb sb-wait">Spor o platbu</span>
+    <div class="sbody"><p class="st">Rozbité reporty (audience / email)</p>
+    <p class="sd">Meiro chce, ať <b>platí DT</b> (supporting hours); DT to bere jako <b>bug Meira</b> a chce fix zdarma. <b>Naše role:</b> pomoct DT to s Meirem vyjednat.</p></div>
   </div>
 
-  <div class="cline">
-    <a class="ct" href="#d6">6 · GDPR potvrzovací maily<span class="arr">detail ↓</span></a>
-    <ul>
-      <li><b>Úkol:</b> zjistit od nich, co chtějí personalizovat (je to na nich)</li>
-    </ul>
-  </div>
-</section>
+  <div class="statgrp">🔵 Na straně DER / DT - čekáme na ně</div>
 
-<!-- ============ DETAIL ============ -->
-<div class="sechead"><h2>📋 Detail k tématům</h2><span class="hint">kontext + místo na komentář</span></div>
+  <div class="srow">
+    <span class="sb sb-block">Blocker · DT</span>
+    <div class="sbody"><p class="st">DACO / integrace dat</p>
+    <p class="sd">= hlavní blocker výše. <b>BV → DACO</b> ~24. 6.; jednorázový import příští týden; automatizace TBD. DACO drží jen kontakty + consenty.</p></div>
+  </div>
 
-<!-- d1 Sales Manago -->
-<div class="otopic b" id="d1">
-  <div class="ohead"><span class="onum">1</span><span class="otitle">Sales Manago - import leadů do Meira</span><span class="tag tag-b">Blocker</span></div>
-  <div class="subjs"><span class="subj">Sales Manago import</span><span class="subj">Incorrect unsubscribe links</span></div>
-  <div class="grp"><div class="grp-l">Stav</div>
-    <ul>
-      <li>Dohodnuto: <b>import všeho najednou</b> (1 CSV přes náš SFTP, ~120 tis. leadů)</li>
-      <li>Import rychlý (1-2 dny); čas řídí <b>počet atributů</b>, ne velikost souboru</li>
-      <li>B2C vs B2B = přes tag <span class="mono">agent</span></li>
-    </ul>
+  <div class="srow">
+    <span class="sb sb-later">DER interní</span>
+    <div class="sbody"><p class="st">Unsub logika + consent change history + Jira přístup</p>
+    <p class="sd">Řeší DER na <b>interním callu</b> (Vojta + Schlesinger + Martin Sýkora) + úprava DACO (M. Lachman). Mimo nás - jen sledujeme, jestli to něco neblokuje.</p></div>
   </div>
-  <div class="grp"><div class="grp-l go">Probrat / rozhodnout</div>
-    <ul>
-      <li><b>Persoo hash = blocker</b> (bez něj nefunguje odhlašování). SM má vlastní contact ID (UUID), ale <b>není to persoo hash</b> -> jde použít, nebo ho musí vygenerovat DACO? → Vojta</li>
-      <li>Proces (návrh): kontakty nahrát do <b>DACO</b> (consent + persoo hash) -> sync do Meira; <b>zároveň</b> SM soubor (tagy, jména) přímo do Meira -> Vojta potvrdí proveditelnost</li>
-      <li>Po vyjasnění rozsahu: připravit <b>cenovou nabídku</b></li>
-    </ul>
+
+  <div class="statgrp">⏸️ Později / parkováno</div>
+
+  <div class="srow dim">
+    <span class="sb sb-later">Není MVP</span>
+    <div class="sbody"><p class="st">Native bannery / naposledy prohlížené nabídky</p>
+    <p class="sd">Odloženo - začneme basic use-cases, tohle řešíme až později. DER to navíc zvažuje na nové HP (web feature, ne Meiro).</p></div>
   </div>
-  <div class="grp"><div class="grp-l go">Od Ewy - vyjasněno (soubor) ✓</div>
-    <ul>
-      <li>Datum narození = formát <b>DD.MM.YYYY</b></li>
-      <li>Tagy importujeme (pro segmentaci); sloupec <span class="mono">Tags (score)</span> <b>vynecháme</b> - nepoužívali na současném exim.pl, jen na starém webu do 2023</li>
-      <li><b>Main contact owner</b> taky netřeba</li>
-    </ul>
+
+  <div class="statgrp">⚪ Mimo scope Meira</div>
+
+  <div class="srow dim">
+    <span class="sb sb-out">Mimo Meiro</span>
+    <div class="sbody"><p class="st">Personalizace GDPR potvrzovacích e-mailů</p>
+    <p class="sd">Není pro Meiro. Řeší <b>DerTouristik na GDPR straně</b>, s Meirem nesouvisí. → vyřazeno z naší agendy.</p></div>
   </div>
-  <div class="grp"><div class="grp-l go">Příležitost - lead scoring (k probrání)</div>
-    <ul>
-      <li>Obecný <b>lead score</b> (engagement: nákup &gt; návštěva webu...) v SM mají. Chtějí ho rozjet znovu <b>nad Meiro daty</b> (= nastavit lead scoring na Meiro eventech)?</li>
-      <li>Pokud ano -> <b>nascopujeme to</b> (práce navíc / naše nabídka)</li>
-    </ul>
+
+  <div class="statgrp">✅ Hotovo</div>
+  <div class="donelist">
+    <b>unsubscribe linky</b> (hash_persoo) · <b>odesílání e-mailů</b> (API klíč) · <b>consent sync DACO→Meiro</b> (~10 min) · <b>profily / blacklist</b> (vysvětleno) · sběrné vlákno rozděleno do threadů · <b>supporting hours</b> (fakturace, předáno Vojtovi). <span style="color:var(--muted)">Detail v záložce „Příprava na call".</span>
   </div>
-  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d1" placeholder="Komentář / poznámka…"></textarea></div>
+
 </div>
 
-<!-- d2 DACO / DER -->
-<div class="otopic s" id="d2">
-  <div class="ohead"><span class="onum">2</span><span class="otitle">DACO / DER - závislosti + přístupy</span><span class="tag tag-s">Status · DER</span></div>
-  <div class="subjs"><span class="subj">Meiro implementation</span></div>
-  <div class="grp"><div class="grp-l">Stav (Vojta 17. 6.)</div>
-    <ul>
-      <li>DACO import: práce <b>začne příští týden</b> (napřed jiné projekty + vylepšení blacklistu)</li>
-      <li>BV-DACO integrace (souhlasy z BlueVenda do DACO): dokončení cca <b>24. 6.</b></li>
-    </ul>
+<!-- ===================== PAGE: PREP ===================== -->
+<div class="page" id="page-prep">
+
+  <header class="head">
+    <div class="kicker">Příprava na call · 24. 6.</div>
+    <h1>Podklad na call - témata, kontext, komentáře</h1>
+  </header>
+
+  <!-- RUN SHEET -->
+  <section class="runsheet">
+    <div class="rs-head">🗣️ Vedení callu <span>klik = skok na detail ↓</span></div>
+    <ol>
+      <li class="done"><a href="#vyreseno">Unsubscribe linky - hotovo</a></li>
+      <li class="done"><a href="#vyreseno">Odesílání e-mailů - hotovo</a></li>
+      <li class="done"><a href="#vyreseno">Consent sync DACO→Meiro (~10 min) - hotovo</a></li>
+      <li class="done"><a href="#vyreseno">Profily / blacklist - vysvětleno</a></li>
+      <li><a href="#d1">Sales Manago - persoo hash (blocker) + nový lead scoring</a></li>
+      <li><a href="#d2">DACO / DER - dotazy na Vojtu (BV, CRM, blacklist)</a></li>
+      <li><a href="#d3">DACO - chodí vůbec nová data? (od 9. 6. nic)</a></li>
+      <li><a href="#d4">Native bannery - dělá use-case Meiro, nebo ne?</a></li>
+      <li><a href="#d5">Reporty - nabídneme, že uděláme my</a></li>
+      <li><a href="#d6">GDPR maily - co chtějí personalizovat?</a></li>
+      <li class="end">Závěr - rozdělit úkoly + termíny</li>
+    </ol>
+  </section>
+
+  <!-- CHEAT-SHEET -->
+  <section class="cheat">
+    <div class="cheat-head">🎯 Rychlá příprava na call <span>klikni na téma pro detail ↓</span></div>
+
+    <div class="cline">
+      <a class="ct" href="#d1">1 · Sales Manago<span class="arr">detail ↓</span></a>
+      <ul>
+        <li><b>Blocker - persoo hash:</b> jde použít SM contact ID (UUID), nebo ho musí vygenerovat DACO? → Vojta</li>
+        <li>Soubor vyjasněn (Birthday DD.MM.YYYY; <span class="mono">Tags (score)</span> + owner vynecháme). <b>Nově:</b> chtějí rozjet lead scoring nad Meiro daty? → nascopovat</li>
+      </ul>
+    </div>
+
+    <div class="cline">
+      <a class="ct" href="#d2">2 · DACO / DER<span class="arr">detail ↓</span></a>
+      <ul>
+        <li><b>BV (≈ ATCOM?):</b> až bude BV-DACO hotové, ať dají vědět → zkontrolujeme implementaci</li>
+        <li><b>Dotaz:</b> budou transakce z BV i v CRM? Máme napojené jen CRM (ne DACO) → možná dodělat u nás</li>
+        <li>Status od Vojty: blacklist v DACO, import DB z BV; unsub + consent history = jejich interní call (proběhl?)</li>
+      </ul>
+    </div>
+
+    <div class="cline">
+      <a class="ct" href="#d3">3 · DACO - chodí nová data?<span class="arr">detail ↓</span></a>
+      <ul>
+        <li>Od <b>9. 6.</b> nepřišel žádný nový záznam (dnes 23. 6.) -> <b>stojí DACO feed?</b></li>
+      </ul>
+    </div>
+
+    <div class="cline">
+      <a class="ct" href="#d4">4 · Native bannery<span class="arr">detail ↓</span></a>
+      <ul>
+        <li><b>HLAVNÍ úkol:</b> rozseknout - dělá use-case Meiro, nebo ne?</li>
+        <li>Pokud ano → potřebujeme <b>potvrzení od Mirka Matese</b></li>
+      </ul>
+    </div>
+
+    <div class="cline">
+      <a class="ct" href="#d5">5 · Reporty<span class="arr">detail ↓</span></a>
+      <ul>
+        <li><b>Náš tah:</b> nabídnout, že reporting uděláme my + připravíme cenovku</li>
+      </ul>
+    </div>
+
+    <div class="cline">
+      <a class="ct" href="#d6">6 · GDPR potvrzovací maily<span class="arr">detail ↓</span></a>
+      <ul>
+        <li><b>Úkol:</b> zjistit od nich, co chtějí personalizovat (je to na nich)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- DETAIL -->
+  <div class="sechead"><h2>📋 Detail k tématům</h2><span class="hint">kontext + komentáře z callu</span></div>
+
+  <div class="otopic b" id="d1">
+    <div class="ohead"><span class="onum">1</span><span class="otitle">Sales Manago - import leadů do Meira</span><span class="tag tag-b">Blocker</span></div>
+    <div class="subjs"><span class="subj">Sales Manago import</span><span class="subj">Incorrect unsubscribe links</span></div>
+    <div class="grp"><div class="grp-l">Stav</div>
+      <ul>
+        <li>Dohodnuto: <b>import všeho najednou</b> (1 CSV přes náš SFTP, ~120 tis. leadů)</li>
+        <li>Import rychlý (1-2 dny); čas řídí <b>počet atributů</b>, ne velikost souboru</li>
+        <li>B2C vs B2B = přes tag <span class="mono">agent</span></li>
+      </ul>
+    </div>
+    <div class="grp"><div class="grp-l go">Probrat / rozhodnout</div>
+      <ul>
+        <li><b>Persoo hash = blocker</b> (bez něj nefunguje odhlašování). SM má vlastní contact ID (UUID), ale <b>není to persoo hash</b> -> jde použít, nebo ho musí vygenerovat DACO? → Vojta</li>
+        <li>Proces (návrh): kontakty nahrát do <b>DACO</b> (consent + persoo hash) -> sync do Meira; <b>zároveň</b> SM soubor (tagy, jména) přímo do Meira -> Vojta potvrdí proveditelnost</li>
+        <li>Po vyjasnění rozsahu: připravit <b>cenovou nabídku</b></li>
+      </ul>
+    </div>
+    <div class="grp"><div class="grp-l go">Od Ewy - vyjasněno (soubor) ✓</div>
+      <ul>
+        <li>Datum narození = formát <b>DD.MM.YYYY</b></li>
+        <li>Tagy importujeme (pro segmentaci); sloupec <span class="mono">Tags (score)</span> <b>vynecháme</b> - nepoužívali na současném exim.pl, jen na starém webu do 2023</li>
+        <li><b>Main contact owner</b> taky netřeba</li>
+      </ul>
+    </div>
+    <div class="grp"><div class="grp-l go">Příležitost - lead scoring (k probrání)</div>
+      <ul>
+        <li>Obecný <b>lead score</b> (engagement: nákup &gt; návštěva webu...) v SM mají. Chtějí ho rozjet znovu <b>nad Meiro daty</b> (= nastavit lead scoring na Meiro eventech)?</li>
+        <li>Pokud ano -> <b>nascopujeme to</b> (práce navíc / naše nabídka)</li>
+      </ul>
+    </div>
+    <div class="grp"><div class="grp-l go">✅ Z callu</div>
+      <ul>
+        <li>Jakub napíše <b>Sýkorovi + Vojtovi</b> info (co chceme, proč, jak) a domluví další kroky - návrh: <b>persoo hash doplnit a vrátit</b>, nebo nechat v DACO a <b>Meiro si ho natáhne</b>; pak doplnit data z CSV od Ewy</li>
+      </ul>
+    </div>
+    <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d1" placeholder="Komentář / poznámka…"></textarea></div>
   </div>
-  <div class="grp"><div class="grp-l go">Náš postup + dotaz na ně</div>
-    <ul>
-      <li><b>BV ≈ ATCOM?</b> (ověřit) - až bude BV-DACO hotové, řekneme jim, ať <b>dají vědět</b> -> my <b>zkontrolujeme implementaci</b></li>
-      <li><b>Dotaz:</b> budou transakce z BV i v <b>CRM</b>? Aktuálně máme napojené transakce jen z CRM (ne z DACO) -> případně budeme muset <b>dodělat i u nás</b></li>
-    </ul>
+
+  <div class="otopic s" id="d2">
+    <div class="ohead"><span class="onum">2</span><span class="otitle">DACO / DER - závislosti + přístupy</span><span class="tag tag-s">Status · DER</span></div>
+    <div class="subjs"><span class="subj">Meiro implementation</span></div>
+    <div class="grp"><div class="grp-l">Stav (Vojta 17. 6.)</div>
+      <ul>
+        <li>DACO import: práce <b>začne příští týden</b> (napřed jiné projekty + vylepšení blacklistu)</li>
+        <li>BV-DACO integrace (souhlasy z BlueVenda do DACO): dokončení cca <b>24. 6.</b></li>
+      </ul>
+    </div>
+    <div class="grp"><div class="grp-l go">Náš postup + dotaz na ně</div>
+      <ul>
+        <li><b>BV ≈ ATCOM?</b> (ověřit) - až bude BV-DACO hotové, řekneme jim, ať <b>dají vědět</b> -> my <b>zkontrolujeme implementaci</b></li>
+        <li><b>Dotaz:</b> budou transakce z BV i v <b>CRM</b>? Aktuálně máme napojené transakce jen z CRM (ne z DACO) -> případně budeme muset <b>dodělat i u nás</b></li>
+      </ul>
+    </div>
+    <div class="grp"><div class="grp-l go">Zeptat se Vojty (z Ewiny pozvánky)</div>
+      <ul>
+        <li>Status <b>vylepšení blacklistu</b> v DACO? <i>(co přesně to je - z mailů neplyne)</i></li>
+        <li>Proběhl <b>import zákaznické DB z BV</b> bez problémů?</li>
+      </ul>
+    </div>
+    <div class="grp"><div class="grp-l go">Jen zkontrolovat (DER interní)</div>
+      <ul>
+        <li>Unsub logika + consent change history (EXIM přístup k Jira; termín úpravy DACO od <b>M. Lachmana</b>) - DER si to bere na <b>interní call</b> (Vojta + Schlesinger + Martin Sýkora) - <b>proběhl už? blokuje to něco?</b></li>
+      </ul>
+    </div>
+    <div class="grp"><div class="grp-l go">✅ Z callu</div>
+      <ul>
+        <li>Objednávky/transakce <b>jen z CRM</b> (ne z DACO) -> <b>DACO není ATCOM</b>; DACO = jen kontakty + consenty, nic jiného</li>
+        <li>Příští týden <b>jednorázový import</b>, <b>automatizace později</b> (termín neznámý)</li>
+        <li><b>= primární blocker na straně DT.</b> Dokud nehotovo, nemůžeme prakticky nic začít</li>
+      </ul>
+    </div>
+    <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d2" placeholder="Komentář / poznámka…"></textarea></div>
   </div>
-  <div class="grp"><div class="grp-l go">Zeptat se Vojty (z Ewiny pozvánky)</div>
-    <ul>
-      <li>Status <b>vylepšení blacklistu</b> v DACO? <i>(co přesně to je - z mailů neplyne)</i></li>
-      <li>Proběhl <b>import zákaznické DB z BV</b> bez problémů?</li>
-    </ul>
+
+  <div class="otopic b" id="d3">
+    <div class="ohead"><span class="onum">3</span><span class="otitle">DACO - chodí vůbec nová data?</span><span class="tag tag-d">Vyjasněno</span></div>
+    <div class="grp"><div class="grp-l">Fakta (export z DACO, dnes 23. 6.)</div>
+      <ul>
+        <li>Poslední záznam: <b>9. 6. 2026 12:29</b> -> dnes je 23. 6., čili <b>~2 týdny nic nového</b></li>
+        <li>V exportu jen 6 testovacích adres Ewy (vše <span class="mono">MKT</span>, <span class="mono">EXIM_PL</span>, statusvalue = 1)</li>
+      </ul>
+    </div>
+    <div class="grp"><div class="grp-l go">✅ Z callu - vysvětleno</div>
+      <ul>
+        <li>Nová data <b>přijdou až s integrací BV → DACO</b>, do té doby tam nic nebude</li>
+        <li>Čili teď je to <b>očekávané, ne chyba</b></li>
+      </ul>
+    </div>
+    <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d3" placeholder="Komentář / poznámka…"></textarea></div>
   </div>
-  <div class="grp"><div class="grp-l go">Jen zkontrolovat (DER interní)</div>
-    <ul>
-      <li>Unsub logika + consent change history (EXIM přístup k Jira; termín úpravy DACO od <b>M. Lachmana</b>) - DER si to bere na <b>interní call</b> (Vojta + Schlesinger + Martin Sýkora) - <b>proběhl už? blokuje to něco?</b></li>
-    </ul>
+
+  <div class="otopic d" id="d4">
+    <div class="ohead"><span class="onum">4</span><span class="otitle">Native bannery / naposledy prohlížené nabídky</span><span class="tag tag-d">Později</span></div>
+    <div class="subjs"><span class="subj">Dynamic offers on page in native banners</span></div>
+    <div class="grp"><div class="grp-l">Stav</div>
+      <ul>
+        <li>DER to chce řešit na <b>nové HP jako web feature</b> (ne přes Meiro) -> projekt <b>on hold</b>, řeší interně (Mirek Mates)</li>
+        <li>Ewa tlačí na <b>prozatímní řešení přes Meiro</b> („každý den = ztracený zloty")</li>
+        <li>Data Club má řešení <b>připravené</b> (banner + API na dostupnost hotelu)</li>
+      </ul>
+    </div>
+    <div class="grp"><div class="grp-l go">✅ Z callu - rozhodnuto</div>
+      <ul>
+        <li><b>Není MVP, počká si.</b> Začneme <b>basic use-cases</b>, tohle řešíme později (po nich)</li>
+      </ul>
+    </div>
+    <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d4" placeholder="Komentář / poznámka…"></textarea></div>
   </div>
-  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d2" placeholder="Komentář / poznámka…"></textarea></div>
+
+  <div class="otopic s" id="d5">
+    <div class="ohead"><span class="onum">5</span><span class="otitle">Rozbité reporty (audience i email)</span><span class="tag tag-s">Spor o platbu</span></div>
+    <div class="subjs"><span class="subj">Problem with email reporting</span></div>
+    <div class="grp"><div class="grp-l">Stav</div>
+      <ul>
+        <li>Vlastní <b>Meiro</b> (Jakub Nožička), <b>ne</b> Data Club</li>
+        <li>Příčina: postupné změny zdrojových dat -> reporty potřebují přepracování + údržbu</li>
+      </ul>
+    </div>
+    <div class="grp"><div class="grp-l go">✅ Z callu - jádro sporu</div>
+      <ul>
+        <li>Meiro chce, ať <b>platí DT</b> (supporting hours); DT to bere jako <b>bug Meira</b> a chce fix <b>zdarma</b></li>
+        <li><b>Naše role:</b> pomoct DT to s Meirem vyjednat</li>
+      </ul>
+    </div>
+    <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d5" placeholder="Komentář / poznámka…"></textarea></div>
+  </div>
+
+  <div class="otopic f" id="d6">
+    <div class="ohead"><span class="onum">6</span><span class="otitle">Personalizace GDPR potvrzovacích e-mailů</span><span class="tag tag-f">Mimo scope</span></div>
+    <div class="subjs"><span class="subj">Meiro implementation</span></div>
+    <div class="grp"><div class="grp-l go">✅ Z callu - vyřazeno</div>
+      <ul>
+        <li><b>Skip - není pro Meiro.</b> Řeší se na <b>GDPR straně v DerTouristik</b>, s Meirem nesouvisí vůbec</li>
+      </ul>
+    </div>
+    <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d6" placeholder="Komentář / poznámka…"></textarea></div>
+  </div>
+
+  <!-- RESOLVED -->
+  <div class="sechead" id="vyreseno"><h2>✅ Vyřešeno</h2><span class="hint">per e-mailový předmět - rozklikni detail</span></div>
+
+  <details class="res">
+    <summary><span class="rsubj">✉ PD: Meiro v. Daco v. BV sync of consents _ PL</span><span class="rout">consent sync hotový</span></summary>
+    <div class="rbody"><ul>
+      <li><b>Problém:</b> souhlasy z DACO se do Meira syncovaly jen <b>2×denně</b> -> pro PL právo nedostatečné (hrozil mail po odhlášení)</li>
+      <li><b>Fix:</b> sync přes event „Email Subscription Imported" nastaven na <b>~10 min</b> (z DACO do Meira)</li>
+      <li><b>Ewa (8. 6.) potvrdila:</b> 10-30 min je dostatečné, blocker odstraněn</li>
+      <li>Pozn.: integrace souhlasů z <b>BlueVenda do DACO</b> je jiná věc - běží dál na straně DER (~24. 6.), viz Status</li>
+    </ul></div>
+  </details>
+
+  <details class="res">
+    <summary><span class="rsubj">✉ Incorrect unsubscribe links</span><span class="rout">unsub funguje</span></summary>
+    <div class="rbody"><ul>
+      <li><b>Problém:</b> u <span class="mono">ewa38016</span> + <span class="mono">ewa26470</span> nešel unsubscribe („…must first verify your email address")</li>
+      <li><b>Příčina:</b> v URL chyběl <b>hash_persoo</b> (interní hash e-mailu z DACO)</li>
+      <li><b>Fix:</b> atribut „Last hash persoo" upraven, aby bral hash z víc zdrojů; přepočet do 7 dní</li>
+      <li><b>22. 6. Ewa potvrdila:</b> unsubscribe funguje</li>
+    </ul></div>
+  </details>
+
+  <details class="res">
+    <summary><span class="rsubj">✉ sending emails doesn't work</span><span class="rout">vyřešeno</span></summary>
+    <div class="rbody"><ul>
+      <li><b>Problém:</b> Meiro ukazovalo odesláno, ale e-maily nedorazily (žádné logy v Infobip/SMTP)</li>
+      <li><b>Příčina:</b> expirovaný API klíč v integraci (i na backendu)</li>
+      <li><b>Fix:</b> vyměněn (expirace nastavena na 2090), otestováno - odesílání OK</li>
+    </ul></div>
+  </details>
+
+  <details class="res">
+    <summary><span class="rsubj">✉ No profiles in Meiro</span><span class="rout">vysvětleno</span></summary>
+    <div class="rbody"><ul>
+      <li><b>Problém:</b> adresy <span class="mono">@exim.pl</span> / <span class="mono">@eximtours.pl</span> se neobjevily v Meiro</li>
+      <li><b>Příčina:</b> domény jsou na Meiro <b>blacklistu</b> (záměrně - brání slití přeposlaných/interních adres do jednoho mega-profilu)</li>
+      <li><b>Řešení:</b> pro test flow používat soukromé adresy (Gmail); Ewa vzala na vědomí</li>
+    </ul></div>
+  </details>
+
+  <details class="res">
+    <summary><span class="rsubj">✉ questions about Meiro</span><span class="rout">rozděleno do vláken</span></summary>
+    <div class="rbody"><ul>
+      <li><b>Co to bylo:</b> sběrné vlákno s mnoha tématy najednou</li>
+      <li>Na žádost Vojty <b>rozděleno na samostatná vlákna</b>; Jakub odpovídá v každém zvlášť</li>
+      <li>Mobile push: <b>parkováno</b> - čeká na appku EXIMu</li>
+    </ul></div>
+  </details>
+
+  <details class="res">
+    <summary><span class="rsubj">✉ Supporting hours for Exim.pl</span><span class="rout">předáno na Vojtu</span></summary>
+    <div class="rbody"><ul>
+      <li><b>Co to bylo:</b> fakturace podpůrných hodin (~18 h od prosince / 32 400 CZK) + dotaz na rozsah u 3 faktur</li>
+      <li>Jan doplnil <b>rozsah prací</b>; objednávky T153083 + T153144 řešeny napřímo s CZ týmem (re-fakturace)</li>
+      <li>Zbylé faktury Ewa <b>doladí s Vojtou</b> po jeho návratu z dovolené</li>
+    </ul></div>
+  </details>
+
+  <div class="notes">
+    <label for="notes">📝 Obecné poznámky (ukládá se v prohlížeči)</label>
+    <textarea id="notes" data-k="notes" placeholder="Poznámky, úkoly, termíny…"></textarea>
+  </div>
+
 </div>
 
-<!-- d3 DACO data flow -->
-<div class="otopic b" id="d3">
-  <div class="ohead"><span class="onum">3</span><span class="otitle">DACO - chodí vůbec nová data?</span><span class="tag tag-b">Blocker?</span></div>
-  <div class="grp"><div class="grp-l">Fakta (export z DACO, dnes 23. 6.)</div>
-    <ul>
-      <li>Poslední záznam: <b>9. 6. 2026 12:29</b> -> dnes je 23. 6., čili <b>~2 týdny nic nového</b></li>
-      <li>V exportu jen 6 testovacích adres Ewy (vše <span class="mono">MKT</span>, <span class="mono">EXIM_PL</span>, statusvalue = 1)</li>
-    </ul>
-  </div>
-  <div class="grp"><div class="grp-l go">Dotaz na Vojtu / DACO</div>
-    <ul>
-      <li><b>Posílá DACO vůbec nová data? Nestojí export / feed?</b></li>
-      <li>Když se někdo přihlásí na webu, dorazí to do DACO (a k nám)? Proč od 9. 6. nic?</li>
-    </ul>
-  </div>
-  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d3" placeholder="Komentář / poznámka…"></textarea></div>
-</div>
-
-<!-- d4 Native banners -->
-<div class="otopic d" id="d4">
-  <div class="ohead"><span class="onum">4</span><span class="otitle">Native bannery / naposledy prohlížené nabídky</span><span class="tag tag-d">Rozhodnutí</span></div>
-  <div class="subjs"><span class="subj">Dynamic offers on page in native banners</span></div>
-  <div class="grp"><div class="grp-l">Stav</div>
-    <ul>
-      <li>DER to chce řešit na <b>nové HP jako web feature</b> (ne přes Meiro) -> projekt <b>on hold</b>, řeší interně (Mirek Mates)</li>
-      <li>Ewa tlačí na <b>prozatímní řešení přes Meiro</b> („každý den = ztracený zloty")</li>
-      <li>Data Club má řešení <b>připravené</b> (banner + API na dostupnost hotelu)</li>
-    </ul>
-  </div>
-  <div class="grp"><div class="grp-l go">HLAVNÍ úkol - rozhodnout</div>
-    <ul>
-      <li>Rozseknout: <b>dělá use-case Meiro, nebo ne?</b></li>
-      <li>Pokud ano -> potřebujeme <b>potvrzení od Mirka Matese</b></li>
-    </ul>
-  </div>
-  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d4" placeholder="Komentář / poznámka…"></textarea></div>
-</div>
-
-<!-- d5 Reporting -->
-<div class="otopic s" id="d5">
-  <div class="ohead"><span class="onum">5</span><span class="otitle">Rozbité reporty (audience i email)</span><span class="tag tag-s">Status · Meiro</span></div>
-  <div class="subjs"><span class="subj">Problem with email reporting</span></div>
-  <div class="grp"><div class="grp-l">Stav</div>
-    <ul>
-      <li>Vlastní <b>Meiro</b> (Jakub Nožička), <b>ne</b> Data Club</li>
-      <li>Příčina: postupné změny zdrojových dat -> reporty potřebují přepracování + údržbu</li>
-      <li>Blokuje vyjednávání <b>consulting balíčku</b> (Václav Málek, Meiro) + spojení s Mirkem Matesem (DER)</li>
-    </ul>
-  </div>
-  <div class="grp"><div class="grp-l go">Náš tah</div>
-    <ul>
-      <li>Nabídnout, že <b>reporting uděláme my</b> + připravíme cenovku <i>(interně: přes Martina)</i></li>
-    </ul>
-  </div>
-  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d5" placeholder="Komentář / poznámka…"></textarea></div>
-</div>
-
-<!-- d6 GDPR emails -->
-<div class="otopic d" id="d6">
-  <div class="ohead"><span class="onum">6</span><span class="otitle">Personalizace GDPR potvrzovacích e-mailů</span><span class="tag tag-d">K implementaci</span></div>
-  <div class="subjs"><span class="subj">Meiro implementation</span></div>
-  <div class="grp"><div class="grp-l">Stav</div>
-    <ul>
-      <li>Z Ewiny pozvánky: <b>„to be implemented"</b> - zatím neřešeno</li>
-      <li>Potvrzovací (DOI) mail běží přes <b>DACO + Infobip</b> = spíš DER, Data Club poradí</li>
-    </ul>
-  </div>
-  <div class="grp"><div class="grp-l go">Úkol</div>
-    <ul>
-      <li>Zjistit od nich, <b>co chtějí personalizovat</b> (jméno / jazyk / nabídka) - je to na nich, jak si to představují</li>
-    </ul>
-  </div>
-  <div class="cmt-wrap"><div class="cmt-l">💬 Komentář</div><textarea class="cmt" data-k="d6" placeholder="Komentář / poznámka…"></textarea></div>
-</div>
-
-<!-- ============ RESOLVED ============ -->
-<div class="sechead" id="vyreseno"><h2>✅ Vyřešeno</h2><span class="hint">per e-mailový předmět - rozklikni detail</span></div>
-
-<details class="res">
-  <summary><span class="rsubj">✉ PD: Meiro v. Daco v. BV sync of consents _ PL</span><span class="rout">consent sync hotový</span></summary>
-  <div class="rbody"><ul>
-    <li><b>Problém:</b> souhlasy z DACO se do Meira syncovaly jen <b>2×denně</b> -> pro PL právo nedostatečné (hrozil mail po odhlášení)</li>
-    <li><b>Fix:</b> sync přes event „Email Subscription Imported" nastaven na <b>~10 min</b> (z DACO do Meira)</li>
-    <li><b>Ewa (8. 6.) potvrdila:</b> 10-30 min je dostatečné, blocker odstraněn</li>
-    <li>Pozn.: integrace souhlasů z <b>BlueVenda do DACO</b> je jiná věc - běží dál na straně DER (~24. 6.), viz bod 2</li>
-  </ul></div>
-</details>
-
-<details class="res">
-  <summary><span class="rsubj">✉ Incorrect unsubscribe links</span><span class="rout">unsub funguje</span></summary>
-  <div class="rbody"><ul>
-    <li><b>Problém:</b> u <span class="mono">ewa38016</span> + <span class="mono">ewa26470</span> nešel unsubscribe („…must first verify your email address")</li>
-    <li><b>Příčina:</b> v URL chyběl <b>hash_persoo</b> (interní hash e-mailu z DACO)</li>
-    <li><b>Fix:</b> atribut „Last hash persoo" upraven, aby bral hash z víc zdrojů; přepočet do 7 dní</li>
-    <li><b>22. 6. Ewa potvrdila:</b> unsubscribe funguje</li>
-    <li>Pozn.: persoo hash pro <b>importované</b> kontakty -> řeší se u Sales Manago (bod 1)</li>
-  </ul></div>
-</details>
-
-<details class="res">
-  <summary><span class="rsubj">✉ sending emails doesn't work</span><span class="rout">vyřešeno</span></summary>
-  <div class="rbody"><ul>
-    <li><b>Problém:</b> Meiro ukazovalo odesláno, ale e-maily nedorazily (žádné logy v Infobip/SMTP)</li>
-    <li><b>Příčina:</b> expirovaný API klíč v integraci (i na backendu)</li>
-    <li><b>Fix:</b> vyměněn (expirace nastavena na 2090), otestováno - odesílání OK</li>
-  </ul></div>
-</details>
-
-<details class="res">
-  <summary><span class="rsubj">✉ No profiles in Meiro</span><span class="rout">vysvětleno</span></summary>
-  <div class="rbody"><ul>
-    <li><b>Problém:</b> adresy <span class="mono">@exim.pl</span> / <span class="mono">@eximtours.pl</span> se neobjevily v Meiro</li>
-    <li><b>Příčina:</b> domény jsou na Meiro <b>blacklistu</b> (záměrně - brání slití přeposlaných/interních adres do jednoho mega-profilu)</li>
-    <li><b>Řešení:</b> pro test flow používat soukromé adresy (Gmail); Ewa vzala na vědomí</li>
-  </ul></div>
-</details>
-
-<details class="res">
-  <summary><span class="rsubj">✉ questions about Meiro</span><span class="rout">rozděleno do vláken</span></summary>
-  <div class="rbody"><ul>
-    <li><b>Co to bylo:</b> sběrné vlákno s mnoha tématy najednou</li>
-    <li>Na žádost Vojty <b>rozděleno na samostatná vlákna</b>; Jakub odpovídá v každém zvlášť</li>
-    <li>Mobile push: <b>parkováno</b> - čeká na appku EXIMu</li>
-  </ul></div>
-</details>
-
-<details class="res">
-  <summary><span class="rsubj">✉ Supporting hours for Exim.pl</span><span class="rout">předáno na Vojtu</span></summary>
-  <div class="rbody"><ul>
-    <li><b>Co to bylo:</b> fakturace podpůrných hodin (~18 h od prosince / 32 400 CZK) + dotaz na rozsah u 3 faktur</li>
-    <li>Jan doplnil <b>rozsah prací</b>; objednávky T153083 + T153144 řešeny napřímo s CZ týmem (re-fakturace)</li>
-    <li>Zbylé faktury Ewa <b>doladí s Vojtou</b> po jeho návratu z dovolené</li>
-  </ul></div>
-</details>
-
-<!-- notes -->
-<div class="notes">
-  <label for="notes">📝 Obecné poznámky z callu (ukládá se v prohlížeči)</label>
-  <textarea id="notes" data-k="notes" placeholder="Sem si piš během callu - rozhodnutí, úkoly, termíny…"></textarea>
-</div>
-
-<footer>Podklad pro call 24. 6. 2026 · sloučeno z 10 e-mailových vláken (do 22. 6.)</footer>
+<footer>Meiro × EXIM · sloučeno z 10 e-mailových vláken + výstupy z callu 24. 6. 2026</footer>
 
 </div>
 
@@ -420,11 +544,43 @@
   function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
     clearTimeout(window.__t);window.__t=setTimeout(function(){t.classList.remove('show')},2000);}
 
+  function showTab(name){
+    document.querySelectorAll('.page').forEach(function(p){p.classList.toggle('active', p.id==='page-'+name);});
+    document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active', t.getAttribute('data-tab')===name);});
+    window.scrollTo({top:0});
+  }
+
   function toggleRes(open){document.querySelectorAll('details.res').forEach(function(d){d.open=open;});}
 
+  function clip(txt){
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){toast('Zkopírováno ✓')},fb);}
+    else fb();
+    function fb(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.left='-9999px';
+      document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Zkopírováno ✓')}catch(e){toast('Kopírování selhalo')}document.body.removeChild(ta);}
+  }
+
+  function copyActive(){
+    if(document.getElementById('page-status').classList.contains('active')) copyStatus(); else copyAgenda();
+  }
+
+  function copyStatus(){
+    var out=['MEIRO × EXIM - STAV k 24. 6. 2026 (po callu)',''];
+    var b=document.querySelector('.blocker');
+    if(b){ out.push(b.querySelector('.bt').textContent.trim());
+      b.querySelectorAll('li').forEach(function(li){out.push('  - '+li.textContent.replace(/\s+/g,' ').trim());}); out.push(''); }
+    document.querySelectorAll('#page-status .statgrp, #page-status .srow, #page-status .donelist').forEach(function(el){
+      if(el.classList.contains('statgrp')){ out.push(''); out.push(el.textContent.replace(/\s+/g,' ').trim()); }
+      else if(el.classList.contains('srow')){
+        var sb=el.querySelector('.sb'), st=el.querySelector('.st'), sd=el.querySelector('.sd');
+        out.push('- ['+(sb?sb.textContent.trim():'')+'] '+(st?st.textContent.trim():'')+': '+(sd?sd.textContent.replace(/\s+/g,' ').trim():''));
+      } else { out.push('Hotovo: '+el.textContent.replace(/\s+/g,' ').trim()); }
+    });
+    clip(out.join('\n'));
+  }
+
   function copyAgenda(){
-    var out=['MEIRO × EXIM - příprava na call (středa 24. 6. 2026)',''];
-    document.querySelectorAll('.otopic').forEach(function(c){
+    var out=['MEIRO × EXIM - příprava na call (24. 6. 2026)',''];
+    document.querySelectorAll('#page-prep .otopic').forEach(function(c){
       out.push(c.querySelector('.onum').textContent.trim()+') '+c.querySelector('.otitle').textContent.trim());
       var subs=[].map.call(c.querySelectorAll('.subj'),function(s){return s.textContent.trim();});
       if(subs.length) out.push('   Předmět: '+subs.join(' / '));
@@ -435,19 +591,9 @@
       var cm=c.querySelector('.cmt'); if(cm&&cm.value.trim()) out.push('   >> KOMENTÁŘ: '+cm.value.trim());
       out.push('');
     });
-    var rc=[];
-    document.querySelectorAll('details.res').forEach(function(d){
-      var cm=d.querySelector('.cmt');
-      if(cm&&cm.value.trim()) rc.push('- '+d.querySelector('.rsubj').textContent.trim()+': '+cm.value.trim());
-    });
-    if(rc.length){ out.push('VYŘEŠENO - komentáře:'); rc.forEach(function(x){out.push(x);}); out.push(''); }
     var n=document.getElementById('notes').value.trim();
     if(n){ out.push('OBECNÉ POZNÁMKY:'); out.push(n); }
-    var txt=out.join('\n');
-    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){toast('Zkopírováno ✓')},fallback);}
-    else fallback();
-    function fallback(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.left='-9999px';
-      document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Zkopírováno ✓')}catch(e){toast('Kopírování selhalo')}document.body.removeChild(ta);}
+    clip(out.join('\n'));
   }
 
   (function(){
