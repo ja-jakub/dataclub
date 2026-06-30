@@ -120,6 +120,20 @@
   .copied{font-size:13px;color:var(--go);font-weight:650;opacity:0;transition:opacity .2s}
   .copied.show{opacity:1}
   footer{border-top:1px solid var(--line);padding:22px 0 50px;color:var(--muted);font-size:13px}
+  .tabs{display:flex;gap:8px;margin-top:14px}
+  .tab-btn{font-size:13.5px;font-weight:600;color:#cfeefb;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:7px 16px;cursor:pointer}
+  .tab-btn.active{background:#fff;color:#0e7490;border-color:#fff}
+  .pane[hidden]{display:none}
+  .agenda-intro{color:var(--muted);font-size:14px;margin:0 0 18px}
+  .ag-item{display:flex;gap:14px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:12px}
+  .ag-item.muted{opacity:.55}
+  .ag-item.active{border-color:var(--accent);box-shadow:0 0 0 2px rgba(14,116,144,.1) inset}
+  .ag-n{flex:0 0 30px;width:30px;height:30px;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+  .ag-item.muted .ag-n{background:var(--muted)}
+  .ag-t{font-weight:700;font-size:16px}
+  .ag-d{color:var(--muted);font-size:13.5px;margin-top:2px}
+  .ag-sub{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;margin:13px 0 5px}
+  .ag-ul{margin:0;padding-left:18px}.ag-ul li{margin:4px 0;font-size:14px}
 </style>
 </head>
 <body>
@@ -127,12 +141,16 @@
 <header class="hero">
   <div class="wrap">
     <div class="eyebrow">Domeq · HubSpot CRM</div>
-    <h1>Reakce na jejich data, rozkreslená flow, rozhodnutí a návrh odpovědi</h1>
-    <p>Vše na jednom místě: sales pohled na Perničkův návrh, celý proces rozkreslený, logika formulářů + Better Hotel, rozhodnutí A/B s reálnými cenami a hotový e-mail k odeslání.</p>
-    <div class="gloss">📖 <b>PMS / booking nástroj</b> = <b>Better Hotel</b> (ze screenshotu „by Better Hotel" — <b>název ověřit u klienta</b>) — kam jde přímá rezervace a kam se ručně předá obchod po podpisu. Mews se nekoná. · <b>SLA</b> = cíl rychlosti první odpovědi (např. do 4 h).</div>
+    <h1>Podklad &amp; příprava na call</h1>
+    <p>Detailní podklad k projektu a stručná agenda na call s klientem.</p>
+    <div class="tabs">
+      <button class="tab-btn active" data-pane="podklad" onclick="showPane('podklad')">Podklad</button>
+      <button class="tab-btn" data-pane="agenda" onclick="showPane('agenda')">Call agenda</button>
+    </div>
   </div>
 </header>
 
+<div class="pane" id="pane-podklad">
 <nav class="chips">
   <div class="wrap">
     <a class="hot" href="#reakce">▶ První reakce</a>
@@ -353,7 +371,7 @@ Ještě se doptáme
 - Komunikace - počítáme s tím, že každý si napojí svůj pracovní e-mail a odpovědi se ukládají rovnou k danému leadu (historii vidí celý tým). Máte i centrální adresu (např. pronajmy@domeq.cz), kterou bychom napojili jako sdílenou schránku?
 - Pipeline, fáze a pravidla posunu (podle čeho je poptávka „kvalifikovaná" a kdy se z ní stane obchod) - chcete je popsat od nás, nebo si definici připravíte sami?
 
-Na základě odpovědí připravíme odhad nákladů na implementaci a dvě varianty řešení.
+Celý tok od poptávky po uzavření je nám jasný a přesně na něj sedí prodejní nástroje HubSpotu (leady, obchody, automatizace) - rádi vám je ukážeme na krátkém demu. Na základě vašich odpovědí vám pak začátkem příštího týdne připravíme a pošleme odhad nákladů (cost estimate) na projekt.
 
 Děkuji a hezký den,
 Jakub</pre>
@@ -361,12 +379,54 @@ Jakub</pre>
   </section>
 
 </main>
+</div><!-- /pane-podklad -->
+
+<div class="pane" id="pane-agenda" hidden>
+<main class="wrap">
+  <section style="margin-top:26px">
+    <div class="agenda-intro">Příprava na call s klientem. Tři body, postupně.</div>
+    <div class="ag-item muted">
+      <div class="ag-n">1</div>
+      <div><div class="ag-t">Ukázka HubSpot Sales Hub</div><div class="ag-d">Živá ukázka prostředí — leady, obchody, automatizace.</div></div>
+    </div>
+    <div class="ag-item active">
+      <div class="ag-n">2</div>
+      <div>
+        <div class="ag-t">Dotazy + domluvené z e-mailu</div>
+        <div class="ag-sub">Domluveno (potvrdíme)</div>
+        <ul class="ag-ul">
+          <li>Pole klienta — doplníme vlastníka a hodnotu obchodu.</li>
+          <li>Důvody ztráty — bereme.</li>
+          <li>Automatizace — bereme + 2 naše (auto-posun fází, autoresponder).</li>
+          <li>Formuláře — přes API, my dodáme specifikaci jejich vývojářům.</li>
+        </ul>
+        <div class="ag-sub">Otázky k zodpovězení</div>
+        <ul class="ag-ul">
+          <li>Formuláře — kolik typů a jaká data navíc u rezervačního?</li>
+          <li>Budovy a typy jednotek — seznam pro výběry.</li>
+          <li>Komunikace — centrální adresa / sdílený inbox?</li>
+          <li>Pravidla posunu / „Kvalifikováno" — definují oni, nebo my?</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ag-item muted">
+      <div class="ag-n">3</div>
+      <div><div class="ag-t">Projít CE</div><div class="ag-d">Rozsah prací a hodiny.</div></div>
+    </div>
+  </section>
+</main>
+</div><!-- /pane-agenda -->
 
 <footer class="wrap">
   Domeq · HubSpot CRM — reakce, flow, rozhodnutí, nabídka. Podklad od skillu <b>domeq-hubspot-crm</b>. Sekci 7 (nacenění) klientovi nech schovanou. Ceny seatů a onboarding fee ověřuj v portálu.
 </footer>
 
 <script>
+  function showPane(name){
+    document.querySelectorAll('.pane').forEach(function(p){p.hidden=(p.id!=='pane-'+name);});
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.toggle('active',b.dataset.pane===name);});
+    window.scrollTo(0,0);
+  }
   function copyMail(){
     var t=document.getElementById('mailText').innerText;
     function done(){var c=document.getElementById('copied');c.classList.add('show');setTimeout(function(){c.classList.remove('show')},1800);}
