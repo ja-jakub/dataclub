@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmapa implementace Meiro v2</title>
+<style>
+  :root{
+    --my:#1a56db; --klient:#d97706; --spolu:#059669;
+    --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);padding:40px 20px;line-height:1.5}
+  .wrap{max-width:960px;margin:0 auto}
+  header{margin-bottom:30px}
+  h1{font-size:26px;font-weight:700}
+  .sub{color:var(--muted);font-size:15px;margin-top:4px}
+  h2{font-size:16px;font-weight:700;margin:36px 0 14px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px}
+
+  /* GANTT */
+  .gantt{display:grid;grid-template-columns:210px repeat(6,1fr);gap:5px 0;align-items:center}
+  .gantt .head{font-size:12px;font-weight:600;color:var(--muted);text-align:center;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .gantt .head.first{text-align:left}
+  .ghead{grid-column:1/8;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:14px 0 5px;border-bottom:1px solid var(--line)}
+  .gantt .label{font-size:13px;font-weight:600;padding:5px 10px 5px 0}
+  .gantt .label a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--muted)}
+  .gantt .label a:hover{color:var(--my);border-bottom-color:var(--my)}
+  .gantt .label small{display:block;font-weight:400;color:var(--muted);font-size:11px}
+  .bar{height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10.5px;font-weight:600;letter-spacing:.02em}
+  .b-my{background:var(--my)} .b-klient{background:var(--klient)} .b-spolu{background:var(--spolu)}
+  .cells{display:grid;grid-template-columns:repeat(6,1fr);grid-column:2/8;column-gap:4px;padding:3px 0;border-left:1px dashed var(--line)}
+  .legend{display:flex;flex-wrap:wrap;gap:16px 20px;margin-top:18px;font-size:12.5px;color:var(--muted)}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .hint{font-size:12px;color:var(--muted);margin-top:10px}
+
+  /* MILESTONES */
+  .miles{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+  .mile{text-align:center;font-size:11.5px;color:var(--muted)}
+  .mile b{display:block;color:var(--ink);font-size:12px}
+  .mile::before{content:"◆";display:block;color:var(--my);font-size:10px;margin-bottom:2px}
+
+  /* PHASE DETAILS */
+  details{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+  summary{cursor:pointer;padding:14px 18px;font-size:14px;font-weight:600;list-style:none;display:flex;align-items:center;gap:10px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";margin-left:auto;color:var(--muted);font-size:18px;font-weight:400}
+  details[open] summary::after{content:"–"}
+  summary .who{font-size:10.5px;font-weight:700;color:#fff;padding:2px 9px;border-radius:20px}
+  summary .wk{font-size:11px;color:var(--muted);font-weight:600;white-space:nowrap}
+  .tasks{padding:0 18px 16px 18px}
+  .tasks ul{list-style:none}
+  .tasks li{font-size:13px;padding:7px 0 7px 22px;border-top:1px solid #f1f5f9;position:relative}
+  .tasks li::before{content:"✓";position:absolute;left:2px;color:var(--my);font-weight:700;font-size:12px}
+  .tasks li b.k{color:var(--klient)}
+
+  /* USE CASES */
+  .uc{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+  .uc .item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
+  .uc .item.opt{border-style:dashed;background:#fcfcfd}
+  .uc .num{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-bottom:10px}
+  .uc .item.opt .num{background:var(--spolu)}
+  .uc h3{font-size:14.5px;margin-bottom:6px}
+  .uc p{font-size:12.5px;color:var(--muted)}
+  .uc .when{display:inline-block;margin-top:10px;background:#eff6ff;color:var(--my);font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px}
+  .uc .item.opt .when{background:#ecfdf5;color:var(--spolu)}
+
+  /* CHECKLIST */
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:0 12px 10px 0;border-bottom:1px solid var(--line)}
+  td{padding:10px 12px 10px 0;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .tag{display:inline-block;background:#f1f5f9;border-radius:6px;padding:2px 8px;font-size:11.5px;font-weight:700;color:var(--ink);white-space:nowrap}
+
+  /* FLOW */
+  .flow{display:flex;align-items:stretch;gap:0;font-size:12.5px}
+  .col{flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+  .col h4{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:10px}
+  .col ul{list-style:none}
+  .col li{padding:6px 10px;background:var(--bg);border-radius:8px;margin-bottom:6px}
+  .col.mid{background:#eff6ff;border-color:#bfdbfe}
+  .col.mid li{background:#fff}
+  .arr{align-self:center;padding:0 10px;color:var(--muted);font-size:20px}
+
+  footer{margin-top:36px;font-size:12px;color:var(--muted)}
+  @media(max-width:720px){.flow{flex-direction:column}.arr{transform:rotate(90deg);text-align:center}.gantt{grid-template-columns:150px repeat(6,1fr)}}
+  @media print{
+    body{background:#fff;padding:0;font-size:12px}
+    .card,.uc .item,.col,details{border-color:#ccc;break-inside:avoid}
+    h2{break-after:avoid}
+    summary::after{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Implementace Meiro v2 — roadmapa</h1>
+  <div class="sub">Pipes + Engage &nbsp;·&nbsp; 6 týdnů od kick-offu &nbsp;·&nbsp; e-mailing přes SmartEmailing &nbsp;·&nbsp; práce běží ve čtyřech paralelních streamech</div>
+</header>
+
+<h2>Harmonogram — paralelní streamy</h2>
+<div class="card">
+  <div class="gantt">
+    <div class="head first">Fáze</div>
+    <div class="head">T1</div><div class="head">T2</div><div class="head">T3</div><div class="head">T4</div><div class="head">T5</div><div class="head">T6</div>
+
+    <div class="ghead">Řízení projektu — společně</div>
+
+    <div class="label"><a href="#f1">Příprava, tým &amp; setup Meiro</a><small>kick-off, přístupy, instance</small></div>
+    <div class="cells"><div class="bar b-spolu" style="grid-column:1/2">společně</div></div>
+
+    <div class="label"><a href="#f9">Průběžné QA dat</a><small>kontrola čísel proti zdrojům</small></div>
+    <div class="cells"><div class="bar b-spolu" style="grid-column:3/6">společně</div></div>
+
+    <div class="label"><a href="#f10">Testování, školení &amp; go-live</a><small>QA, předání provozu</small></div>
+    <div class="cells"><div class="bar b-spolu" style="grid-column:6/7">společně</div></div>
+
+    <div class="ghead">Web — vývojář klienta + Data Club</div>
+
+    <div class="label"><a href="#f2">Specifikace eventů</a><small>datový slovník, custom events</small></div>
+    <div class="cells"><div class="bar b-my" style="grid-column:1/3">Data Club</div></div>
+
+    <div class="label"><a href="#f3">SDK + custom eventy CZ/SK</a><small>test → produkce</small></div>
+    <div class="cells"><div class="bar b-klient" style="grid-column:2/4">klient (dev)</div></div>
+
+    <div class="ghead">Data — datový tým Data Club</div>
+
+    <div class="label"><a href="#f4">Napojení SmartEmailingu</a><small>bez součinnosti klienta</small></div>
+    <div class="cells"><div class="bar b-my" style="grid-column:1/3">Data Club</div></div>
+
+    <div class="label"><a href="#f5">Napojení databáze</a><small>historie + průběžný sync</small></div>
+    <div class="cells"><div class="bar b-my" style="grid-column:2/4">Data Club</div></div>
+
+    <div class="label"><a href="#f6">Jednotná identita</a><small>propojení dat do profilu</small></div>
+    <div class="cells"><div class="bar b-my" style="grid-column:3/5">Data Club</div></div>
+
+    <div class="ghead">Kampaně — kampaňový tým Data Club</div>
+
+    <div class="label"><a href="#f7">E-mailové šablony</a><small>welcome, košík, ponákupka</small></div>
+    <div class="cells"><div class="bar b-my" style="grid-column:2/5">Data Club</div></div>
+
+    <div class="label"><a href="#f8">Kampaně v Engage</a><small>postupné spouštění use-casů</small></div>
+    <div class="cells"><div class="bar b-my" style="grid-column:3/6">Data Club</div></div>
+  </div>
+
+  <div class="miles">
+    <div class="mile"><b>Kick-off</b>instance běží</div>
+    <div class="mile"><b>Specifikace + SE</b>e-mailing napojen</div>
+    <div class="mile"><b>Data tečou</b>web i databáze</div>
+    <div class="mile"><b>Welcome live</b>jednotný profil</div>
+    <div class="mile"><b>Košík + ponákupka</b>vše live</div>
+    <div class="mile"><b>Go-live</b>předání provozu</div>
+  </div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:var(--my)"></span>Data Club</span>
+    <span><span class="dot" style="background:var(--klient)"></span>Klient</span>
+    <span><span class="dot" style="background:var(--spolu)"></span>Společně</span>
+  </div>
+  <div class="hint">Kliknutím na název fáze zobrazíte detailní soupis úkolů. Streamy běží paralelně — use-casy spouštíme postupně, jakmile mají svá data.</div>
+</div>
+
+<h2>Postupné spouštění use-casů</h2>
+<div class="uc">
+  <div class="item opt">
+    <span class="num">+</span>
+    <h3>Sběrový pop-up <small style="color:var(--muted);font-weight:400">(volitelný předskokan)</small></h3>
+    <p>Jednoduchý banner na sběr e-mailů bez personalizace. Jede hned, jak běží SDK a SmartEmailing — první výsledky ještě během implementace.</p>
+    <span class="when">už od týdne 3</span>
+  </div>
+  <div class="item">
+    <span class="num">1</span>
+    <h3>Welcome banner + e-mail</h3>
+    <p>Personalizovaný pop-up pro nové návštěvníky a uvítací zpráva. Potřebuje web tracking a jednotný profil.</p>
+    <span class="when">od týdne 4</span>
+  </div>
+  <div class="item">
+    <span class="num">2</span>
+    <h3>Opuštěný košík</h3>
+    <p>Připomínka nedokončeného nákupu v reálném čase. Potřebuje e-commerce eventy z webu a pár dní sběru dat.</p>
+    <span class="when">od týdne 5</span>
+  </div>
+  <div class="item">
+    <span class="num">3</span>
+    <h3>Ponákupní e-mail</h3>
+    <p>Poděkování / doporučení po nákupu. Čeká na historii transakcí z databáze a odsouhlasené QA dat.</p>
+    <span class="when">týden 5–6</span>
+  </div>
+</div>
+
+<h2 id="detail">Detail fází — co konkrétně proběhne</h2>
+
+<details id="f1">
+  <summary>1 · Příprava, tým &amp; setup Meiro <span class="wk">týden 1</span><span class="who" style="background:var(--spolu)">společně</span></summary>
+  <div class="tasks"><ul>
+    <li>Kick-off: cíle, harmonogram a způsob komunikace</li>
+    <li>Sestavení projektového týmu a rozdělení rolí na obou stranách</li>
+    <li>Audit datových zdrojů — web CZ/SK, databáze, SmartEmailing</li>
+    <li>Předání checklistu přístupů klientovi (DB, DNS, GTM)</li>
+    <li>Založení produkční instance Meiro</li>
+    <li>Základní setup instance — uživatelé a oprávnění, kostra zdrojů a destinací, notifikace a alerting</li>
+  </ul></div>
+</details>
+
+<details id="f2">
+  <summary>2 · Specifikace eventů &amp; datový model <span class="wk">týden 1–2</span><span class="who" style="background:var(--my)">Data Club</span></summary>
+  <div class="tasks"><ul>
+    <li>Datový slovník custom eventů: <i>product_viewed, category_viewed, add_to_cart, basket_snapshot, begin_checkout, purchase, form_submit</i> — kdy se posílají a jaká data obsahují</li>
+    <li>JSON schémata eventů pro automatickou validaci příchozích dat</li>
+    <li>Návrh identifikátorů zákazníka (e-mail, customer ID, telefon, cookie) a pravidel spojování</li>
+    <li>Předání implementačního zadání vývojáři klienta — specifikace je závazná, podle ní se data posílají i validují</li>
+  </ul></div>
+</details>
+
+<details id="f3">
+  <summary>3 · Web tracking CZ + SK <span class="wk">týden 2–3</span><span class="who" style="background:var(--klient)">klient (dev)</span></summary>
+  <div class="tasks"><ul>
+    <li><b class="k">Klient:</b> DNS záznam pro first-party tracking doménu</li>
+    <li><b class="k">Klient:</b> nasazení Meiro SDK přes GTM na obě domény (CZ + SK)</li>
+    <li><b class="k">Klient:</b> implementace custom eventů dle specifikace — nejdřív na testovacím prostředí</li>
+    <li>Data Club: odchycení prvních eventů, kontrola proti specifikaci a zpětná vazba vývojáři</li>
+    <li>Data Club: formalizace eventů v Meiro — event types, validační schémata a pravidla identifikace (nevalidní data se automaticky zahazují)</li>
+    <li>Propojení souhlasů — cookie lišta řídí, co se smí měřit</li>
+    <li>Nasazení do produkce až po ověření, že data odpovídají specifikaci</li>
+  </ul></div>
+</details>
+
+<details id="f4">
+  <summary>4 · Napojení SmartEmailingu <span class="wk">týden 1–2</span><span class="who" style="background:var(--my)">Data Club</span></summary>
+  <div class="tasks"><ul>
+    <li>SmartEmailing spravujeme kompletně my — stream běží bez součinnosti klienta, proto startuje hned v týdnu 1</li>
+    <li>Sync kontaktů a e-mailových eventů (odeslání, otevření, kliky, odhlášení) do Meiro</li>
+    <li>Napojení Meiro → SmartEmailing pro spouštění triggerovaných e-mailů</li>
+    <li>Obousměrné řešení souhlasů — odhlášení se okamžitě propisuje do profilu</li>
+  </ul></div>
+</details>
+
+<details id="f5">
+  <summary>5 · Napojení databáze <span class="wk">týden 2–3</span><span class="who" style="background:var(--my)">Data Club</span></summary>
+  <div class="tasks"><ul>
+    <li>Připojení databáze (read-only) — zákazníci, objednávky, produkty</li>
+    <li>Nahrání historie objednávek (backfill) + nastavení průběžné synchronizace</li>
+    <li>Záložní varianta: pokud přímý přístup k DB nebude možný, řešíme pravidelným exportem souborů — harmonogram se nemění</li>
+    <li>Monitoring a alerting datových toků od prvního dne</li>
+  </ul></div>
+</details>
+
+<details id="f6">
+  <summary>6 · Jednotná identita zákazníka <span class="wk">týden 3–4</span><span class="who" style="background:var(--my)">Data Club</span></summary>
+  <div class="tasks"><ul>
+    <li>Aktivace pravidel spojování: e-mail → customer ID → telefon → cookie</li>
+    <li>Pojistky proti chybnému slučování profilů (sdílená zařízení, firemní e-maily)</li>
+    <li>Ověření na testovacích profilech: anonymní návštěva → registrace → nákup = jeden profil</li>
+    <li>Startuje průběžně, jakmile tečou první data z webu a databáze</li>
+  </ul></div>
+</details>
+
+<details id="f7">
+  <summary>7 · E-mailové šablony <span class="wk">týden 2–4</span><span class="who" style="background:var(--my)">Data Club</span></summary>
+  <div class="tasks"><ul>
+    <li>Výroba šablon v SmartEmailingu: welcome, opuštěný košík, ponákupní e-mail</li>
+    <li>Personalizační pole — jméno, produkty z košíku, doporučení</li>
+    <li>Běží paralelně s datovými pracemi — nezávisí na napojení webu ani DB</li>
+    <li><b class="k">Klient:</b> dodání podkladů (texty, grafika) a schválení šablon</li>
+  </ul></div>
+</details>
+
+<details id="f8">
+  <summary>8 · Kampaně v Engage — postupné spouštění <span class="wk">týden 3–5</span><span class="who" style="background:var(--my)">Data Club</span></summary>
+  <div class="tasks"><ul>
+    <li>T3: volitelný sběrový pop-up (bez personalizace) — jede hned, jak běží SDK</li>
+    <li>T4: welcome banner + welcome e-mail — segment nových návštěvníků, trigger do SmartEmailingu</li>
+    <li>T5: opuštěný košík — real-time trigger s ochranou proti odeslání po nákupu</li>
+    <li>T5: ponákupní e-mail — po nahrání historie transakcí a odsouhlaseném QA</li>
+    <li>Frequency capping — ochrana zákazníků před přehlcením zprávami</li>
+    <li>Každý use-case nejdřív testovací běh na malém vzorku, pak plné spuštění</li>
+  </ul></div>
+</details>
+
+<details id="f9">
+  <summary>9 · Průběžné QA dat <span class="wk">týden 3–5</span><span class="who" style="background:var(--spolu)">společně</span></summary>
+  <div class="tasks"><ul>
+    <li>Reconciliation: počty objednávek a obraty v Meiro vs. zdrojová databáze</li>
+    <li>Kontrola kvality a úplnosti eventů z webu (testovací nákupy, košíky, formuláře)</li>
+    <li><b class="k">Klient:</b> odsouhlasení, že čísla sedí — podmínka spuštění kampaní nad transakcemi</li>
+  </ul></div>
+</details>
+
+<details id="f10">
+  <summary>10 · Testování, školení &amp; go-live <span class="wk">týden 6</span><span class="who" style="background:var(--spolu)">společně</span></summary>
+  <div class="tasks"><ul>
+    <li>End-to-end test všech use-casů na testovacích profilech</li>
+    <li>Kontrola měření výsledků kampaní (otevření, kliky, konverze)</li>
+    <li>Workshop pro marketing klienta — práce se segmenty, pauzování a úprava kampaní</li>
+    <li>Předávací dokumentace a provozní manuál</li>
+    <li>Go-live + zvýšený dohled v prvních dnech provozu</li>
+  </ul></div>
+</details>
+
+<h2>Co budeme potřebovat od klienta</h2>
+<div class="card">
+  <table>
+    <tr><th>Položka</th><th>K čemu</th><th style="text-align:right">Dodat do</th></tr>
+    <tr><td>Přístup k databázi (read-only) + povolení IP adres</td><td>napojení zákazníků a objednávek</td><td style="text-align:right"><span class="tag">T2</span></td></tr>
+    <tr><td>DNS záznam + přístup do GTM</td><td>měření chování na webu CZ i SK</td><td style="text-align:right"><span class="tag">T2</span></td></tr>
+    <tr><td>Kapacita vývojáře na nasazení SDK a custom eventů</td><td>implementace měření dle naší specifikace</td><td style="text-align:right"><span class="tag">T2–T3</span></td></tr>
+    <tr><td>Právní náležitosti (DPA, cookie lišta)</td><td>soulad s GDPR</td><td style="text-align:right"><span class="tag">T3</span></td></tr>
+    <tr><td>Osoba pro QA dat</td><td>odsouhlasení, že čísla v Meiro sedí se zdroji</td><td style="text-align:right"><span class="tag">T3–T5</span></td></tr>
+    <tr><td>Podklady ke kampaním (texty, grafika) a schválení šablon</td><td>welcome, košík, ponákupka — šablony tvoříme my</td><td style="text-align:right"><span class="tag">T3</span></td></tr>
+    <tr><td>Přístupy Google Ads / Meta Business Manager</td><td>reklamní publika (další fáze)</td><td style="text-align:right"><span class="tag">T4</span></td></tr>
+  </table>
+</div>
+
+<h2>Co se propojuje</h2>
+<div class="flow">
+  <div class="col">
+    <h4>Zdroje dat</h4>
+    <ul>
+      <li>Web CZ + SK (chování, košík)</li>
+      <li>Databáze (zákazníci, objednávky)</li>
+      <li>SmartEmailing (kontakty, opens, kliky)</li>
+    </ul>
+  </div>
+  <div class="arr">→</div>
+  <div class="col mid">
+    <h4>Meiro v2</h4>
+    <ul>
+      <li><b>Pipes</b> — sběr dat a jednotný profil zákazníka v reálném čase</li>
+      <li><b>Engage</b> — segmenty a spouštění kampaní</li>
+    </ul>
+  </div>
+  <div class="arr">→</div>
+  <div class="col">
+    <h4>Aktivace</h4>
+    <ul>
+      <li>SmartEmailing (triggerované e-maily)</li>
+      <li>Web bannery / personalizace</li>
+      <li>Google Ads &amp; Meta publika</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  Harmonogram je orientační. Streamy běží paralelně — kritickou cestou je dodání přístupů a DNS v týdnech 1–2 a kapacita vývojáře na implementaci eventů; e-mailingový stream na klientovi nezávisí a běží od prvního dne. Zdržet mohou právní schvalování (GDPR / cookie lišta) a povolení přístupu k databázi na straně IT.
+</footer>
+
+</div>
+<script>
+  // klik na fázi v ganttu otevře její detail
+  document.querySelectorAll('.gantt .label a').forEach(function(a){
+    a.addEventListener('click', function(){
+      var d = document.querySelector(this.getAttribute('href'));
+      if(d) d.open = true;
+    });
+  });
+  // před tiskem otevřít všechny detaily
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details').forEach(function(d){ d.open = true; });
+  });
+</script>
+</body>
+</html>
