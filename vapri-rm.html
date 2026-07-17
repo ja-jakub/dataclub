@@ -23,6 +23,11 @@
   .gantt{display:grid;grid-template-columns:210px repeat(6,1fr);gap:5px 0;align-items:center}
   .gantt .head{font-size:12px;font-weight:600;color:var(--muted);text-align:center;padding-bottom:8px;border-bottom:1px solid var(--line)}
   .gantt .head.first{text-align:left}
+  .gantt .head[data-week]{cursor:pointer;user-select:none}
+  .gantt .head[data-week]:hover{color:var(--my)}
+  .gantt .head.active{color:var(--my);border-bottom:2px solid var(--my)}
+  .bar,.gantt .label,.mile{transition:opacity .2s}
+  .dim{opacity:.15}
   .ghead{grid-column:1/8;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:14px 0 5px;border-bottom:1px solid var(--line)}
   .gantt .label{font-size:13px;font-weight:600;padding:5px 10px 5px 0}
   .gantt .label a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--muted)}
@@ -58,13 +63,10 @@
   /* USE CASES */
   .uc{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
   .uc .item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
-  .uc .item.opt{border-style:dashed;background:#fcfcfd}
   .uc .num{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-bottom:10px}
-  .uc .item.opt .num{background:var(--spolu)}
   .uc h3{font-size:14.5px;margin-bottom:6px}
   .uc p{font-size:12.5px;color:var(--muted)}
   .uc .when{display:inline-block;margin-top:10px;background:#eff6ff;color:var(--my);font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px}
-  .uc .item.opt .when{background:#ecfdf5;color:var(--spolu)}
 
   /* CHECKLIST */
   table{width:100%;border-collapse:collapse;font-size:13.5px}
@@ -98,14 +100,13 @@
 
 <header>
   <h1>Implementace Meiro v2 — roadmapa</h1>
-  <div class="sub">Pipes + Engage &nbsp;·&nbsp; 6 týdnů od kick-offu &nbsp;·&nbsp; e-mailing přes SmartEmailing &nbsp;·&nbsp; práce běží ve čtyřech paralelních streamech</div>
 </header>
 
-<h2>Harmonogram — paralelní streamy</h2>
+<h2>Harmonogram</h2>
 <div class="card">
   <div class="gantt">
     <div class="head first">Fáze</div>
-    <div class="head">T1</div><div class="head">T2</div><div class="head">T3</div><div class="head">T4</div><div class="head">T5</div><div class="head">T6</div>
+    <div class="head" data-week="1">T1</div><div class="head" data-week="2">T2</div><div class="head" data-week="3">T3</div><div class="head" data-week="4">T4</div><div class="head" data-week="5">T5</div><div class="head" data-week="6">T6</div>
 
     <div class="ghead">Řízení projektu — společně</div>
 
@@ -148,10 +149,10 @@
 
   <div class="miles">
     <div class="mile"><b>Kick-off</b>instance běží</div>
-    <div class="mile"><b>Specifikace + SE</b>e-mailing napojen</div>
-    <div class="mile"><b>Data tečou</b>web i databáze</div>
-    <div class="mile"><b>Welcome live</b>jednotný profil</div>
-    <div class="mile"><b>Košík + ponákupka</b>vše live</div>
+    <div class="mile"><b>SE napojen</b>specifikace hotová</div>
+    <div class="mile"><b>Welcome live</b>data z webu tečou</div>
+    <div class="mile"><b>Jednotný profil</b>web × DB × e-mail</div>
+    <div class="mile"><b>Košík + ponákupka</b>live</div>
     <div class="mile"><b>Go-live</b>předání provozu</div>
   </div>
 
@@ -160,22 +161,16 @@
     <span><span class="dot" style="background:var(--klient)"></span>Klient</span>
     <span><span class="dot" style="background:var(--spolu)"></span>Společně</span>
   </div>
-  <div class="hint">Kliknutím na název fáze zobrazíte detailní soupis úkolů. Streamy běží paralelně — use-casy spouštíme postupně, jakmile mají svá data.</div>
+  <div class="hint">Klik na název fáze otevře detailní soupis úkolů &nbsp;·&nbsp; klik na T1–T6 zvýrazní, co v daném týdnu probíhá.</div>
 </div>
 
 <h2>Postupné spouštění use-casů</h2>
 <div class="uc">
-  <div class="item opt">
-    <span class="num">+</span>
-    <h3>Sběrový pop-up <small style="color:var(--muted);font-weight:400">(volitelný předskokan)</small></h3>
-    <p>Jednoduchý banner na sběr e-mailů bez personalizace. Jede hned, jak běží SDK a SmartEmailing — první výsledky ještě během implementace.</p>
-    <span class="when">už od týdne 3</span>
-  </div>
   <div class="item">
     <span class="num">1</span>
     <h3>Welcome banner + e-mail</h3>
-    <p>Personalizovaný pop-up pro nové návštěvníky a uvítací zpráva. Potřebuje web tracking a jednotný profil.</p>
-    <span class="when">od týdne 4</span>
+    <p>Pop-up na sběr e-mailů pro nové návštěvníky + uvítací e-mail ze SmartEmailingu. Jede hned, jak běží SDK — první výsledky už během implementace.</p>
+    <span class="when">od týdne 3</span>
   </div>
   <div class="item">
     <span class="num">2</span>
@@ -271,8 +266,8 @@
 <details id="f8">
   <summary>8 · Kampaně v Engage — postupné spouštění <span class="wk">týden 3–5</span><span class="who" style="background:var(--my)">Data Club</span></summary>
   <div class="tasks"><ul>
-    <li>T3: volitelný sběrový pop-up (bez personalizace) — jede hned, jak běží SDK</li>
-    <li>T4: welcome banner + welcome e-mail — segment nových návštěvníků, trigger do SmartEmailingu</li>
+    <li>T3: welcome banner + welcome e-mail — sběr e-mailů na webu, trigger uvítací zprávy do SmartEmailingu</li>
+    <li>T4: doladění personalizace welcome podle jednotného profilu (nezobrazovat stávajícím zákazníkům)</li>
     <li>T5: opuštěný košík — real-time trigger s ochranou proti odeslání po nákupu</li>
     <li>T5: ponákupní e-mail — po nahrání historie transakcí a odsouhlaseném QA</li>
     <li>Frequency capping — ochrana zákazníků před přehlcením zprávami</li>
@@ -354,6 +349,30 @@
     a.addEventListener('click', function(){
       var d = document.querySelector(this.getAttribute('href'));
       if(d) d.open = true;
+    });
+  });
+  // klik na týden (T1–T6) zvýrazní jen fáze, které do něj spadají
+  var heads = document.querySelectorAll('.gantt .head[data-week]');
+  var rows = [];
+  document.querySelectorAll('.gantt .cells').forEach(function(c){
+    var bar = c.querySelector('.bar');
+    var gc = (bar.style.gridColumn || '').split('/');
+    rows.push({label: c.previousElementSibling, bar: bar, start: parseInt(gc[0],10), end: parseInt(gc[1],10)});
+  });
+  var activeWeek = 0;
+  heads.forEach(function(h){
+    h.addEventListener('click', function(){
+      var w = parseInt(h.dataset.week,10);
+      activeWeek = (activeWeek === w) ? 0 : w;
+      heads.forEach(function(x){ x.classList.toggle('active', parseInt(x.dataset.week,10) === activeWeek); });
+      rows.forEach(function(r){
+        var on = !activeWeek || (r.start <= activeWeek && activeWeek < r.end);
+        r.bar.classList.toggle('dim', !on);
+        r.label.classList.toggle('dim', !on);
+      });
+      document.querySelectorAll('.miles .mile').forEach(function(m,i){
+        m.classList.toggle('dim', !!activeWeek && (i+1) !== activeWeek);
+      });
     });
   });
   // před tiskem otevřít všechny detaily
