@@ -135,12 +135,12 @@
     <div class="label"><a href="#f5">Napojení databáze</a><small>historie + průběžný sync</small></div>
     <div class="cells"><div class="bar b-my" style="grid-column:2/4">Data Club</div></div>
 
-    <div class="label"><a href="#f6">Jednotná identita</a><small>propojení dat do profilu</small></div>
+    <div class="label"><a href="#f6">Tvorba destinací</a><small>propojení do cílových systémů</small></div>
     <div class="cells"><div class="bar b-my" style="grid-column:3/5">Data Club</div></div>
 
     <div class="ghead">Kampaně — kampaňový tým Data Club</div>
 
-    <div class="label"><a href="#f7">E-mailové šablony</a><small>welcome, košík, ponákupka</small></div>
+    <div class="label"><a href="#f7">Šablony &amp; kreativa</a><small>e-maily + welcome banner</small></div>
     <div class="cells"><div class="bar b-my" style="grid-column:2/5">Data Club</div></div>
 
     <div class="label"><a href="#f8">Kampaně v Engage</a><small>postupné spouštění use-casů</small></div>
@@ -151,7 +151,7 @@
     <div class="mile"><b>Kick-off</b>instance běží</div>
     <div class="mile"><b>SE napojen</b>specifikace hotová</div>
     <div class="mile"><b>Welcome live</b>data z webu tečou</div>
-    <div class="mile"><b>Jednotný profil</b>web × DB × e-mail</div>
+    <div class="mile"><b>Destinace připravené</b>jednotný profil ověřen</div>
     <div class="mile"><b>Košík + ponákupka</b>live</div>
     <div class="mile"><b>Go-live</b>předání provozu</div>
   </div>
@@ -228,8 +228,7 @@
   <div class="tasks"><ul>
     <li>SmartEmailing spravujeme kompletně my — stream běží bez součinnosti klienta, proto startuje hned v týdnu 1</li>
     <li>Sync kontaktů a e-mailových eventů (odeslání, otevření, kliky, odhlášení) do Meiro</li>
-    <li>Napojení Meiro → SmartEmailing pro spouštění triggerovaných e-mailů</li>
-    <li>Obousměrné řešení souhlasů — odhlášení se okamžitě propisuje do profilu</li>
+    <li>Odhlášení a souhlasy se okamžitě propisují do profilu zákazníka</li>
   </ul></div>
 </details>
 
@@ -238,28 +237,33 @@
   <div class="tasks"><ul>
     <li>Připojení databáze (read-only) — zákazníci, objednávky, produkty</li>
     <li>Nahrání historie objednávek (backfill) + nastavení průběžné synchronizace</li>
+    <li>Pravidla spojování identit se aktivují rovnou při napojování — data z DB se ihned párují s webem a e-mailingem (e-mail, customer ID, telefon), včetně pojistek proti chybnému slučování profilů</li>
+    <li>Ověření na testovacích profilech: anonymní návštěva → registrace → nákup = jeden profil</li>
     <li>Záložní varianta: pokud přímý přístup k DB nebude možný, řešíme pravidelným exportem souborů — harmonogram se nemění</li>
     <li>Monitoring a alerting datových toků od prvního dne</li>
   </ul></div>
 </details>
 
 <details id="f6">
-  <summary>6 · Jednotná identita zákazníka <span class="wk">týden 3–4</span><span class="who" style="background:var(--my)">Data Club</span></summary>
+  <summary>6 · Tvorba destinací <span class="wk">týden 3–4</span><span class="who" style="background:var(--my)">Data Club</span></summary>
   <div class="tasks"><ul>
-    <li>Aktivace pravidel spojování: e-mail → customer ID → telefon → cookie</li>
-    <li>Pojistky proti chybnému slučování profilů (sdílená zařízení, firemní e-maily)</li>
-    <li>Ověření na testovacích profilech: anonymní návštěva → registrace → nákup = jeden profil</li>
-    <li>Startuje průběžně, jakmile tečou první data z webu a databáze</li>
+    <li>Technická příprava propojení Meiro → cílové systémy (opačný směr než zdroje dat)</li>
+    <li>SmartEmailing jako destinace — spouštění triggerovaných e-mailů vč. předání personalizačních dat (jméno, produkty z košíku)</li>
+    <li>Kanál web bannerů — propojení pro zobrazování bannerů na webu CZ i SK</li>
+    <li>Příprava destinací Google Ads a Meta pro reklamní publika (aktivace v navazující fázi)</li>
+    <li>Testovací doručení do každé destinace před spuštěním kampaní</li>
   </ul></div>
 </details>
 
 <details id="f7">
-  <summary>7 · E-mailové šablony <span class="wk">týden 2–4</span><span class="who" style="background:var(--my)">Data Club</span></summary>
+  <summary>7 · Šablony &amp; kreativa <span class="wk">týden 2–4</span><span class="who" style="background:var(--my)">Data Club</span></summary>
   <div class="tasks"><ul>
-    <li>Výroba šablon v SmartEmailingu: welcome, opuštěný košík, ponákupní e-mail</li>
+    <li>Výroba e-mailových šablon v SmartEmailingu: welcome, opuštěný košík, ponákupní e-mail</li>
     <li>Personalizační pole — jméno, produkty z košíku, doporučení</li>
+    <li>Grafický návrh welcome banneru — grafiku dodáme my, nebo klient (dle domluvy)</li>
+    <li><b class="k">Klient:</b> schválení návrhu banneru a šablon, dodání podkladů (texty, grafika)</li>
+    <li>Nakódování welcome banneru pro nasazení přes Meiro</li>
     <li>Běží paralelně s datovými pracemi — nezávisí na napojení webu ani DB</li>
-    <li><b class="k">Klient:</b> dodání podkladů (texty, grafika) a schválení šablon</li>
   </ul></div>
 </details>
 
@@ -304,7 +308,7 @@
     <tr><td>Kapacita vývojáře na nasazení SDK a custom eventů</td><td>implementace měření dle naší specifikace</td><td style="text-align:right"><span class="tag">T2–T3</span></td></tr>
     <tr><td>Právní náležitosti (DPA, cookie lišta)</td><td>soulad s GDPR</td><td style="text-align:right"><span class="tag">T3</span></td></tr>
     <tr><td>Osoba pro QA dat</td><td>odsouhlasení, že čísla v Meiro sedí se zdroji</td><td style="text-align:right"><span class="tag">T3–T5</span></td></tr>
-    <tr><td>Podklady ke kampaním (texty, grafika) a schválení šablon</td><td>welcome, košík, ponákupka — šablony tvoříme my</td><td style="text-align:right"><span class="tag">T3</span></td></tr>
+    <tr><td>Podklady ke kampaním (texty, grafika) a schválení šablon i banneru</td><td>welcome, košík, ponákupka — šablony a kódování děláme my, grafika dle domluvy</td><td style="text-align:right"><span class="tag">T3</span></td></tr>
     <tr><td>Přístupy Google Ads / Meta Business Manager</td><td>reklamní publika (další fáze)</td><td style="text-align:right"><span class="tag">T4</span></td></tr>
   </table>
 </div>
