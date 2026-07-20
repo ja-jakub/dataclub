@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaprio × Data Club — přehled červenec 2026</title>
+<style>
+  :root{
+    --green:#1e8a4c; --green-light:#e6f4ec; --green-dark:#14663a;
+    --ink:#1a1f24; --muted:#6b7480; --line:#e6e9ed; --bg:#f4f6f8; --card:#ffffff;
+    --amber:#b7791f; --amber-light:#fdf3e0; --blue:#2b6cb0; --blue-light:#e8f0fa;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;padding:32px 16px}
+  .wrap{max-width:880px;margin:0 auto}
+  h1{font-size:26px;letter-spacing:-.3px}
+  .sub{color:var(--muted);margin-top:4px;font-size:14px}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .kpi .label{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+  .kpi .value{font-size:26px;font-weight:700;margin-top:6px}
+  .kpi .note{font-size:13px;color:var(--muted);margin-top:2px}
+  .kpi.accent{background:var(--green-light);border-color:#cbe7d6}
+  .kpi.accent .value{color:var(--green-dark)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px}
+  .card h2{font-size:17px;margin-bottom:4px}
+  .card .desc{font-size:14px;color:var(--muted);margin-bottom:16px}
+  .bigbar{height:14px;background:#e9edf1;border-radius:7px;overflow:hidden;margin:10px 0 6px}
+  .bigbar>div{height:100%;background:linear-gradient(90deg,var(--green),#34a866);border-radius:7px}
+  .bigbar-caption{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:18px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--line)}
+  td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 10px;border-radius:20px;white-space:nowrap}
+  .chip.ok{background:var(--green-light);color:var(--green-dark)}
+  .chip.bonus{background:var(--amber-light);color:var(--amber)}
+  .itemnote{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+  tr.bonus-row td{background:#fffaf0}
+  .rows .row{display:grid;grid-template-columns:1fr 90px 110px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+  .rows .row:last-child{border-bottom:none}
+  .rows .name{font-weight:600;font-size:14px}
+  .rows .name span{display:block;font-weight:400;font-size:12.5px;color:var(--muted)}
+  .rows .h,.rows .kc{text-align:right;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .rows .kc{color:var(--muted)}
+  .minibar{grid-column:1/-1;height:6px;background:#eef1f4;border-radius:3px;overflow:hidden;margin-top:-4px}
+  .minibar>div{height:100%;background:#9fceb4;border-radius:3px}
+  ol.todo{list-style:none;counter-reset:n}
+  ol.todo li{counter-increment:n;display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;align-items:baseline}
+  ol.todo li:last-child{border-bottom:none}
+  ol.todo li::before{content:counter(n);flex:0 0 24px;height:24px;background:var(--green-light);color:var(--green-dark);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;align-self:flex-start;margin-top:1px}
+  .who{margin-left:auto;flex-shrink:0}
+  .chip.us{background:var(--blue-light);color:var(--blue)}
+  .chip.them{background:#f0eef9;color:#6b46c1}
+  .chip.both{background:#eef1f4;color:var(--muted)}
+  .foot{font-size:12.5px;color:var(--muted);margin-top:8px}
+  @media(max-width:640px){
+    .kpis{grid-template-columns:1fr}
+    .rows .row{grid-template-columns:1fr 70px 90px}
+    ol.todo li{flex-wrap:wrap}
+    .who{margin-left:36px}
+    td.hidemob,th.hidemob{display:none}
+  }
+  @media print{body{background:#fff;padding:0}.card,.kpi{border-color:#ccc;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Vaprio × Data Club</h1>
+  <div class="sub">Přehled prací — červenec 2026 · stav k 20. 7. 2026</div>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="label">Celkem vykázáno</div>
+      <div class="value">54:24 h</div>
+      <div class="note">96 891 Kč v hodinovce</div>
+    </div>
+    <div class="kpi accent">
+      <div class="label">Balíček „Implementace na klíč"</div>
+      <div class="value">26:48 / 30 h</div>
+      <div class="note">89 % · fix 54 000 Kč · hotovo ✓</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Nad rámec balíčku</div>
+      <div class="value">27:36 h</div>
+      <div class="note">48 646 Kč</div>
+    </div>
+  </div>
+
+  <!-- ==================== BALÍČEK ==================== -->
+  <div class="card">
+    <h2>1 · Balíček „Implementace na klíč" — 30 h / 54 000 Kč</h2>
+    <div class="desc">Hotovo a v provozu. Do balíčku se navíc vešla i kompletní první rozesílka (7.&nbsp;7.), která v nacenění nebyla.</div>
+
+    <div class="bigbar"><div style="width:89%"></div></div>
+    <div class="bigbar-caption"><span>Čerpáno 26:48 h (89 %)</span><span>Rezerva 3:12 h</span></div>
+
+    <table>
+      <thead><tr><th>Položka</th><th class="num">Plán</th><th class="num">Skutečnost</th><th class="hidemob">Stav</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Audit odesílací domény + warm-up<span class="itemnote">domény z.vaprio.cz/sk a obchod.vaprio.cz/sk, warm-up běží</span></td>
+          <td class="num">4 h</td><td class="num">0 h *</td>
+          <td class="hidemob"><span class="chip ok">✓ hotovo</span></td>
+        </tr>
+        <tr>
+          <td>Nastavení DNS (SPF, DKIM, DMARC)<span class="itemnote">nasazeno a ověřeno 2. 7., navíc i transakční domény</span></td>
+          <td class="num">2 h</td><td class="num">0 h *</td>
+          <td class="hidemob"><span class="chip ok">✓ hotovo</span></td>
+        </tr>
+        <tr>
+          <td>HTML šablona (master, responzivita, darkmode)<span class="itemnote">rychleji než plán, prvky jako znovupoužitelné bloky</span></td>
+          <td class="num">14 h</td><td class="num">6:24</td>
+          <td class="hidemob"><span class="chip ok">✓ hotovo</span></td>
+        </tr>
+        <tr>
+          <td>První import kontaktů<span class="itemnote">import přes API na straně Vapria — my specifikace seznamů, souhlasy, webhook odhlášek, kontrola</span></td>
+          <td class="num">7 h</td><td class="num">1:37</td>
+          <td class="hidemob"><span class="chip ok">✓ hotovo</span></td>
+        </tr>
+        <tr>
+          <td>Předání účtu + zaškolení<span class="itemnote">workshop 2. 7.</span></td>
+          <td class="num">2 h</td><td class="num">1:02</td>
+          <td class="hidemob"><span class="chip ok">✓ hotovo</span></td>
+        </tr>
+        <tr>
+          <td>Projektový management, consulting<span class="itemnote">vč. webtrackingu (ověřen 3. 7.) a UTM konvence</span></td>
+          <td class="num">5 h</td><td class="num">5:07</td>
+          <td class="hidemob"><span class="chip ok">✓ dle plánu</span></td>
+        </tr>
+        <tr class="bonus-row">
+          <td><strong>První rozesílka 7. 7.</strong><span class="itemnote">šablony, kontrola seznamů, odhlašování, acid testy, odesláno</span></td>
+          <td class="num">—</td><td class="num"><strong>13:55</strong></td>
+          <td class="hidemob"><span class="chip bonus">★ bonus navíc</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="foot">* Proběhlo koncem června / v rámci consultingu — hodiny nejsou v červencovém výkazu.</div>
+  </div>
+
+  <!-- ==================== MIMO BALÍČEK ==================== -->
+  <div class="card">
+    <h2>2 · Nad rámec balíčku — 27:36 h / 48 646 Kč</h2>
+    <div class="desc">Provozní agenda účtovaná v hodinovce.</div>
+    <div class="rows">
+      <div class="row">
+        <div class="name">Newslettery a rozesílky<span>jednorázovka + newsletter 16. 7., textace, SK šablony, fix SE odkazů · od 21. 7. tvoří Vaprio</span></div>
+        <div class="h">14:01 h</div><div class="kc">25 241 Kč</div>
+        <div class="minibar"><div style="width:100%"></div></div>
+      </div>
+      <div class="row">
+        <div class="name">Opuštěný košík (automatizace)<span>2 kroky: připomínka + sleva 5 % · schváleno 17. 7., spouští se · sazba 1 650 Kč/h</span></div>
+        <div class="h">6:50 h</div><div class="kc">11 271 Kč</div>
+        <div class="minibar"><div style="width:49%"></div></div>
+      </div>
+      <div class="row">
+        <div class="name">Vedení projektu<span>statusy, koordinace týmu, komunikace</span></div>
+        <div class="h">5:36 h</div><div class="kc">10 073 Kč</div>
+        <div class="minibar"><div style="width:40%"></div></div>
+      </div>
+      <div class="row">
+        <div class="name">Meiro<span>roadmapa navazující implementace CDP</span></div>
+        <div class="h">1:09 h</div><div class="kc">2 062 Kč</div>
+        <div class="minibar"><div style="width:8%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== OTEVŘENÉ BODY ==================== -->
+  <div class="card">
+    <h2>3 · Otevřené body</h2>
+    <div class="desc">Co je potřeba dotáhnout a kdo je na tahu.</div>
+    <ol class="todo">
+      <li>Opuštěný košík — dodat header bannery, pak spuštění 2. kroku <span class="who chip them">Vaprio → my</span></li>
+      <li>Zobrazení newsletteru na Androidu (feedback 20. 7.) — prověřit šablonu <span class="who chip us">Data Club</span></li>
+      <li>Objednávky z prodejen do SE — rozšíření API importu <span class="who chip them">Vaprio</span></li>
+      <li>Transakční e-maily — DNS připraveno, šablony a odesílání nezahájeny <span class="who chip both">společně</span></li>
+      <li>BIMI (logo ve schránce) — roadmapa a nacenění jako samostatný projekt <span class="who chip us">Data Club</span></li>
+      <li>Newsletter 21. 7. — tvoří Vaprio dle šablony, zálohou Magda <span class="who chip them">Vaprio</span></li>
+      <li>Meiro — audit dat a kickoff implementace <span class="who chip both">společně</span></li>
+    </ol>
+  </div>
+
+  <div class="foot">Zdroje: Clockify výkaz 1.–31. 7. 2026 (data k 20. 7.) · cenová nabídka „Implementace na klíč" · projektová korespondence. Sazba 1 800 Kč/h, opuštěný košík 1 650 Kč/h.</div>
+
+</div>
+</body>
+</html>
