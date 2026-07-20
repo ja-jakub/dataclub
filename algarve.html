@@ -76,6 +76,10 @@
   .tips li::before{content:"›"; position:absolute; left:6px; color:var(--terra); font-weight:800}
   .preg{background:var(--terra-soft); border-radius:12px; padding:10px 12px; font-size:13.5px; margin:12px 0}
   .preg b{color:var(--terra)}
+  .b-res{bottom:10px; right:10px; background:#0e6b68; color:#fff}
+  .noCar{background:var(--teal-soft); border-radius:12px; padding:9px 12px; font-size:13.5px; margin:12px 0}
+  .noCar b{color:var(--teal)}
+  .meta .okCar{color:var(--teal); font-weight:800}
   .links{display:flex; gap:8px; flex-wrap:wrap; margin-top:13px}
   .links a{text-decoration:none; background:var(--teal-soft); color:var(--teal); font-weight:700;
     font-size:13.5px; padding:8px 13px; border-radius:11px}
@@ -96,12 +100,13 @@
 <header class="hero">
   <div class="kicker">Dovolená · 8.–15. září 2026 · Vila Galé Náutico</div>
   <h1>Armação de Pêra &amp; okolí<br>co vidět, ochutnat a zažít</h1>
-  <p>35 tipů od procházky za rohem po celodenní výlety — s fotkami, hodnocením, časem na místě a poznámkami, co je v pohodě pro těhotnou. Rozklikni kartu pro detaily.</p>
+  <p>39 tipů od procházky za rohem po celodenní výlety — s fotkami, hodnocením, časem na místě a poznámkami, co je v pohodě pro těhotnou. Rozklikni kartu pro detaily — u míst je i doprava bez auta.</p>
   <div class="stats">
     <span class="stat">☀️ ~27 °C ve dne</span>
     <span class="stat">🌊 moře ~21–22 °C</span>
     <span class="stat">🌅 západ ~19:50</span>
-    <span class="stat">📍 vše do ~50 min autem</span>
+    <span class="stat">📍 vše do ~50 min</span>
+    <span class="stat">🚌 jde to i bez auta</span>
   </div>
 </header>
 
@@ -116,6 +121,8 @@
     <button class="chip" data-f="mesto">🏘 Města</button>
     <button class="chip" data-f="priroda">🌿 Příroda</button>
     <button class="chip" data-f="jidlo">🍽 Jídlo</button>
+    <button class="chip" data-f="zvirata">🐾 Zvířata</button>
+    <button class="chip" data-f="bezauta">🚌 Bez auta</button>
   </div>
 </div>
 
@@ -126,12 +133,12 @@
   <p>Bez auta, bez plánování — na dnešní odpoledne.</p>
 </section>
 
-<details class="card" data-cats="plaz klid must">
+<details class="card" data-cats="plaz klid must bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Arma%C3%A7%C3%A3o_de_pera_(cropped).jpg?width=900" alt="Armação de Pêra" loading="lazy" onerror="phFail(this)"><span class="ph-fb">🏖</span>
       <span class="badge b-cat">Pláž + město</span><span class="badge b-rate">★ ≈4,5</span><span class="badge b-must">ZÁKLADNA</span></div>
     <div class="hd"><h3>Praia de Armação de Pêra + promenáda</h3>
-      <div class="meta"><span>⏱ kdykoliv</span><span>🚶 2 min</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ kdykoliv</span><span>🚶 2 min</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Vaše domácí pláž — kilometry písku, pozvolný vstup do vody a promenáda s kavárnami.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -148,12 +155,12 @@
   </div>
 </details>
 
-<details class="card" data-cats="priroda plaz klid must">
+<details class="card" data-cats="priroda plaz klid must bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/20-05-2017_Igreja_de_Nossa_Senhora_da_Rocha,_Porches_(1).JPG?width=900" alt="Kaple Nossa Senhora da Rocha" loading="lazy" onerror="phFail(this)"><span class="ph-fb">⛪️</span>
       <span class="badge b-cat">Vyhlídka + pláž</span><span class="badge b-rate">★ ≈4,7</span><span class="badge b-must">MUST</span></div>
     <div class="hd"><h3>Kaple Nossa Senhora da Rocha</h3>
-      <div class="meta"><span>⏱ 1–3 h</span><span>🚗 5 min / 🚶 45 min po útesech</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ 1–3 h</span><span>🚗 5 min / 🚶 45 min po útesech</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Bílá kaplička na ostrohu nad mořem — nejhezčí „hodinka" hned vedle vás.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -167,16 +174,17 @@
       <li>Dá se sem dojít i pěšky z Armação po pobřežní stezce (~45 min) — jen po rovině s pár zvlněními.</li>
     </ul>
     <div class="preg">🤰 Pohodové — krátké vzdálenosti, jen u okraje útesů opatrně (bez zábradlí).</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Po pobřežní pěšině ~45 min, nebo Bolt ~5 €.</p>
     <div class="links"><a href="https://maps.google.com/?q=Capela+de+Nossa+Senhora+da+Rocha+Porches">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="priroda klid">
+<details class="card" data-cats="priroda klid bezauta zvirata">
   <summary>
     <div class="ph fb g-nat"><span class="ph-fb">🦩</span>
       <span class="badge b-cat">Příroda</span><span class="badge b-rate">★ ≈4,4</span></div>
     <div class="hd"><h3>Laguna Salgados — plameňáci za dunami</h3>
-      <div class="meta"><span>⏱ 1,5–2 h</span><span>🚶 od vých. konce pláže / 🚗 5 min</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ 1,5–2 h</span><span>🚶 od vých. konce pláže / 🚗 5 min</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Dřevěný chodník mezi lagunou a dunami — plameňáci, volavky, ibisové.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -193,12 +201,12 @@
   </div>
 </details>
 
-<details class="card" data-cats="priroda klid">
+<details class="card" data-cats="priroda klid bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/20-05-2017_Praia_da_Senhora_da_Rocha,_Porches.JPG?width=900" alt="Praia da Senhora da Rocha" loading="lazy" onerror="phFail(this)"><span class="ph-fb">🌅</span>
       <span class="badge b-cat">Západy slunce</span><span class="badge b-rate">★ 🌇</span></div>
     <div class="hd"><h3>Kam na západ slunce</h3>
-      <div class="meta"><span>⏱ ~1 h</span><span>🚶/🚗 0–25 min</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ ~1 h</span><span>🚶/🚗 0–25 min</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">V září zapadá kolem 19:50 — čtyři ověřené spoty seřazené podle vzdálenosti.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -218,12 +226,12 @@
   <p>To nejslavnější z Algarve se odehrává z lodi. Pozor na pravidla pro těhotné!</p>
 </section>
 
-<details class="card" data-cats="voda must">
+<details class="card" data-cats="voda must bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Benagil_Cave_seen_by_above.jpg?width=900" alt="Jeskyně Benagil" loading="lazy" onerror="phFail(this)"><span class="ph-fb">🕳</span>
-      <span class="badge b-cat">Jeskyně</span><span class="badge b-rate">★ ≈4,7</span><span class="badge b-must">MUST</span></div>
+      <span class="badge b-cat">Jeskyně</span><span class="badge b-rate">★ ≈4,7</span><span class="badge b-must">MUST</span><span class="badge b-res">📅 rezervace</span></div>
     <div class="hd"><h3>Jeskyně Benagil (Algar de Benagil)</h3>
-      <div class="meta"><span>⏱ výlet 1–2,5 h</span><span>🚗 15 min (vesnice)</span><span>💶 ~25–50 €</span></div>
+      <div class="meta"><span>⏱ výlet 1–2,5 h</span><span>🚗 15 min (vesnice)</span><span>💶 ~25–50 €</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Katedrála s okem ve stropě — nejslavnější místo Algarve. Od 2024 platí nová pravidla.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -236,16 +244,17 @@
       <li>Nejklidnější moře a nejmíň lodí je <b>brzy ráno</b>; světlo dovnitř padá nejlíp kolem poledne.</li>
     </ul>
     <div class="preg">🤰 <b>Důležité:</b> rychlé čluny (RIB/speedboat) těhotné z bezpečnostních důvodů <b>nevozí</b> — např. AlgarExperience uvádí „zakázáno těhotným a dětem do 5 let". Řešení: <b>pomalá tradiční loď z Armação nebo Benagilu</b> (viz další karta) a předem napsat operátorovi, že čekáte miminko — v klidném moři běžně vezmou.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Nejlíp <b>lodí přímo z Armação</b> — auto netřeba. Autem k vesnici Benagil 15 min (parkování omezené).</p>
     <div class="links"><a href="https://maps.google.com/?q=Algar+de+Benagil">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="voda klid must">
+<details class="card" data-cats="voda klid must bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ponta_da_Piedade_Grottenfahrt.jpg?width=900" alt="Plavba mezi jeskyněmi" loading="lazy" onerror="phFail(this)"><span class="ph-fb">⛵️</span>
-      <span class="badge b-cat">Výlet lodí</span><span class="badge b-rate">★ ≈4,8</span><span class="badge b-must">MUST</span></div>
+      <span class="badge b-cat">Výlet lodí</span><span class="badge b-rate">★ ≈4,8</span><span class="badge b-must">MUST</span><span class="badge b-res">📅 rezervace</span></div>
     <div class="hd"><h3>Loď z Armação — pobřeží plné jeskyní</h3>
-      <div class="meta"><span>⏱ 1–2 h</span><span>🚶 start z vaší pláže</span><span>💶 ~20–40 €/os</span></div>
+      <div class="meta"><span>⏱ 1–2 h</span><span>🚶 start z vaší pláže</span><span>💶 ~20–40 €/os</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Místní lodě vyplouvají přímo z Praia dos Pescadores — Benagil, Marinha a 10+ jeskyní.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -262,12 +271,12 @@
   </div>
 </details>
 
-<details class="card" data-cats="voda">
+<details class="card" data-cats="voda bezauta zvirata">
   <summary>
     <div class="ph fb g-sea"><span class="ph-fb">🐬</span>
-      <span class="badge b-cat">Zážitek</span><span class="badge b-rate">★ ≈4,6</span></div>
+      <span class="badge b-cat">Zážitek</span><span class="badge b-rate">★ ≈4,6</span><span class="badge b-res">📅 rezervace</span></div>
     <div class="hd"><h3>Delfíni na otevřeném moři</h3>
-      <div class="meta"><span>⏱ 1,5–2,5 h</span><span>🚗 20–25 min (Albufeira/Portimão)</span><span>💶 ~35–45 €</span></div>
+      <div class="meta"><span>⏱ 1,5–2,5 h</span><span>🚗 20–25 min (Albufeira/Portimão)</span><span>💶 ~35–45 €</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Stáda delfínů obecných pár mil od pobřeží — úspěšnost pozorování ~90 %.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -277,19 +286,21 @@
     <ul class="tips">
       <li>Většina delfíních tour jede na <b>rychlých RIB člunech → těhotné nevezmou</b> (oficiální podmínky operátorů).</li>
       <li>Alternativa pro vás: <b>velký katamarán</b> podél pobřeží (klidná plavba, často s zastávkou na koupání) — delfíny občas potká taky, ale bez záruky.</li>
+      <li><b>Welfare:</b> tady jsou delfíni divocí a svobodní — vybírejte operátory, kteří drží odstup a netlačí se do středu stáda.</li>
       <li>Jestli delfíny chce vidět hlavně budoucí táta — může vyrazit sám na RIB a vy si zatím dát kávu v maríně. 🙂</li>
     </ul>
     <div class="preg">🤰 RIB ne; katamarán/pomalá loď ano (potvrdit s operátorem).</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt do maríny Albufeira/Portimão ~12–18 €; řada tours nabízí <b>vyzvednutí u hotelu</b>.</p>
     <div class="links"><a href="https://maps.google.com/?q=Marina+de+Albufeira">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="voda priroda klid">
+<details class="card" data-cats="voda priroda klid bezauta zvirata">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ria_Formosa_lagoon.jpg?width=900" alt="Ria Formosa" loading="lazy" onerror="phFail(this)"><span class="ph-fb">🛶</span>
-      <span class="badge b-cat">Laguna + ostrovy</span><span class="badge b-rate">★ ≈4,7</span></div>
+      <span class="badge b-cat">Laguna + ostrovy</span><span class="badge b-rate">★ ≈4,7</span><span class="badge b-res">📅 rezervace</span></div>
     <div class="hd"><h3>Ria Formosa — katamarán mezi ostrovy</h3>
-      <div class="meta"><span>⏱ půlden (+ Faro = celý den)</span><span>🚗 45–50 min (Faro/Olhão)</span><span>💶 ~35–50 €</span></div>
+      <div class="meta"><span>⏱ půlden (+ Faro = celý den)</span><span>🚗 45–50 min (Faro/Olhão)</span><span>💶 ~35–50 €</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Chráněná laguna bez vln: pusté ostrovy, majáková vesnička a mořské plody u vody.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -302,6 +313,7 @@
       <li>Plameňáci a mořští koníci — Ria Formosa má jednu z největších populací koníků na světě.</li>
     </ul>
     <div class="preg">🤰 Perfektní: klidná plavba, pláže s pozvolným vstupem, jen slunce + voda s sebou.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt na nádraží Alcantarilha (~8 €) + <b>přímý vlak do Fara</b> (~45 min, pár eur) — molo je hned u hradeb.</p>
     <div class="links"><a href="https://maps.google.com/?q=Ria+Formosa+catamaran+tour+Faro">📍 Mapa</a></div>
   </div>
 </details>
@@ -311,12 +323,12 @@
   <p>Každá jiná — od ikony z pohlednic po divoké duny.</p>
 </section>
 
-<details class="card" data-cats="plaz must">
+<details class="card" data-cats="plaz must bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Praia_da_Marinha-Algarve-Portugal.jpg?width=900" alt="Praia da Marinha" loading="lazy" onerror="phFail(this)"><span class="ph-fb">🏝</span>
       <span class="badge b-cat">Ikonická pláž</span><span class="badge b-rate">★ ≈4,8</span><span class="badge b-must">MUST</span></div>
     <div class="hd"><h3>Praia da Marinha</h3>
-      <div class="meta"><span>⏱ půlden</span><span>🚗 15 min</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ půlden</span><span>🚗 15 min</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Pláž z každé fotky Algarve — zlaté útesy, tyrkys a skalní oblouky „M".</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -330,16 +342,17 @@
       <li>Vyhlídka nahoře (start stezky Sete Vales) stojí za to i bez sestupu.</li>
     </ul>
     <div class="preg">🤰 Schody v pohodě pomalu; při vyšších vlnách se držet u břehu.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt ~10–12 € (zpáteční objednat s předstihem, nahoře bývá slabší signál), nebo ji uvidíte z lodi z Armação.</p>
     <div class="links"><a href="https://maps.google.com/?q=Praia+da+Marinha">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="plaz klid">
+<details class="card" data-cats="plaz klid bezauta">
   <summary>
     <div class="ph fb g-beach"><span class="ph-fb">🌊</span>
       <span class="badge b-cat">Skrytá zátoka</span><span class="badge b-rate">★ ≈4,6</span></div>
     <div class="hd"><h3>Praia de Albandeira + skalní oblouk</h3>
-      <div class="meta"><span>⏱ 1–2 h</span><span>🚗 12 min</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ 1–2 h</span><span>🚗 12 min</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Mini zátoka bez davů a jeden z nejfotogeničtějších oblouků pobřeží.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -351,16 +364,17 @@
       <li>Malý bufet s občerstvením nad pláží v sezóně funguje.</li>
     </ul>
     <div class="preg">🤰 Krátké a nenáročné; cestička k oblouku je nezpevněná — pevné boty.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt ~8–10 €.</p>
     <div class="links"><a href="https://maps.google.com/?q=Praia+de+Albandeira">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="plaz jidlo klid">
+<details class="card" data-cats="plaz jidlo klid bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Caneiros_beach,_Ferragudo,_Algarve_(17070981600).jpg?width=900" alt="Praia dos Caneiros" loading="lazy" onerror="phFail(this)"><span class="ph-fb">🏖</span>
-      <span class="badge b-cat">Pláž + oběd</span><span class="badge b-rate">★ ≈4,6</span></div>
+      <span class="badge b-cat">Pláž + oběd</span><span class="badge b-rate">★ ≈4,6</span><span class="badge b-res">📅 rezervace</span></div>
     <div class="hd"><h3>Praia dos Caneiros + Rei das Praias</h3>
-      <div class="meta"><span>⏱ půlden</span><span>🚗 20 min</span><span>💶 oběd ~20–35 €/os</span></div>
+      <div class="meta"><span>⏱ půlden</span><span>🚗 20 min</span><span>💶 oběd ~20–35 €/os</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Elegantní pláž u Ferraguda s jednou z nejlepších plážových restaurací Algarve.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -372,6 +386,7 @@
       <li>Po obědě procházka k majáku Ponta do Altar (15 min po útesu).</li>
     </ul>
     <div class="preg">🤰 Pohodový den bez námahy; ryby důkladně propečené jsou v pohodě.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt ~12–15 €, zpáteční objednat po obědě.</p>
     <div class="links"><a href="https://maps.google.com/?q=Praia+dos+Caneiros">📍 Mapa</a></div>
   </div>
 </details>
@@ -394,16 +409,17 @@
       <li>V okolí Vilamoury se dá spojit s kávou v maríně.</li>
     </ul>
     <div class="preg">🤰 Rovná pláž i stezka nahoře; jen slunce — deštník/klobouk nutnost.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt ~20–25 €; bez auta kombinovat spíš s Albufeirou. Autem pohodlnější.</p>
     <div class="links"><a href="https://maps.google.com/?q=Praia+da+Fal%C3%A9sia">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="plaz">
+<details class="card" data-cats="plaz bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Praia_da_Dona_Ana_-_Lagos_02.JPG?width=900" alt="Praia Dona Ana" loading="lazy" onerror="phFail(this)"><span class="ph-fb">💛</span>
       <span class="badge b-cat">Pláž</span><span class="badge b-rate">★ ≈4,7</span></div>
     <div class="hd"><h3>Praia Dona Ana &amp; Praia do Camilo (Lagos)</h3>
-      <div class="meta"><span>⏱ 2–4 h (+ Lagos)</span><span>🚗 40 min</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ 2–4 h (+ Lagos)</span><span>🚗 40 min</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Dvě nejfotografovanější pláže západního Algarve, hned vedle Ponta da Piedade.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -415,7 +431,31 @@
       <li>Nad Camilem je populární <b>restaurace O Camilo</b> — mořské plody s výhledem (rezervace!).</li>
     </ul>
     <div class="preg">🤰 Dona Ana ano; Camilo (200 schodů dolů a nahoru) jen s chutí a v pohodovém tempu — případně jen vyhlídka shora.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> V rámci vlakového dne v Lagosu: vlak → Bolt na pláž (~5 €).</p>
     <div class="links"><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos">📍 Mapa</a></div>
+  </div>
+</details>
+
+<details class="card" data-cats="plaz priroda">
+  <summary>
+    <div class="ph fb g-beach"><span class="ph-fb">🤿</span>
+      <span class="badge b-cat">Hidden gem</span><span class="badge b-rate">★ ≈4,7</span></div>
+    <div class="hd"><h3>Praia de João de Arens — tajná zátoka</h3>
+      <div class="meta"><span>⏱ 2–3 h</span><span>🚗 30 min (Alvor)</span><span>💶 zdarma</span></div>
+      <p class="tease">Miláček Instagramu a vláken o „secret spots“ — divoká zátoka mezi piniemi.</p></div>
+    <span class="chev">▾</span>
+  </summary>
+  <div class="body">
+    <p>Skalní výběžek Ponta de João de Arens u Alvoru: pěšinky mezi piniemi po vrcholech útesů, prázdné vyhlídky na skalní věže a dole malá zátoka s výbornou vodou na šnorchlování. Žádný bar, žádná lehátka — jen příroda, proto je tak oblíbená v „hidden gems“ videích.</p>
+    <span class="lbl">Tipy</span>
+    <ul class="tips">
+      <li>Ráno nebo k podvečeru; voda a šnorchl s sebou, dole není zázemí.</li>
+      <li>Část návštěvníků bývají naturisté — ať vás to nepřekvapí.</li>
+      <li>Okruh po útesech nahoře je krásný i bez sestupu na pláž.</li>
+    </ul>
+    <div class="preg">🤰 Pěšiny nahoře pohodové; sestup do zátoky je strmější nezpevněná stezka — klidně jen vyhlídky.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt do Alvoru ~18–20 € a kus pěšky — spíš na auto-den.</p>
+    <div class="links"><a href="https://maps.google.com/?q=Praia+de+Jo%C3%A3o+de+Arens">📍 Mapa</a></div>
   </div>
 </details>
 
@@ -424,12 +464,12 @@
   <p>Od pohlednicového Ferraguda po maurské hradby Silves.</p>
 </section>
 
-<details class="card" data-cats="mesto must klid">
+<details class="card" data-cats="mesto must klid bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/View_of_Portimao_-_Ferragudo_-_The_Algarve,_Portugal_(1469904980)_(cropped).jpg?width=900" alt="Ferragudo" loading="lazy" onerror="phFail(this)"><span class="ph-fb">⛵️</span>
       <span class="badge b-cat">Vesnice</span><span class="badge b-rate">★ ≈4,6</span><span class="badge b-must">MUST</span></div>
     <div class="hd"><h3>Ferragudo</h3>
-      <div class="meta"><span>⏱ 2–4 h</span><span>🚗 20 min</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ 2–4 h</span><span>🚗 20 min</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Nejfotogeničtější rybářská vesnice Algarve — bílé domky, muškáty, loďky.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -443,16 +483,17 @@
       <li>Kombinace: odpoledne Caneiros pláž → podvečer a večeře Ferragudo.</li>
     </ul>
     <div class="preg">🤰 Pohodové; jen dlažba do kopečka ke kostelu — pomalu.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Pobřežní bus Vamus směr Portimão, nebo Bolt ~12–15 €.</p>
     <div class="links"><a href="https://maps.google.com/?q=Ferragudo">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="mesto priroda must">
+<details class="card" data-cats="mesto priroda must bezauta">
   <summary>
     <div class="ph fb g-town"><span class="ph-fb">🪨</span>
       <span class="badge b-cat">Městečko + útesy</span><span class="badge b-rate">★ ≈4,7</span><span class="badge b-must">MUST</span></div>
     <div class="hd"><h3>Carvoeiro + boardwalk na Algar Seco</h3>
-      <div class="meta"><span>⏱ 2–3 h</span><span>🚗 15 min</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ 2–3 h</span><span>🚗 15 min</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Dřevěný chodník po útesech ke skalnímu „měsíčnímu" amfiteátru Algar Seco.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -465,16 +506,17 @@
       <li>Večer městečko příjemně žije, spousta zmrzliny a teras.</li>
     </ul>
     <div class="preg">🤰 Boardwalk ideální; dolů do skalních bazénků Algar Seco jen opatrně (nerovné kameny).</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt ~8–10 €; večer zpět objednávat s rezervou.</p>
     <div class="links"><a href="https://maps.google.com/?q=Algar+Seco+Carvoeiro">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="mesto">
+<details class="card" data-cats="mesto bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Castelo_Silves_2.JPG?width=900" alt="Hrad Silves" loading="lazy" onerror="phFail(this)"><span class="ph-fb">🏰</span>
       <span class="badge b-cat">Historie</span><span class="badge b-rate">★ ≈4,5</span></div>
     <div class="hd"><h3>Silves — maurské hlavní město</h3>
-      <div class="meta"><span>⏱ půlden</span><span>🚗 20 min</span><span>💶 hrad ~3–4 €</span></div>
+      <div class="meta"><span>⏱ půlden</span><span>🚗 20 min</span><span>💶 hrad ~3–4 €</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Rudý hrad z pískovce, katedrála, čápi na komínech a pomeranče všude kolem.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -488,16 +530,17 @@
       <li>Cestou zpět zastávka ve vinařství <b>Quinta dos Vales</b> (Estômbar) — degustace pro řidiče-neřidiče a sochy v zahradách. 😉</li>
     </ul>
     <div class="preg">🤰 Hradby jsou nahoře nerovné — pevné boty; jinak krátké vzdálenosti.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Vlak z Alcantarilhy (Bolt na nádraží ~8 €), stanice Silves ~20 min pěšky od centra; nebo Bolt celou cestu ~15 €.</p>
     <div class="links"><a href="https://maps.google.com/?q=Castelo+de+Silves">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="mesto must">
+<details class="card" data-cats="mesto must bezauta">
   <summary>
     <div class="ph fb g-sea"><span class="ph-fb">🌇</span>
       <span class="badge b-cat">Město</span><span class="badge b-rate">★ ≈4,7</span><span class="badge b-must">MUST</span></div>
     <div class="hd"><h3>Lagos — staré město + zlaté útesy</h3>
-      <div class="meta"><span>⏱ celý den</span><span>🚗 40 min</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ celý den</span><span>🚗 40 min</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Nejhezčí kombinace dne: hradby, uličky, mercado, pláže a Ponta da Piedade.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -510,16 +553,17 @@
       <li>Odpoledne: pláž Dona Ana / mercado / zmrzlina na náměstí.</li>
     </ul>
     <div class="preg">🤰 Město rovinaté a stinné; útesové vyhlídky s pevným chodníkem.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Nejhezčí vlakový výlet: Bolt na Alcantarilhu + <b>přímý vlak do Lagosu</b> (~35 min, ~4 €), nádraží 10 min od centra.</p>
     <div class="links"><a href="https://maps.google.com/?q=Lagos+old+town">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="mesto klid">
+<details class="card" data-cats="mesto klid bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/15-09-2017_Albufeira_old_town.JPG?width=900" alt="Albufeira staré město" loading="lazy" onerror="phFail(this)"><span class="ph-fb">🏙</span>
       <span class="badge b-cat">Město</span><span class="badge b-rate">★ ≈4,4</span></div>
     <div class="hd"><h3>Albufeira — staré město</h3>
-      <div class="meta"><span>⏱ 2–3 h</span><span>🚗 20 min</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ 2–3 h</span><span>🚗 20 min</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Bílé uličky nad širokou pláží — turistické, ale večer má svoje kouzlo.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -531,16 +575,17 @@
       <li>Večer tu hraje live hudba na náměstíčkách — příjemná (nedivoká) atmosféra.</li>
     </ul>
     <div class="preg">🤰 Pohodové, jen kopeček z parkoviště; večer chladněji — svetřík.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bus Vamus nebo Bolt ~12–15 €.</p>
     <div class="links"><a href="https://maps.google.com/?q=Albufeira+old+town">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="mesto jidlo">
+<details class="card" data-cats="mesto jidlo bezauta">
   <summary>
     <div class="ph fb g-sea"><span class="ph-fb">🐟</span>
       <span class="badge b-cat">Město + muzeum</span><span class="badge b-rate">★ ≈4,5</span></div>
     <div class="hd"><h3>Portimão + Praia da Rocha</h3>
-      <div class="meta"><span>⏱ půlden</span><span>🚗 25 min</span><span>💶 muzeum ~3 €</span></div>
+      <div class="meta"><span>⏱ půlden</span><span>🚗 25 min</span><span>💶 muzeum ~3 €</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Sardinková metropole: skvělé muzeum v bývalé konzervárně a velkoměstská pláž.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -553,16 +598,17 @@
       <li>Vyhlídka z pevnosti Santa Catarina na ústí řeky.</li>
     </ul>
     <div class="preg">🤰 Muzeum + promenáda = pohodový program bez námahy.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bus Vamus směr Portimão, nebo Bolt ~15–18 €.</p>
     <div class="links"><a href="https://maps.google.com/?q=Museu+de+Portim%C3%A3o">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="mesto">
+<details class="card" data-cats="mesto bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Arco_da_Vila,_Faro.jpg?width=900" alt="Faro - Arco da Vila" loading="lazy" onerror="phFail(this)"><span class="ph-fb">🏛</span>
       <span class="badge b-cat">Město</span><span class="badge b-rate">★ ≈4,5</span></div>
     <div class="hd"><h3>Faro — staré město za hradbami</h3>
-      <div class="meta"><span>⏱ půlden (+ laguna = den)</span><span>🚗 45–50 min</span><span>💶 kaple ~2 €</span></div>
+      <div class="meta"><span>⏱ půlden (+ laguna = den)</span><span>🚗 45–50 min</span><span>💶 kaple ~2 €</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Hlavní město Algarve: římské hradby, čápi, katedrála a kaple z lidských kostí.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -574,6 +620,7 @@
       <li>Kavárny na Largo da Sé — káva pod pomerančovníky.</li>
     </ul>
     <div class="preg">🤰 Rovinaté a kompaktní; věž katedrály (68 schodů) volitelná.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Vlak z Alcantarilhy <b>přímo do Fara</b> (~45 min) — celodenní výlet úplně bez auta.</p>
     <div class="links"><a href="https://maps.google.com/?q=Cidade+Velha+Faro">📍 Mapa</a></div>
   </div>
 </details>
@@ -596,6 +643,7 @@
       <li>Kavárna na galerii tržnice = pastel de nata s výhledem na mumraj.</li>
     </ul>
     <div class="preg">🤰 Vše v rovině; jen ranní frmol — držte se krajů uliček.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bez auta složitější (taxi ~30 €); sobotní alternativa bez auta = rybí trh v Olhão vlakem přes Faro.</p>
     <div class="links"><a href="https://maps.google.com/?q=Mercado+Municipal+de+Loul%C3%A9">📍 Mapa</a></div>
   </div>
 </details>
@@ -618,6 +666,7 @@
       <li>Hezká zastávka cestou na/z Loulé (20 min od sebe).</li>
     </ul>
     <div class="preg">🤰 Klidné, stinné, rovinka podél potoka.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Reálně jen autem — ideální kousek vnitrozemního auto-dne.</p>
     <div class="links"><a href="https://maps.google.com/?q=Alte+Algarve">📍 Mapa</a></div>
   </div>
 </details>
@@ -639,6 +688,7 @@
       <li>Cestou zpět zastávka v <b>Olhão</b> — nejautentičtější rybí tržnice jihu (nejlepší v sobotu ráno).</li>
     </ul>
     <div class="preg">🤰 Město pohodové; na ostrově minimum stínu — slunečník s sebou.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Jde i vlakem s přestupem ve Faru (~1:45 celkem) — jen pro odhodlané. 🙂</p>
     <div class="links"><a href="https://maps.google.com/?q=Tavira">📍 Mapa</a></div>
   </div>
 </details>
@@ -648,12 +698,12 @@
   <p>Útesy, hory a stezky — dávkujte podle energie.</p>
 </section>
 
-<details class="card" data-cats="priroda must">
+<details class="card" data-cats="priroda must bezauta">
   <summary>
     <div class="ph"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ponta_da_Piedade_Algarve_Portugal_(27433535620).jpg?width=900" alt="Ponta da Piedade" loading="lazy" onerror="phFail(this)"><span class="ph-fb">🗿</span>
       <span class="badge b-cat">Přírodní ikona</span><span class="badge b-rate">★ ≈4,8</span><span class="badge b-must">MUST</span></div>
     <div class="hd"><h3>Ponta da Piedade (Lagos)</h3>
-      <div class="meta"><span>⏱ 1–2 h</span><span>🚗 45 min</span><span>💶 zdarma (loďka ~20 €)</span></div>
+      <div class="meta"><span>⏱ 1–2 h</span><span>🚗 45 min</span><span>💶 zdarma (loďka ~20 €)</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Zlaté skalní věže, oblouky a groty — nejslavnější přírodní scenérie Algarve.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -666,16 +716,17 @@
       <li>Spojte s Lagosem a Dona Ana do jednoho dne.</li>
     </ul>
     <div class="preg">🤰 Vyhlídky nahoře bez námahy; 182 schodů dolů jen podle nálady.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Vlak do Lagosu + Bolt (~5 €), nebo loďka z maríny Lagos rovnou mezi skály.</p>
     <div class="links"><a href="https://maps.google.com/?q=Ponta+da+Piedade">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="priroda must">
+<details class="card" data-cats="priroda must bezauta">
   <summary>
     <div class="ph fb g-nat"><span class="ph-fb">🥾</span>
       <span class="badge b-cat">Stezka</span><span class="badge b-rate">★ ≈4,9</span><span class="badge b-must">MUST (kousek)</span></div>
     <div class="hd"><h3>Sete Vales Suspensos — stezka nad útesy</h3>
-      <div class="meta"><span>⏱ 1–5 h (podle úseku)</span><span>🚗 15 min (start Marinha)</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ 1–5 h (podle úseku)</span><span>🚗 15 min (start Marinha)</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Podle mnoha žebříčků nejkrásnější pobřežní stezka Evropy. Jde si vzít jen ochutnávku.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -688,6 +739,7 @@
       <li>Pevné boty, voda, kšiltovka; terén zvlněný, ale bez lezení.</li>
     </ul>
     <div class="preg">🤰 Krátký úsek v pohodovém tempu OK (2.–3. trimestr zvažte podle dne); celých 11,4 km tam-zpět letos vynechte.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt na Marinhu ~10–12 €; zpět jde odjet Boltem z vesnice Benagil.</p>
     <div class="links"><a href="https://maps.google.com/?q=Percurso+dos+Sete+Vales+Suspensos">📍 Mapa</a></div>
   </div>
 </details>
@@ -710,6 +762,7 @@
       <li>Vodopád Barbelote je v září většinou jen pramínek — nepočítat s ním.</li>
     </ul>
     <div class="preg">🤰 Pohodová „výletní" varianta dne; termální bazénky/horké koupele v Caldas letos vynechat (v těhotenství se nedoporučují), procházka údolím ano.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Jen autem (druhý auto-den), případně jeep-safari tour s vyzvednutím u hotelu.</p>
     <div class="links"><a href="https://maps.google.com/?q=F%C3%B3ia+Monchique">📍 Mapa</a></div>
   </div>
 </details>
@@ -731,7 +784,83 @@
       <li>Spojte s vesnicí Paderne (káva na návsi) nebo cestou z Loulé/Alte.</li>
     </ul>
     <div class="preg">🤰 Krátké, mírné stoupání po širokém chodníku.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Autem; skvěle se spojí s procházkou s oslíky v Paderne (viz sekce Zvířata).</p>
     <div class="links"><a href="https://maps.google.com/?q=Castelo+de+Paderne">📍 Mapa</a></div>
+  </div>
+</details>
+
+<section class="sec" data-sec>
+  <h2>🐾 Se zvířaty</h2>
+  <p>Vybráno s ohledem na pohodu zvířat: divoká pozorování a záchranné azyly, žádné delfíní show v bazénech. Delfíni na moři a plameňáci jsou výš v přehledu. A kdybyste na cestách našli zraněné divoké zvíře, v Olhão sídlí záchranná stanice RIAS.</p>
+</section>
+
+<details class="card" data-cats="zvirata klid priroda must">
+  <summary>
+    <div class="ph fb g-nat"><span class="ph-fb">🫏</span>
+      <span class="badge b-cat">Zážitek na farmě</span><span class="badge b-rate">★ ≈5,0</span><span class="badge b-must">PECKA</span><span class="badge b-res">📅 rezervace</span></div>
+    <div class="hd"><h3>Procházka s oslíky (Paderne)</h3>
+      <div class="meta"><span>⏱ 2–3 h</span><span>🚗 25 min</span><span>💶 ~25–45 €/os</span></div>
+      <p class="tease">Pomalá procházka krajinou s vlastním oslíkem — na Tripadvisoru prakticky samé pětihvězdy.</p></div>
+    <span class="chev">▾</span>
+  </summary>
+  <div class="body">
+    <p>Donkey Tours Algarve (Burro Paderne) vám svěří oslíka a vede vás polními cestami mezi olivovníky, fíkovníky a starými zídkami. Oslíci jsou mazliví, tempo loudavé — přesně ten „semi-chill“ zážitek, na který se vzpomíná víc než na další pláž. Jde se pěšky s oslíkem na vodítku, odvážnější můžou i jet.</p>
+    <span class="lbl">Tipy</span>
+    <ul class="tips">
+      <li><b>Domluva předem nutná</b> (farma není celý den obsazená) — web/WhatsApp pár dní dopředu.</li>
+      <li>Ráno je nejpříjemněji; pevné boty, kšiltovka, voda.</li>
+      <li>Krásně se spojí s hradem Paderne (5 min autem).</li>
+      <li>Alternativa: útulek <b>Happy Donkeys</b> u Monchique — procházky se zachráněnými oslíky, výtěžek jde na provoz azylu.</li>
+    </ul>
+    <div class="preg">🤰 Chůze s oslíkem po rovinatých cestách = ideální; jízdu na oslu letos vynechat.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt ~18–22 € za cestu — jde to, pohodlnější v auto-den.</p>
+    <div class="links"><a href="https://maps.google.com/?q=Donkey+Tours+Algarve+Paderne">📍 Mapa</a> <a href="https://www.donkey-tours-algarve.com/">🌐 Web</a></div>
+  </div>
+</details>
+
+<details class="card" data-cats="zvirata voda">
+  <summary>
+    <div class="ph fb g-sea"><span class="ph-fb">🪸</span>
+      <span class="badge b-cat">Unikát</span><span class="badge b-rate">★ ≈4,8</span><span class="badge b-res">📅 rezervace</span></div>
+    <div class="hd"><h3>Mořští koníci v Ria Formose (Fuseta)</h3>
+      <div class="meta"><span>⏱ 2–3 h</span><span>🚗 ~55–60 min</span><span>💶 ~35–55 €/os</span></div>
+      <p class="tease">Laguna má jednu z největších populací mořských koníků na světě — a jde je vidět zblízka.</p></div>
+    <span class="chev">▾</span>
+  </summary>
+  <div class="body">
+    <p>Malé loďky z Fusety/Olhãa zajíždí na mělčiny, kde průvodce koníky vyhledá a ukáže (pozorování z lodi, za dobrých podmínek i opatrné šnorchlování). K tomu ostrovy, ústřicové farmy a spousta ptactva — nejosobitější zvířecí zážitek Algarve.</p>
+    <span class="lbl">Tipy</span>
+    <ul class="tips">
+      <li>Rezervace předem — malé skupiny a termíny závislé na přílivu (např. Passeios Ria Formosa, Fuseta).</li>
+      <li><b>Welfare:</b> vyberte operátora, který koníky jen pozoruje ve vodě — žádné vytahování ani dotýkání, populace je chráněná.</li>
+      <li>Ideální spojit se sobotním rybím trhem v Olhão nebo s Tavirou.</li>
+    </ul>
+    <div class="preg">🤰 Klidná mělká laguna — pozorování z lodi bez omezení.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> vlak do Fara/Olhãa + Bolt do Fusety — delší, ale jde to.</p>
+    <div class="links"><a href="https://maps.google.com/?q=Passeios+Ria+Formosa+Fuseta">📍 Mapa</a></div>
+  </div>
+</details>
+
+<details class="card" data-cats="zvirata klid">
+  <summary>
+    <div class="ph fb g-nat"><span class="ph-fb">🦜</span>
+      <span class="badge b-cat">Zoo</span><span class="badge b-rate">★ ≈4,3</span></div>
+    <div class="hd"><h3>Lagos Zoo (Barão de São João)</h3>
+      <div class="meta"><span>⏱ 2–3 h</span><span>🚗 ~45–50 min</span><span>💶 ~18 €</span></div>
+      <p class="tease">Malá stinná zoo plná opiček, lemurů a papoušků — pohodový dodatek k Lagosu.</p></div>
+    <span class="chev">▾</span>
+  </summary>
+  <div class="body">
+    <p>Komorní, zelení zarostlá zoo: primáti na ostrůvcích, lemuři, volně létající ptáci a kontaktní část s kozičkami. Není to safari — je to dvouhodinová procházka ve stínu, což se v září počítá.</p>
+    <span class="lbl">Tipy</span>
+    <ul class="tips">
+      <li><b>Welfare:</b> malá zoo s prostornými zelenými průchozími voliérami a menšími druhy; žádné show se zvířaty. Jestli nechcete zvířata v zajetí vůbec, držte se divokých pozorování (delfíni, koníci, plameňáci).</li>
+      <li>Kombinujte s dnem v Lagosu (15 min autem od centra).</li>
+      <li>U vstupu je rozpis krmení — přizpůsobte si směr procházky.</li>
+    </ul>
+    <div class="preg">🤰 Rovinaté, stinné, s lavičkami — bez omezení.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> taxi z Lagosu ~10 € — spíš do auto-dne na západ.</p>
+    <div class="links"><a href="https://maps.google.com/?q=Parque+Zool%C3%B3gico+de+Lagos">📍 Mapa</a></div>
   </div>
 </details>
 
@@ -740,12 +869,12 @@
   <p>Algarve se jí. Tady je plán, ať nic dobrého nepropásnete.</p>
 </section>
 
-<details class="card" data-cats="jidlo must">
+<details class="card" data-cats="jidlo must bezauta">
   <summary>
     <div class="ph fb g-food"><span class="ph-fb">🍽</span>
       <span class="badge b-cat">Cheat-sheet</span><span class="badge b-rate">★ povinné</span><span class="badge b-must">MUST</span></div>
     <div class="hd"><h3>Co ochutnat — algarvský jídelníček</h3>
-      <div class="meta"><span>⏱ celý týden</span><span>💶 od 1,5 €</span></div>
+      <div class="meta"><span>⏱ celý týden</span><span>💶 od 1,5 €</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Od cataplany po dom rodrigo — checklist s poznámkou, co je OK v těhotenství.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -770,12 +899,12 @@
   </div>
 </details>
 
-<details class="card" data-cats="jidlo must klid">
+<details class="card" data-cats="jidlo must klid bezauta">
   <summary>
     <div class="ph fb g-food"><span class="ph-fb">🐟</span>
       <span class="badge b-cat">Legenda</span><span class="badge b-rate">★ ≈4,5</span><span class="badge b-must">MUST</span></div>
     <div class="hd"><h3>Casa de Pasto Zé Leiteiro (Armação)</h3>
-      <div class="meta"><span>⏱ oběd/večeře</span><span>🚶 v městečku</span><span>💶 ~15–20 €/os</span></div>
+      <div class="meta"><span>⏱ oběd/večeře</span><span>🚶 v městečku</span><span>💶 ~15–20 €/os</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Ryba, kterou si vyberete z pultu, gril, brambory, salát. Žádné menu, žádný kompromis.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -792,12 +921,12 @@
   </div>
 </details>
 
-<details class="card" data-cats="jidlo klid">
+<details class="card" data-cats="jidlo klid bezauta">
   <summary>
     <div class="ph fb g-food"><span class="ph-fb">🦐</span>
-      <span class="badge b-cat">Klasika</span><span class="badge b-rate">★ ≈4,3</span></div>
+      <span class="badge b-cat">Klasika</span><span class="badge b-rate">★ ≈4,3</span><span class="badge b-res">📅 rezervace</span></div>
     <div class="hd"><h3>O Serol (Armação)</h3>
-      <div class="meta"><span>⏱ večeře</span><span>🚶 u pláže rybářů</span><span>💶 ~20–30 €/os</span></div>
+      <div class="meta"><span>⏱ večeře</span><span>🚶 u pláže rybářů</span><span>💶 ~20–30 €/os</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Jedna z nejstarších restaurací města — cataplana a ryby kousek od vln.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -811,12 +940,12 @@
   </div>
 </details>
 
-<details class="card" data-cats="jidlo must">
+<details class="card" data-cats="jidlo must bezauta">
   <summary>
     <div class="ph fb g-food"><span class="ph-fb">🍗</span>
       <span class="badge b-cat">Lokální rituál</span><span class="badge b-rate">★ ≈4,3</span><span class="badge b-must">MUST</span></div>
     <div class="hd"><h3>Frango piri-piri v Guia</h3>
-      <div class="meta"><span>⏱ oběd</span><span>🚗 12 min</span><span>💶 ~10–14 €/os</span></div>
+      <div class="meta"><span>⏱ oběd</span><span>🚗 12 min</span><span>💶 ~10–14 €/os</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Vesnice Guia = hlavní město pálivého kuřete. Ramires vs. Teodósio — vyberte si tábor.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -827,16 +956,17 @@
       <li>Porce jsou velké — jedno kuře pro dva úplně stačí.</li>
     </ul>
     <div class="preg">🤰 Dobře propečené kuře ✅ — jen s pálivostí opatrně, ať nepálí žáha.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt ~8–10 € — v pohodě bez auta.</p>
     <div class="links"><a href="https://maps.google.com/?q=Restaurante+Ramires+Guia">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="jidlo">
+<details class="card" data-cats="jidlo bezauta">
   <summary>
     <div class="ph fb g-food"><span class="ph-fb">🦀</span>
-      <span class="badge b-cat">Mořské plody</span><span class="badge b-rate">★ ≈4,4</span></div>
+      <span class="badge b-cat">Mořské plody</span><span class="badge b-rate">★ ≈4,4</span><span class="badge b-res">📅 rezervace</span></div>
     <div class="hd"><h3>Marisqueira Rui (Silves)</h3>
-      <div class="meta"><span>⏱ oběd/večeře</span><span>🚗 20 min</span><span>💶 ~25–40 €/os</span></div>
+      <div class="meta"><span>⏱ oběd/večeře</span><span>🚗 20 min</span><span>💶 ~25–40 €/os</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Nejznámější „marisqueira" Algarve — krevety, škeble a krabi od roku 1977.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -846,16 +976,17 @@
       <li>Přes poledne bez rezervace fronta — přijďte hned ve 12:00, nebo rezervujte.</li>
     </ul>
     <div class="preg">🤰 Vše si nechte <b>důkladně tepelně upravit</b> (vařené/grilované ✅); syrové a jen spařené kousky letos vynechat.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Stejně jako Silves: vlak z Alcantarilhy, nebo Bolt ~15 €.</p>
     <div class="links"><a href="https://maps.google.com/?q=Marisqueira+Rui+Silves">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="jidlo">
+<details class="card" data-cats="jidlo bezauta">
   <summary>
     <div class="ph fb g-food"><span class="ph-fb">✨</span>
-      <span class="badge b-cat">Výjimečný večer</span><span class="badge b-rate">★ ≈4,8</span></div>
+      <span class="badge b-cat">Výjimečný večer</span><span class="badge b-rate">★ ≈4,8</span><span class="badge b-res">📅 rezervace</span></div>
     <div class="hd"><h3>Ocean ★★ — michelinský zážitek za rohem</h3>
-      <div class="meta"><span>⏱ večer (3–4 h)</span><span>🚗 5–10 min (Porches)</span><span>💶 degustace ~230 €+/os</span></div>
+      <div class="meta"><span>⏱ večer (3–4 h)</span><span>🚗 5–10 min (Porches)</span><span>💶 degustace ~230 €+/os</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Dvě michelinské hvězdy s výhledem na Atlantik — 2 km od vašeho hotelu.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -866,16 +997,17 @@
       <li>Kuchyně běžně připraví <b>těhotenskou variantu degustace</b> — napište to do rezervace.</li>
       <li>Rozumnější kompromis: oběd/drink v jiné restauraci resortu s výhledem.</li>
     </ul>
+    <p class="noCar">🚌 <b>Bez auta:</b> Bolt 5 min (~5–6 €) — a nikdo nemusí řešit, že se pije víno.</p>
     <div class="links"><a href="https://maps.google.com/?q=Ocean+Restaurant+Vila+Vita+Parc">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="jidlo klid">
+<details class="card" data-cats="jidlo klid bezauta">
   <summary>
     <div class="ph fb g-food"><span class="ph-fb">🍹</span>
       <span class="badge b-cat">Kavárny &amp; bary u moře</span><span class="badge b-rate">★ výběr</span></div>
     <div class="hd"><h3>Kávy a drinky s výhledem</h3>
-      <div class="meta"><span>⏱ kdykoliv</span><span>🚶–🚗 25 min</span><span>💶 káva ~1,5 €</span></div>
+      <div class="meta"><span>⏱ kdykoliv</span><span>🚶–🚗 25 min</span><span>💶 káva ~1,5 €</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Čtyři ověřené spoty na „sednout, koukat na moře a nikam nespěchat".</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -885,18 +1017,20 @@
       <li><b>A Boneca (Algar Seco)</b> — barový stolek zaklíněný ve skalách; při západu slunce kouzlo.</li>
       <li><b>Armação Beach Club (Praia Dourada)</b> — stylová lehátka a oceanfront dining kousek od města.</li>
       <li><b>NoSolo Água (Praia da Rocha)</b> — trendy bazénový klub s DJ; pro ni mocktail, pro něj espumante. Spíš „scéna" než klídek — vědět do čeho jdete. 🙂</li>
+      <li><b>Purobeach Vilamoura / WET Deck (W Algarve)</b> — největší lounge-scény regionu na východ od vás, kdyby lákal luxusnější den u bazénu (lehátka rezervovat online).</li>
     </ul>
     <div class="preg">🤰 Všude v pohodě — mocktaily a čerstvé džusy jsou v Portugalsku všude a levné.</div>
+    <p class="noCar">🚌 <b>Bez auta:</b> Promenáda pěšky; Boneca (Carvoeiro) Bolt ~8–10 €, NoSolo Água ~15–18 €.</p>
     <div class="links"><a href="https://maps.google.com/?q=Algar+Seco+Boneca+bar">📍 Mapa</a></div>
   </div>
 </details>
 
-<details class="card" data-cats="jidlo mesto klid">
+<details class="card" data-cats="jidlo mesto klid bezauta">
   <summary>
     <div class="ph fb g-food"><span class="ph-fb">🧺</span>
       <span class="badge b-cat">Trhy</span><span class="badge b-rate">★ ≈4,4</span></div>
     <div class="hd"><h3>Trhy — kalendář na váš týden</h3>
-      <div class="meta"><span>⏱ dopoledne</span><span>🚶–🚗 55 min</span><span>💶 zdarma</span></div>
+      <div class="meta"><span>⏱ dopoledne</span><span>🚶–🚗 55 min</span><span>💶 zdarma</span><span class="okCar">🚌 bez auta</span></div>
       <p class="tease">Ryby, fíky, mandle a mumraj — kam který den ráno vyrazit.</p></div>
     <span class="chev">▾</span>
   </summary>
@@ -919,6 +1053,18 @@
 <div class="info" data-static>
   <h3>☀️ Září v Algarve (8.–15. 9.)</h3>
   <p>Nejpříjemnější měsíc roku: dny ~26–29 °C, večery ~18–20 °C (lehký svetřík), moře ~21–22 °C, déšť skoro nula. Hlavní davy odjely s koncem srpna, ale všechno je ještě otevřené. Slunce má pořád sílu — SPF 50, klobouk, litr vody v tašce.</p>
+</div>
+
+<div class="info" data-static>
+  <h3>🚌 Bez auta po Algarve — jak na to</h3>
+  <ul>
+    <li><b>Pěšky + lodí:</b> pláž, promenáda, kaple Senhora da Rocha, laguna Salgados a lodní výlety na jeskyně — nejlepší program vůbec startuje přímo z vaší pláže.</li>
+    <li><b>Bolt/Uber:</b> funguje po celém pobřeží a je levný — orientačně Guia/Carvoeiro ~8–10 €, Albufeira/Caneiros ~12–15 €, Portimão ~15–18 €. Večer a z odlehlých pláží objednávejte s rezervou (míň řidičů).</li>
+    <li><b>Vlak (Linha do Algarve):</b> nejbližší stanice <b>Alcantarilha</b> (~7 km, Bolt ~8 €). Přímé regionální vlaky odtud: Silves ~10 min, Lagos ~35 min, Faro ~45 min, jízdenky za pár eur. Nejpohodovější celodenní výlety bez půjčovny.</li>
+    <li><b>Bus Vamus:</b> pobřežní linka Portimão–Lagoa–Armação–Albufeira staví ve městě, jízdenka u řidiče za pár eur; časy hledejte v Google Maps / Moovit nebo na vamus.pt (v září jede míň spojů než v létě).</li>
+    <li><b>Výlety s vyzvednutím u hotelu:</b> spousta tours (Benagil, delfíni, jeep safari na Monchique) nabízí pickup z Armação — na GetYourGuide/Viator filtr „from Armação de Pêra“.</li>
+    <li><b>Na které 2 dny půjčit auto:</b> ① západ — Lagos + Ponta da Piedade + Dona Ana (příp. Lagos Zoo / João de Arens), ② vnitrozemí — Silves + Fóia/Monchique, nebo v sobotu Loulé + Alte + oslíci v Paderne. Zbytek zvládnete pěšky, lodí, Boltem a vlakem.</li>
+  </ul>
 </div>
 
 <div class="info" data-static>
@@ -955,7 +1101,7 @@
 </main>
 
 <footer class="foot">
-  <p>Sestaveno 15. 7. 2026 pro cestu 8.–15. 9. 2026 · Hodnocení ★ jsou orientační (Google/Tripadvisor) · Ceny přibližné, otevíračky a lodní výlety si před cestou ověřte.<br>Fotky: Wikimedia Commons (načítají se online).</p>
+  <p>Sestaveno 15. 7. 2026 (v2.1: doprava bez auta, zvířata s ohledem na welfare, rezervační štítky) pro cestu 8.–15. 9. 2026 · Hodnocení ★ jsou orientační (Google/Tripadvisor) · Ceny přibližné, otevíračky a lodní výlety si před cestou ověřte.<br>Fotky: Wikimedia Commons (načítají se online).</p>
 </footer>
 
 <script>
