@@ -2,147 +2,270 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sobota · Olhão → Fuseta → Loulé → Falésia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Neděle · mapa západ — Marinha až Lagos</title>
 <style>
-  :root{--ink:#1B2B33;--acc:#0E6C7C;--warn:#C0532A;--bg:#FCFBF8;--line:#E6E2D8;--mut:#68767D}
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.5}
-  .wrap{max-width:30rem;margin:0 auto;padding:1rem 1rem 3rem}
-  h1{font-size:1.35rem;line-height:1.2}
-  .sub{color:var(--mut);font-size:.85rem;margin-top:.2rem}
-  .nav{display:flex;gap:.4rem;flex-wrap:wrap;margin:.8rem 0 1.2rem}
-  .nav a{font-size:.8rem;font-weight:600;color:var(--acc);background:#fff;border:1px solid var(--line);border-radius:999px;padding:.35rem .7rem;text-decoration:none}
-  section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem;margin-bottom:.8rem;scroll-margin-top:.5rem}
-  h2{font-size:1.1rem;display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
-  .dl{font-size:.72rem;font-weight:700;color:#fff;background:var(--warn);border-radius:999px;padding:.2rem .6rem;white-space:nowrap}
-  .dl.ok{background:#4C6B4F}
-  ul{list-style:none;margin-top:.55rem}
-  li{padding:.28rem 0;border-top:1px dashed var(--line);font-size:.92rem}
-  li:first-child{border-top:none}
-  b{font-weight:650}
-  .t{color:var(--mut);font-size:.8rem;white-space:nowrap}
-  a.m{color:var(--acc);font-weight:650;text-decoration:none;white-space:nowrap}
-  .note{font-size:.82rem;color:var(--mut);margin-top:.5rem}
-  .row{font-size:.92rem;margin-top:.45rem}
-  h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--warn);margin-top:.7rem}
-  .zas h3{color:var(--acc)}
-  footer{font-size:.78rem;color:var(--mut);margin-top:1rem}
+  :root{--ink:#1B2B33;--acc:#0E6C7C;--warn:#C0532A;--bg:#FCFBF8;--line:#E6E2D8;--mut:#68767D;
+        --sea:#CFE4E8;--land:#F5F0E4}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.45;display:flex;flex-direction:column}
+  header{padding:.7rem 1rem .5rem;flex:0 0 auto}
+  h1{font-size:1.05rem}
+  .sub{color:var(--mut);font-size:.75rem;margin-top:.1rem}
+  .modes{display:flex;gap:.5rem;margin-top:.55rem}
+  .modes button{flex:1;min-height:42px;border:1.5px solid var(--acc);border-radius:10px;background:#fff;color:var(--acc);font-weight:650;font-size:.88rem}
+  .modes button.on{background:var(--acc);color:#fff}
+  #mapwrap{flex:1 1 auto;overflow:hidden;position:relative;padding:0 .4rem}
+  svg{width:100%;height:100%;display:block;touch-action:manipulation}
+  .dot{cursor:pointer}
+  .dot circle{fill:#fff;stroke:var(--warn);stroke-width:3}
+  .dot.inland circle{stroke:var(--acc)}
+  .dot text{font-size:26px;font-weight:700;fill:var(--ink);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+  .dot.sel circle{fill:var(--warn);stroke:var(--warn)}
+  .dot.inland.sel circle{fill:var(--acc);stroke:var(--acc)}
+  .dot.sel text{fill:#fff}
+  .seq{font-size:20px;font-weight:800;fill:#fff;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+  .seqbg{fill:var(--ink)}
+  .dot.end circle{stroke:#3E5C42;stroke-width:6}
+  .tlabel{font-weight:800;paint-order:stroke;stroke:#fff;stroke-width:8;stroke-linejoin:round;fill:#33513B;font-size:24px;text-anchor:middle}
+  .maplabel{font-size:22px;fill:#9AA6AB;font-weight:600}
+  .sealabel{font-size:26px;fill:#8FB6BE;letter-spacing:.35em;font-weight:600}
+  #sheet{flex:0 0 auto;background:#fff;border-top:1px solid var(--line);border-radius:16px 16px 0 0;
+         box-shadow:0 -4px 16px rgba(27,43,51,.08);padding:.8rem 1rem 1rem;max-height:38vh;overflow-y:auto;display:none}
+  #sheet.open{display:block}
+  .sh-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem}
+  .sh-name{font-weight:700;font-size:1.02rem;line-height:1.25}
+  .xbtn{flex:0 0 auto;width:34px;height:34px;border:none;border-radius:50%;background:var(--bg);color:var(--mut);font-size:1rem;font-weight:700}
+  .meta{color:var(--warn);font-size:.76rem;font-weight:700;margin-top:.15rem}
+  .sh-desc{font-size:.9rem;margin-top:.4rem}
+  .sh-tip{font-size:.83rem;margin-top:.4rem;background:var(--bg);border-left:3px solid var(--warn);padding:.4rem .55rem;border-radius:6px}
+  .btnrow{display:flex;gap:.5rem;margin-top:.65rem;flex-wrap:wrap}
+  .b{flex:1;min-height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;
+     font-weight:650;font-size:.88rem;text-decoration:none;border:none}
+  .b.go{background:var(--acc);color:#fff}
+  .b.cp{background:#fff;color:var(--acc);border:1.5px solid var(--acc)}
+  .b.gray{background:#fff;color:var(--mut);border:1.5px solid var(--line);flex:0 0 auto;padding:0 .8rem}
+  .legs{margin-top:.5rem;font-size:.88rem}
+  .legs div{padding:.28rem 0;border-top:1px dashed var(--line)}
+  .legs div:first-child{border-top:none}
+  .tot{font-weight:750;margin-top:.4rem}
+  .hint{font-size:.8rem;color:var(--mut)}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:52vh;background:var(--ink);color:#fff;
+         padding:.5rem .9rem;border-radius:999px;font-size:.82rem;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+  .toast.show{opacity:1}
 </style>
 </head>
 <body>
-<div class="wrap">
+<header>
+  <h1>Neděle · západní Algarve — 14 bodů</h1>
+  <div class="sub">Schematická mapa (čáry nejsou silnice, časy ≈ odhad jízdy autem)</div>
+  <div class="modes">
+    <button id="mBrowse" class="on">👆 Prohlížet</button>
+    <button id="mPlan">🚗 Plánovat trasu</button>
+  </div>
+</header>
 
-<h1>Sobota 25. 7. · Algarve východ</h1>
-<div class="sub">Olhão → Fuseta → (Loulé) → Falésia · západ slunce 20:45 · celkem ~2 h 35 jízdy, A22 zdarma</div>
+<div id="mapwrap"><svg id="map" viewBox="0 0 1000 900" preserveAspectRatio="xMidYMid meet"></svg></div>
 
-<div class="nav">
-  <a href="#olhao">Olhão</a><a href="#fuseta">Fuseta</a><a href="#loule">Loulé</a><a href="#falesia">Falésia</a><a href="#vecer">Večer</a><a href="#zasobnik">Zásobník</a><a href="#tank">⛽</a>
-</div>
+<div id="sheet"></div>
+<div class="toast" id="toast">Zkopírováno ✓</div>
 
-<section id="olhao">
-  <h2>1 · Olhão — trhy <span class="dl">odjet do 12:15</span></h2>
-  <ul>
-    <li><b>Rybí hala</b> — ranní show s úlovky, jít hned <span class="t">· 25 min</span></li>
-    <li><b>Hala ovoce/zelenina + venkovní sobotní trh</b> u laguny <span class="t">· 30 min</span></li>
-    <li><b>Kubistické uličky</b> za tržnicí + káva na nábřeží <span class="t">· 20 min</span></li>
-  </ul>
-  <h3>Parkování</h3>
-  <div class="row"><b>Zona E</b> u maríny, ~3,55 €/den, přesné mince, 8 min pěšky · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=37.025228,-7.836032">navigace ↗</a></div>
-  <div class="row">Záloha: krytý <b>Levante</b>, 5 min · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=37.025430,-7.837835">navigace ↗</a></div>
-  <h3>Oběd (kdyby už tady)</h3>
-  <div class="row"><b>Vai e Volta</b> 4,7★ neomezený gril ryb 19 €, 12–15 h, být tam 11:50 · <a class="m" href="https://www.google.com/maps/search/?api=1&query=37.026320,-7.839216&query_place_id=ChIJC5_2ttpUBQ0R497dvNo9DAA">mapa ↗</a></div>
-  <div class="row"><b>Á Do Inácio</b> 4,4★ cataplana u tržnice · <a class="m" href="https://www.google.com/maps/search/?api=1&query=37.023820,-7.841700&query_place_id=ChIJd7Wm8cRUBQ0RQQpDbaAbv-8">mapa ↗</a> · <b>Terra i Mar</b> 4,5★ ryba z pultu na gril · <a class="m" href="https://www.google.com/maps/search/?api=1&query=37.024090,-7.839310&query_place_id=ChIJe_2tOcRUBQ0RzGnxFz001ZM">mapa ↗</a></div>
-  <div class="note">💶 Hotovost! · Když oběd tady → Fuseta 13:30–15:15 a Loulé škrtnout.</div>
-</section>
+<script>
+// ---------- data ----------
+const P = [
+ {id:'H', n:'H', name:'Vila Galé Náutico (hotel)', lat:37.1000, lon:-8.3560, t:'start / cíl',
+  d:'Výchozí bod. Do Marinhy 15 min, do Lagosu ~40 min.',
+  g:'https://www.google.com/maps/search/?api=1&query=Vila+Gal%C3%A9+N%C3%A1utico'},
+ {id:'1', n:'1', name:'Capela Senhora da Rocha', lat:37.09606, lon:-8.38644, t:'⏱ 15–20 min',
+  d:'Bílá kaplička na ostrohu vysoko nad mořem, tunel ve skále na vedlejší pláž. Parkování zdarma u kaple.',
+  g:'https://www.google.com/maps/search/?api=1&query=37.096060,-8.386443'},
+ {id:'2', n:'2', name:'Praia da Marinha — VÝCHODNÍ start stezky + šnorchl', lat:37.0906, lon:-8.4126, t:'⏱ pláž 1–2 h',
+  d:'Jedna z nejslavnějších pláží Evropy. Šnorchlování u skal na obou okrajích zátoky — ryby, mušle, průzračná voda (ráno nejklidnější). Odsud startuje stezka 7 údolí.',
+  tip:'⚠ Parkoviště je malé a v červenci plné už ~9:15 — vyjet z hotelu do 8:15! Přepadové polní parkoviště je podél příjezdové Estrada da Marinha (10–20 min pěšky).',
+  g:'https://www.google.com/maps/search/?api=1&query=37.091175,-8.412901&query_place_id=ChIJj5q7OwDXGg0RR7mvieo18Q4'},
+ {id:'3', n:'3', name:'Stezka 7 údolí — jak na ni s autem', lat:37.0866, lon:-8.4438, t:'⏱ 1,5–4 h pěšky',
+  d:'Vede po útesech mezi Marinhou (bod 2 = VÝCHODNÍ začátek) a Vale Centeanes (bod 4 = ZÁPADNÍ konec), 5,7 km jedním směrem. AUTO: nejjednodušší je nechat ho na Marinze a jít tam a zpět — k vyhlídce nad „okem" Benagilu je to ~1,2 km, na Praia do Carvalho ~2 km, k majáku Alfanzina ~3 km. Celá stezka tam a zpět = 11,4 km / ~4 h. Kdo chce projít jen jednosměrně, z konce ve Vale Centeanes se k autu vrátí Boltem/taxíkem z Carvoeira (~10 min jízdy).',
+  tip:'💡 Nulový stín — jít hned ráno, hodně vody, kšiltovka. Nechodit na hrany, drolí se. „Oko" jeskyně Benagil uvidíte shora přímo z pěšiny — zadarmo a bez lodí.',
+  g:'https://www.google.com/maps/search/?api=1&query=Percurso+dos+Sete+Vales+Suspensos',
+  path:[[-8.4126,37.0906],[-8.4250,37.0868],[-8.4320,37.0852],[-8.4430,37.0878],[-8.4505,37.0895],[-8.4542,37.0907]],
+  la:'START · Marinha (2)', lb:'KONEC · Vale Centeanes (4)', ends:['2','4']},
+ {id:'4', n:'4', name:'Vale Centeanes — ZÁPADNÍ konec stezky', lat:37.09065, lon:-8.45418, t:'⏱ průchozí / pláž 30–60 min',
+  d:'Západní konec stezky u pláže Vale de Centeanes s vyhlídkou 4,8★. Parkuje se podél Estrada do Vale de Centeanes — bývá tu volněji než na Marinze, takže je to i záchranný start, kdyby Marinha byla plná. Do Carvoeira odsud 1,5 km.',
+  g:'https://www.google.com/maps/search/?api=1&query=37.090653,-8.454180&query_place_id=ChIJUw2Xd3vXGg0R9OILYXW7At4'},
+ {id:'5', n:'5', name:'Praia do Carvalho', lat:37.08665, lon:-8.43187, t:'⏱ 45–90 min',
+  d:'Pláž, na kterou se vchází tunelem vytesaným ve skále. Skvělý šnorchl kolem útesů, míň lidí než Marinha; oblíbené (nepovolené) skoky ze skal.',
+  g:'https://www.google.com/maps/search/?api=1&query=37.086650,-8.431870&query_place_id=ChIJA0RrC4PWGg0RVe82jEEnjy8'},
+ {id:'6', n:'6', name:'Algar Seco + chodník A Boneca', lat:37.09429, lon:-8.46503, t:'⏱ 30–45 min',
+  d:'Skalní terasy s „oknem" A Boneca a jeskyňkami. Z Carvoeira sem vede dřevěný chodník po hraně útesů (570 m) — krátká klifová promenáda.',
+  g:'https://www.google.com/maps/search/?api=1&query=Algar+Seco+Carvoeiro',
+  path:[[-8.4716,37.0972],[-8.4690,37.0957],[-8.4663,37.0947],[-8.4650,37.0943]],
+  la:'START · Carvoeiro (7)', lb:'KONEC · Algar Seco (6)', ends:['7','6']},
+ {id:'7', n:'7', name:'Carvoeiro (městečko)', lat:37.0972, lon:-8.4716, t:'⏱ 30–60 min',
+  d:'Náměstíčko přímo nad plážovou zátokou, bílé domky, zmrzlina a káva. Odsud startuje boardwalk na Algar Seco.',
+  tip:'⚠ V centru se parkuje špatně — nechte auto na parkovišti nad městem a sejděte.',
+  g:'https://www.google.com/maps/search/?api=1&query=Carvoeiro'},
+ {id:'8', n:'8', name:'Praia dos Caneiros', lat:37.10496, lon:-8.51385, t:'⏱ 1–2 h',
+  d:'Zlatá pláž se skalisky po obou stranách (šnorchl), klidnější než Marinha, plážová restaurace. Při odlivu se dá obejít útes do vedlejší tiché zátoky.',
+  g:'https://www.google.com/maps/search/?api=1&query=37.104963,-8.513845&query_place_id=ChIJ09TnorspGw0RzrIxRVJy7h8'},
+ {id:'9', n:'9', name:'Ferragudo', lat:37.1236, lon:-8.5236, t:'⏱ 30–60 min',
+  d:'Nejfotogeničtější rybářská vesnice západu — bílé uličky s květináči spadající k řece Arade, kostelík nahoře, kavárny na náměstí u vody.',
+  g:'https://www.google.com/maps/search/?api=1&query=Ferragudo'},
+ {id:'10', n:'10', name:'Passadiços de Alvor — chodníky nad vodou', lat:37.12369, lon:-8.59569, t:'⏱ 45–90 min',
+  d:'To je ten dřevěný chodník: kilometry lávek nad lagunou, dunami a ústím řeky Alvor. Rovina, zdarma, ptáci, výhledy. Nejhezčí světlo pozdě odpoledne.',
+  tip:'💡 Parkování zdarma přímo u pláže Alvor (východní konec). Chodník vede až ke skalám Três Irmãos (bod 11) — dá se spojit pěšky.',
+  g:'https://www.google.com/maps/search/?api=1&query=37.123685,-8.595692&query_place_id=ChIJ0xlONwAvGw0Rqgwq2vpkehw',
+  path:[[-8.5804,37.1200],[-8.5880,37.1226],[-8.5957,37.1240],[-8.6045,37.1252],[-8.6105,37.1278]],
+  la:'START · Três Irmãos (11)', lb:'KONEC · ústí řeky Alvor', ends:['11','10']},
+ {id:'11', n:'11', name:'Praia dos Três Irmãos', lat:37.11931, lon:-8.58041, t:'⏱ 1–2 h',
+  d:'Zlaté skalní věže a tunely mezi zátokami — projdete skálou z pláže na pláž. Výborný šnorchl kolem skal, 4,8★ z 7 000+ recenzí.',
+  g:'https://www.google.com/maps/search/?api=1&query=37.119306,-8.580410&query_place_id=ChIJWcThzKEvGw0Rig59wOgi7HE'},
+ {id:'12', n:'12', name:'Lagos — keramika + staré město', lat:37.10173, lon:-8.67229, t:'⏱ 1–2 h',
+  d:'The Original Grater, R. 25 de Abril 28 (denně do 23:00; druhá pobočka R. Infante de Sagres 61). K tomu procházka starým městem v hradbách a přístavní promenádou.',
+  g:'https://www.google.com/maps/search/?api=1&query=37.101731,-8.672286&query_place_id=ChIJ-T-45p0xGw0R0uHMamvBSIo'},
+ {id:'13', n:'13', name:'Silves — maurský hrad', lat:37.19127, lon:-8.43790, t:'⏱ 1–1,5 h', inland:true,
+  d:'Hrad z rudého pískovce nad městem pomerančů, hradby s výhledem, čapí hnízda, katedrála. Neděle 9–20 h, vstup ~3 €. Ideální zajížďka cestou domů z Lagosu.',
+  g:'https://www.google.com/maps/search/?api=1&query=37.191267,-8.437900&query_place_id=ChIJw_psdbbZGg0R7gmGapxeO9k'},
+ {id:'14', n:'14', name:'Fóia 902 m — střecha Algarve', lat:37.31538, lon:-8.59245, t:'⏱ 30 min + cesta', inland:true,
+  d:'Nejvyšší bod Algarve s výhledem na celé pobřeží, 4,7★. Krásná serpentinová silnice přes Monchique — ale je to ~40 min jízdy z Portimãa jedním směrem. Jen pokud zbyde energie; na západ slunce nahoře je to velkolepé.',
+  g:'https://www.google.com/maps/search/?api=1&query=37.315383,-8.592448&query_place_id=ChIJB1q6J2YiGw0RbrUfEgBTUok'}
+];
 
-<div class="sub" style="text-align:center">↓ 15 min</div>
+// ---------- projection ----------
+const LO=-8.735, HIo=-8.315, LA=37.045, HA=37.345;
+const KX=1000/(HIo-LO), KY=KX/Math.cos(37.2*Math.PI/180);
+const X=lon=>(lon-LO)*KX, Y=lat=>(HA-lat)*KY;
 
-<section id="fuseta">
-  <h2>2 · Fuseta — teplá laguna <span class="dl">koupání do 15:30</span></h2>
-  <ul>
-    <li><b>Lagunová pláž</b> — mělká, klidná, ~25 °C; příliv vrcholí 12:30, pak voda ubývá <span class="t">· 1–1,5 h</span></li>
-    <li><b>Vesnice a přístav</b> — rybářské městečko, zmrzlina <span class="t">· 15 min</span></li>
-  </ul>
-  <h3>Parkování</h3>
-  <div class="row"><b>U pláže zdarma</b> (stín pod stromy, plní se — jinak uličky vesnice +5 min pěšky) · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=37.052062,-7.742840">navigace ↗</a></div>
-  <h3>Oběd u vody</h3>
-  <div class="row"><b>Maresia</b> 4,5★ gril ryby/chobotnice, od 12:00 · <a class="m" href="https://www.google.com/maps/search/?api=1&query=37.054740,-7.744799&query_place_id=ChIJ0wq7XW0BEA0RdjhpnvkosO4">mapa ↗</a> · <b>Bistrô Memórias</b> 5★ petiscos, málo stolů · <a class="m" href="https://www.google.com/maps/search/?api=1&query=37.053977,-7.747729&query_place_id=ChIJ1SkAehcBEA0RJRxFyknPmbU">mapa ↗</a></div>
-</section>
+// ---------- draw base map ----------
+const svg=document.getElementById('map');
+function poly(pts,close){return pts.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join(' ')+(close?' Z':'');}
+const coast=[[-8.735,37.095],[-8.700,37.093],[-8.676,37.099],[-8.662,37.107],[-8.640,37.100],[-8.618,37.112],
+ [-8.596,37.121],[-8.580,37.116],[-8.556,37.108],[-8.532,37.108],[-8.528,37.118],[-8.522,37.108],
+ [-8.514,37.103],[-8.489,37.096],[-8.472,37.095],[-8.465,37.091],[-8.443,37.086],[-8.432,37.083],
+ [-8.425,37.085],[-8.413,37.089],[-8.399,37.093],[-8.386,37.094],[-8.370,37.098],[-8.356,37.099],
+ [-8.340,37.094],[-8.315,37.090]];
+let g='';
+g+='<rect x="0" y="0" width="1000" height="900" fill="var(--land)"/>';
+g+='<path d="'+poly(coast)+' L '+X(HIo)+' '+Y(LA)+' L '+X(LO)+' '+Y(LA)+' Z" fill="var(--sea)"/>';
+g+='<path d="'+poly(coast)+'" fill="none" stroke="#B9CDD1" stroke-width="3"/>';
+// Arade river to Silves + Alvor lagoon
+g+='<path d="'+poly([[-8.527,37.112],[-8.505,37.140],[-8.470,37.170],[-8.438,37.189]])+'" fill="none" stroke="var(--sea)" stroke-width="8" stroke-linecap="round"/>';
+g+='<path d="'+poly([[-8.607,37.119],[-8.622,37.130],[-8.614,37.143],[-8.595,37.147],[-8.582,37.138],[-8.589,37.125]],true)+'" fill="var(--sea)"/>';
+g+='<text class="sealabel" x="430" y="'+(Y(37.052))+'">A T L A N T I K</text>';
+g+='<text class="maplabel" x="'+(X(-8.700))+'" y="'+(Y(37.115))+'">Lagos</text>';
+g+='<text class="maplabel" x="'+(X(-8.500))+'" y="'+(Y(37.075))+'">Carvoeiro</text>';
+g+='<text class="maplabel" x="'+(X(-8.560))+'" y="'+(Y(37.180))+'">Monchique →</text>';
+g+='<g id="lines"></g><g id="trail"></g><g id="dots"></g><g id="trailtop"></g>';
+svg.innerHTML=g;
 
-<div class="sub" style="text-align:center">↓ 35 min</div>
+const dotsG=document.getElementById('dots'), linesG=document.getElementById('lines'),
+      trailG=document.getElementById('trail'), ttG=document.getElementById('trailtop');
+function clearTrail(){trailG.innerHTML='';ttG.innerHTML='';
+  document.querySelectorAll('.dot.end').forEach(d=>d.classList.remove('end'));}
+function lbl(x,y,txt){const cx=Math.max(140,Math.min(860,x));
+  return '<text class="tlabel" x="'+cx+'" y="'+y+'">'+txt+'</text>';}
+function drawTrail(p){clearTrail();
+  if(!p||!p.path||p.path.length<2)return;
+  const d=p.path.map((q,i)=>(i?'L':'M')+X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1)).join(' ');
+  const a=p.path[0], b=p.path[p.path.length-1];
+  const ax=X(a[0]), ay=Y(a[1]), bx=X(b[0]), by=Y(b[1]);
+  trailG.innerHTML='<path d="'+d+'" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>'
+   +'<path d="'+d+'" fill="none" stroke="#4C6B4F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>';
+  ttG.innerHTML='<circle cx="'+ax+'" cy="'+ay+'" r="14" fill="#4C6B4F" stroke="#fff" stroke-width="3"/>'
+   +'<circle cx="'+bx+'" cy="'+by+'" r="14" fill="#4C6B4F" stroke="#fff" stroke-width="3"/>'
+   +lbl(ax, ay+52, p.la||'START')
+   +lbl(bx, by-38, p.lb||'KONEC');
+  (p.ends||[]).forEach(id=>{const e=el(id); if(e) e.classList.add('end');});}
+P.forEach(p=>{
+  const el=document.createElementNS('http://www.w3.org/2000/svg','g');
+  el.setAttribute('class','dot'+(p.inland?' inland':''));
+  el.dataset.id=p.id;
+  const x=X(p.lon),y=Y(p.lat);
+  el.innerHTML='<circle cx="'+x+'" cy="'+y+'" r="24"/>'+
+    '<text x="'+x+'" y="'+y+'">'+p.n+'</text>'+
+    '<g class="seq" data-seq style="display:none"><circle class="seqbg" cx="'+(x+22)+'" cy="'+(y-22)+'" r="15"/><text class="seq" x="'+(x+22)+'" y="'+(y-22)+'"></text></g>';
+  el.addEventListener('click',()=>tap(p.id));
+  dotsG.appendChild(el);
+});
 
-<section id="loule">
-  <h2>3 · Loulé <span class="dl">jen při příjezdu do 14:15</span></h2>
-  <ul>
-    <li><b>Mercado Municipal</b> — maurská tržnice 1908, stánky do 15:00, petiscos i pak <span class="t">· 25 min</span></li>
-    <li><b>Rua da Barbacã + hradby</b> — nejhezčí ulička <span class="t">· 20 min</span></li>
-    <li><b>Café Calcinha</b> — kavárna z 1929 <span class="t">· 15 min</span></li>
-  </ul>
-  <h3>Parkování</h3>
-  <div class="row">Krytý <b>Parque Municipal</b>, 5 min k tržnici · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=37.138335,-8.018326">navigace ↗</a></div>
-  <h3>Jídlo</h3>
-  <div class="row"><b>Petisco stánky v tržnici</b> (jedou i odpoledne) · <b>Bocage</b> 4,5★ kuchyň do 15:00 · <a class="m" href="https://www.google.com/maps/search/?api=1&query=37.139763,-8.022715&query_place_id=ChIJqcQWRRaxGg0RdNU6TAkWR4k">mapa ↗</a> · <b>Bica Velha</b> 4,8★ vaří od 12:30 do večera · <a class="m" href="https://www.google.com/maps/search/?api=1&query=37.138939,-8.024133&query_place_id=ChIJHU_-55WxGg0RBo_WZnezD6I">mapa ↗</a></div>
-  <div class="note">Po 15:00 už tržnice zavřená → Loulé škrtněte a čas dejte Fusetě/Falésii.</div>
-</section>
+// ---------- helpers ----------
+const byId=id=>P.find(p=>p.id===id);
+const el=id=>document.querySelector('.dot[data-id="'+id+'"]');
+function hav(a,b){const R=6371,dLa=(b.lat-a.lat)*Math.PI/180,dLo=(b.lon-a.lon)*Math.PI/180;
+ const s=Math.sin(dLa/2)**2+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLo/2)**2;
+ return 2*R*Math.asin(Math.sqrt(s));}
+function legMin(a,b){const km=hav(a,b)*1.3;const v=(a.id==='14'||b.id==='14')?38:55;
+ return {km:km, min:Math.round(km/v*60+3)};}
+const sheet=document.getElementById('sheet');
+function toast(t){const o=document.getElementById('toast');o.textContent=t;o.classList.add('show');setTimeout(()=>o.classList.remove('show'),1400);}
+function copyName(name){
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(name).then(()=>toast('Zkopírováno ✓'),()=>fallback(name));}
+  else fallback(name);
+  function fallback(n){const t=document.createElement('textarea');t.value=n;document.body.appendChild(t);t.select();try{document.execCommand('copy');toast('Zkopírováno ✓');}catch(e){toast('Nešlo zkopírovat');}t.remove();}
+}
 
-<div class="sub" style="text-align:center">↓ 25 min</div>
+// ---------- modes ----------
+let plan=false, route=[];
+const mB=document.getElementById('mBrowse'), mP=document.getElementById('mPlan');
+mB.onclick=()=>setMode(false); mP.onclick=()=>setMode(true);
+function setMode(p){plan=p;mB.classList.toggle('on',!p);mP.classList.toggle('on',p);
+  clearTrail();
+  if(p){renderPlan(); if(!route.length) sheet.classList.add('open');}
+  else {clearRoute(false); sheet.classList.remove('open');}
+}
+function tap(id){ if(plan){ if(route[route.length-1]!==id){route.push(id);renderPlan();} }
+  else showInfo(id); }
 
-<section id="falesia">
-  <h2>4 · Praia da Falésia <span class="dl ok">kdykoli · top po 17:00</span></h2>
-  <ul>
-    <li><b>Pláž pod rudými útesy</b> — ~80 schodů dolů, plavčíci do 19:30, voda ~22 °C <span class="t">· 1,5–3 h</span></li>
-    <li><b>Útesová stezka</b> mezi piniemi směr Olhos de Água — po 17. h žhne okr <span class="t">· 45–90 min</span></li>
-    <li><b>Západ slunce z útesů</b> ve 20:45 — klidně zůstaňte <span class="t">· bonus</span></li>
-  </ul>
-  <h3>Parkování</h3>
-  <div class="row"><b>Na útesu ZDARMA</b>, GPS 37.08832, -8.17053 (+ štěrková rezerva; přes den plno, po 17. h volno) · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=37.08832,-8.17053">navigace ↗</a></div>
-  <div class="row">Záloha: malý parking u schodů · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=37.086578,-8.168170">navigace ↗</a></div>
-</section>
+// ---------- browse sheet ----------
+function showInfo(id){const p=byId(id);
+  document.querySelectorAll('.dot').forEach(d=>d.classList.remove('sel'));
+  el(id).classList.add('sel');
+  drawTrail(p);
+  sheet.innerHTML='<div class="sh-top"><div><div class="sh-name">'+(p.id==='H'?'🏨 ':p.n+' · ')+p.name+'</div>'+
+   '<div class="meta">'+p.t+'</div></div><button class="xbtn" onclick="closeSheet()">✕</button></div>'+
+   '<div class="sh-desc">'+p.d+'</div>'+(p.tip?'<div class="sh-tip">'+p.tip+'</div>':'')+
+   (p.path?'<div class="hint" style="margin-top:.4rem">🟢 Na mapě: '+(p.la||'start')+' → '+(p.lb||'konec')+' (schematicky)</div>':'')+
+   '<div class="btnrow"><a class="b go" target="_blank" href="'+p.g+'">Google Maps ↗</a>'+
+   '<button class="b cp" onclick="copyName(\''+p.name.replace(/'/g,"\\'")+'\')">Kopírovat název</button></div>';
+  sheet.classList.add('open');
+}
+function closeSheet(){sheet.classList.remove('open');clearTrail();document.querySelectorAll('.dot').forEach(d=>d.classList.remove('sel'));}
 
-<section id="vecer">
-  <h2>5 · Večer <span class="dl ok">vyjet 20:10 · západ 20:45</span></h2>
-  <ul>
-    <li><b>Kaplička Senhora da Rocha</b> — ostroh nad mořem, tunel na pláž, parking u kaple <span class="t">· 5 min autem</span> · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=37.096060,-8.386443">navigace ↗</a></li>
-    <li><b>Praia Grande de Pêra</b> — chodníky u laguny Salgados, plameňáci <span class="t">· 6 min</span> · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=37.095689,-8.336309">navigace ↗</a></li>
-    <li><b>Albufeira, Pau da Bandeira</b> — výhled + večerní ruch <span class="t">· 20 min</span> · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=37.086880,-8.248165">navigace ↗</a></li>
-  </ul>
-</section>
-
-<section id="zasobnik" class="zas">
-  <h2>🎒 Zásobník — když jste někde napřed</h2>
-  <h3>U Fusety (směr východ)</h3>
-  <ul>
-    <li><b>Tavira</b> — nejhezčí město východu: římský most, hradní zahrada s výhledem <span class="t">· +20 min jízdy · 1–1,5 h</span> · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=Tavira">navigace ↗</a></li>
-    <li><b>Santa Luzia</b> — „chobotnicová" vesnice u Taviry, pasti na molu <span class="t">· 30 min</span> · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=Santa+Luzia,+Tavira">navigace ↗</a></li>
-  </ul>
-  <h3>Cestou Olhão → Loulé</h3>
-  <ul>
-    <li><b>Faro — Cidade Velha</b> — staré město v hradbách, katedrála s věží, čapí hnízda <span class="t">· 10 min z trasy · 45–60 min</span> · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=Arco+da+Vila,+Faro">navigace ↗</a></li>
-    <li><b>Palác Estoi</b> — růžové rokoko se zahradami (volně přístupné) <span class="t">· 10 min z trasy · 30–45 min</span> · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=Pal%C3%A1cio+de+Estoi">navigace ↗</a></li>
-    <li><b>Quinta do Lago</b> — dřevěný most přes lagunu, ptáci, pláž Ancão <span class="t">· 15 min z trasy · 45–60 min</span> · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=Ponte+da+Quinta+do+Lago">navigace ↗</a></li>
-  </ul>
-  <h3>U Loulé</h3>
-  <ul>
-    <li><b>Fonte Benémola</b> — stinný okruh podél potoka, únik z vedra <span class="t">· 15 min od Loulé · ~1 h</span> · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=Fonte+Ben%C3%A9mola">navigace ↗</a></li>
-  </ul>
-  <h3>U Falésie</h3>
-  <ul>
-    <li><b>Olhos de Água</b> — plážová vesnička; při odlivu (dnes ~18:50) vyvěrají v písku sladkovodní prameny <span class="t">· 5 min · 30 min</span> · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=Praia+dos+Olhos+de+%C3%81gua">navigace ↗</a></li>
-  </ul>
-</section>
-
-<section id="tank">
-  <h2>⛽ Galp na trase</h2>
-  <ul>
-    <li><b>Galp Olhão, N125</b> — projedete cestou Fuseta → Loulé, so 7–23, s obsluhou · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=37.031510,-7.847015">navigace ↗</a></li>
-    <li><b>Galp Loulé, Av. Marçal Pacheco</b> — nonstop, 400 m od parkování u tržnice · <a class="m" href="https://www.google.com/maps/dir/?api=1&destination=37.135011,-8.021132">navigace ↗</a></li>
-    <li class="t">U „pay first" automatů pozor na blokaci 100 € — s kartou Galp Frota se neřeší.</li>
-  </ul>
-</section>
-
-<footer>S sebou: hotovost + mince · voda a krém (na útesech není stín) · tenisky na stezku. Ověřeno online dnes ráno 25. 7. 2026. Krásný den! 🌅</footer>
-
-</div>
+// ---------- plan sheet ----------
+function renderPlan(){
+  document.querySelectorAll('.dot').forEach(d=>{d.classList.remove('sel');const s=d.querySelector('[data-seq]');s.style.display='none';});
+  linesG.innerHTML='';
+  route.forEach((id,i)=>{const d=el(id);d.classList.add('sel');
+    const s=d.querySelector('[data-seq]');s.style.display='';s.querySelector('text').textContent=i+1;});
+  for(let i=1;i<route.length;i++){const a=byId(route[i-1]),b=byId(route[i]);
+    const L=document.createElementNS('http://www.w3.org/2000/svg','line');
+    L.setAttribute('x1',X(a.lon));L.setAttribute('y1',Y(a.lat));L.setAttribute('x2',X(b.lon));L.setAttribute('y2',Y(b.lat));
+    L.setAttribute('stroke','var(--ink)');L.setAttribute('stroke-width','4');L.setAttribute('stroke-dasharray','10 8');L.setAttribute('opacity','.55');
+    linesG.appendChild(L);}
+  let html='<div class="sh-top"><div><div class="sh-name">🚗 Plán trasy</div>'+
+    '<div class="hint">Ťukejte na body v pořadí jízdy. Časy ≈ odhad.</div></div>'+
+    '<button class="xbtn" onclick="setMode(false)">✕</button></div>';
+  if(route.length===0){ html+='<div class="sh-desc hint" style="margin-top:.5rem">Zatím nic nevybráno. Začněte třeba hotelem (H).<br><br><button class="b cp" style="width:100%" onclick="preset()">★ Načíst návrh dne (H→2→6→7→9→11→12→13→H)</button></div>'; }
+  else{
+    html+='<div class="legs">';let tot=0,totKm=0;
+    for(let i=1;i<route.length;i++){const a=byId(route[i-1]),b=byId(route[i]);const l=legMin(a,b);tot+=l.min;totKm+=l.km;
+      html+='<div>'+(a.id==='H'?'H':a.n)+' → '+(b.id==='H'?'H':b.n)+' · <b>≈ '+l.min+' min</b> <span class="hint">('+l.km.toFixed(0)+' km)</span> <span class="hint">'+b.name.split('—')[0].split('(')[0].trim()+'</span></div>';}
+    html+='</div><div class="tot">Celkem jízdy ≈ '+tot+' min · '+totKm.toFixed(0)+' km</div>';
+    html+='<div class="btnrow">'+gmapsLink()+'<button class="b gray" onclick="undo()">↩︎ Krok zpět</button><button class="b gray" onclick="clearRoute(true)">Vymazat</button></div>';
+    if(route.length>11) html+='<div class="hint" style="margin-top:.4rem">⚠ Google Maps zvládne max ~11 zastávek v jednom odkazu.</div>';
+  }
+  sheet.innerHTML=html; sheet.classList.add('open');
+}
+function gmapsLink(){ if(route.length<2) return '';
+  const c=p=>p.lat.toFixed(6)+','+p.lon.toFixed(6);
+  const o=byId(route[0]), d=byId(route[route.length-1]);
+  const w=route.slice(1,-1).slice(0,9).map(id=>c(byId(id))).join('%7C');
+  const u='https://www.google.com/maps/dir/?api=1&origin='+c(o)+'&destination='+c(d)+(w?'&waypoints='+w:'')+'&travelmode=driving';
+  return '<a class="b go" target="_blank" href="'+u+'">Otevřít trasu v Google Maps ↗</a>';}
+function undo(){route.pop();renderPlan();}
+function clearRoute(keepMode){route=[];if(keepMode)renderPlan();else{linesG.innerHTML='';document.querySelectorAll('.dot').forEach(d=>{d.classList.remove('sel');d.querySelector('[data-seq]').style.display='none';});}}
+function preset(){route=['H','2','6','7','9','11','12','13','H'];renderPlan();}
+window.closeSheet=closeSheet;window.copyName=copyName;window.setMode=setMode;window.undo=undo;window.clearRoute=clearRoute;window.preset=preset;
+</script>
 </body>
 </html>
