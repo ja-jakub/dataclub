@@ -2,270 +2,273 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Neděle · mapa západ — Marinha až Lagos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#FCFBF8">
+<title>Neděle · západní Algarve — interaktivní mapa</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-  :root{--ink:#1B2B33;--acc:#0E6C7C;--warn:#C0532A;--bg:#FCFBF8;--line:#E6E2D8;--mut:#68767D;
-        --sea:#CFE4E8;--land:#F5F0E4}
+  :root{--ink:#1B2B33;--acc:#0E6C7C;--warn:#C0532A;--bg:#FCFBF8;--line:#E6E2D8;--mut:#68767D;--green:#3E6B45}
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{height:100%}
-  body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.45;display:flex;flex-direction:column}
-  header{padding:.7rem 1rem .5rem;flex:0 0 auto}
-  h1{font-size:1.05rem}
-  .sub{color:var(--mut);font-size:.75rem;margin-top:.1rem}
-  .modes{display:flex;gap:.5rem;margin-top:.55rem}
-  .modes button{flex:1;min-height:42px;border:1.5px solid var(--acc);border-radius:10px;background:#fff;color:var(--acc);font-weight:650;font-size:.88rem}
-  .modes button.on{background:var(--acc);color:#fff}
-  #mapwrap{flex:1 1 auto;overflow:hidden;position:relative;padding:0 .4rem}
-  svg{width:100%;height:100%;display:block;touch-action:manipulation}
-  .dot{cursor:pointer}
-  .dot circle{fill:#fff;stroke:var(--warn);stroke-width:3}
-  .dot.inland circle{stroke:var(--acc)}
-  .dot text{font-size:26px;font-weight:700;fill:var(--ink);text-anchor:middle;dominant-baseline:central;pointer-events:none}
-  .dot.sel circle{fill:var(--warn);stroke:var(--warn)}
-  .dot.inland.sel circle{fill:var(--acc);stroke:var(--acc)}
-  .dot.sel text{fill:#fff}
-  .seq{font-size:20px;font-weight:800;fill:#fff;text-anchor:middle;dominant-baseline:central;pointer-events:none}
-  .seqbg{fill:var(--ink)}
-  .dot.end circle{stroke:#3E5C42;stroke-width:6}
-  .tlabel{font-weight:800;paint-order:stroke;stroke:#fff;stroke-width:8;stroke-linejoin:round;fill:#33513B;font-size:24px;text-anchor:middle}
-  .maplabel{font-size:22px;fill:#9AA6AB;font-weight:600}
-  .sealabel{font-size:26px;fill:#8FB6BE;letter-spacing:.35em;font-weight:600}
-  #sheet{flex:0 0 auto;background:#fff;border-top:1px solid var(--line);border-radius:16px 16px 0 0;
-         box-shadow:0 -4px 16px rgba(27,43,51,.08);padding:.8rem 1rem 1rem;max-height:38vh;overflow-y:auto;display:none}
-  #sheet.open{display:block}
+  html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+  #map{position:fixed;inset:0;z-index:0}
+
+  /* horní lišta */
+  #top{position:fixed;top:0;left:0;right:0;z-index:1100;padding:calc(env(safe-area-inset-top,0px) + .5rem) .6rem .5rem;
+       display:flex;gap:.45rem;pointer-events:none}
+  #top button{pointer-events:auto;flex:1;min-height:44px;border:1.5px solid var(--acc);border-radius:12px;
+       background:rgba(255,255,255,.94);backdrop-filter:blur(6px);color:var(--acc);font-weight:700;font-size:.9rem;
+       touch-action:manipulation;box-shadow:0 2px 8px rgba(27,43,51,.12)}
+  #top button.on{background:var(--acc);color:#fff}
+  .leaflet-top{top:calc(env(safe-area-inset-top,0px) + 58px)}
+
+  /* piny */
+  .pin{width:38px;height:38px;border-radius:50%;background:#fff;border:3px solid var(--warn);
+       display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--ink);
+       box-shadow:0 2px 6px rgba(27,43,51,.3);position:relative;transition:transform .12s}
+  .pin.inland{border-color:var(--acc)}
+  .pin.sel{background:var(--warn);border-color:var(--warn);color:#fff;transform:scale(1.12)}
+  .pin.inland.sel{background:var(--acc);border-color:var(--acc)}
+  .pin.end{border-color:var(--green);border-width:5px}
+  .pin[data-seq]::after{content:attr(data-seq);position:absolute;top:-9px;right:-9px;width:21px;height:21px;
+       border-radius:50%;background:var(--ink);color:#fff;font-size:12px;font-weight:800;
+       display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+  .tlab{background:#fff;border:2px solid var(--green);color:#2C4A32;font-weight:800;font-size:12px;
+       padding:3px 8px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 6px rgba(27,43,51,.25);
+       transform:translate(-50%,-140%)}
+
+  /* spodní karta */
+  #sheet{position:fixed;left:0;right:0;bottom:0;z-index:1100;background:#fff;border-radius:18px 18px 0 0;
+       box-shadow:0 -6px 24px rgba(27,43,51,.18);padding:.8rem 1rem calc(env(safe-area-inset-bottom,0px) + 1rem);
+       max-height:42dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+       transform:translateY(105%);transition:transform .22s ease}
+  #sheet.open{transform:translateY(0)}
+  .grab{width:38px;height:4px;border-radius:2px;background:var(--line);margin:0 auto .55rem}
   .sh-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem}
-  .sh-name{font-weight:700;font-size:1.02rem;line-height:1.25}
-  .xbtn{flex:0 0 auto;width:34px;height:34px;border:none;border-radius:50%;background:var(--bg);color:var(--mut);font-size:1rem;font-weight:700}
-  .meta{color:var(--warn);font-size:.76rem;font-weight:700;margin-top:.15rem}
-  .sh-desc{font-size:.9rem;margin-top:.4rem}
-  .sh-tip{font-size:.83rem;margin-top:.4rem;background:var(--bg);border-left:3px solid var(--warn);padding:.4rem .55rem;border-radius:6px}
-  .btnrow{display:flex;gap:.5rem;margin-top:.65rem;flex-wrap:wrap}
-  .b{flex:1;min-height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;
-     font-weight:650;font-size:.88rem;text-decoration:none;border:none}
+  .sh-name{font-weight:750;font-size:1.02rem;line-height:1.25}
+  .xbtn{flex:0 0 auto;width:36px;height:36px;border:none;border-radius:50%;background:var(--bg);color:var(--mut);
+       font-size:1rem;font-weight:700;touch-action:manipulation}
+  .meta{color:var(--warn);font-size:.76rem;font-weight:750;margin-top:.15rem}
+  .sh-desc{font-size:.9rem;margin-top:.45rem}
+  .sh-tip{font-size:.83rem;margin-top:.45rem;background:var(--bg);border-left:3px solid var(--warn);
+       padding:.45rem .6rem;border-radius:6px}
+  .hint{font-size:.8rem;color:var(--mut)}
+  .btnrow{display:flex;gap:.5rem;margin-top:.7rem;flex-wrap:wrap}
+  .b{flex:1;min-height:46px;display:flex;align-items:center;justify-content:center;border-radius:12px;
+     font-weight:700;font-size:.9rem;text-decoration:none;border:none;touch-action:manipulation}
   .b.go{background:var(--acc);color:#fff}
   .b.cp{background:#fff;color:var(--acc);border:1.5px solid var(--acc)}
-  .b.gray{background:#fff;color:var(--mut);border:1.5px solid var(--line);flex:0 0 auto;padding:0 .8rem}
+  .b.gray{background:#fff;color:var(--mut);border:1.5px solid var(--line);flex:0 0 auto;padding:0 .85rem}
   .legs{margin-top:.5rem;font-size:.88rem}
-  .legs div{padding:.28rem 0;border-top:1px dashed var(--line)}
+  .legs div{padding:.3rem 0;border-top:1px dashed var(--line)}
   .legs div:first-child{border-top:none}
-  .tot{font-weight:750;margin-top:.4rem}
-  .hint{font-size:.8rem;color:var(--mut)}
-  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:52vh;background:var(--ink);color:#fff;
-         padding:.5rem .9rem;border-radius:999px;font-size:.82rem;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+  .tot{font-weight:800;margin-top:.45rem}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:46dvh;z-index:1200;background:var(--ink);
+       color:#fff;padding:.55rem 1rem;border-radius:999px;font-size:.84rem;opacity:0;transition:opacity .2s;pointer-events:none}
   .toast.show{opacity:1}
 </style>
 </head>
 <body>
-<header>
-  <h1>Neděle · západní Algarve — 14 bodů</h1>
-  <div class="sub">Schematická mapa (čáry nejsou silnice, časy ≈ odhad jízdy autem)</div>
-  <div class="modes">
-    <button id="mBrowse" class="on">👆 Prohlížet</button>
-    <button id="mPlan">🚗 Plánovat trasu</button>
-  </div>
-</header>
+<div id="map"></div>
 
-<div id="mapwrap"><svg id="map" viewBox="0 0 1000 900" preserveAspectRatio="xMidYMid meet"></svg></div>
+<div id="top">
+  <button id="mBrowse" class="on">👆 Prohlížet</button>
+  <button id="mPlan">🚗 Plánovat trasu</button>
+</div>
 
-<div id="sheet"></div>
+<div id="sheet"><div class="grab"></div><div id="shbody"></div></div>
 <div class="toast" id="toast">Zkopírováno ✓</div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-// ---------- data ----------
-const P = [
- {id:'H', n:'H', name:'Vila Galé Náutico (hotel)', lat:37.1000, lon:-8.3560, t:'start / cíl',
-  d:'Výchozí bod. Do Marinhy 15 min, do Lagosu ~40 min.',
+// ---------------- DATA ----------------
+const P=[
+ {id:'H',n:'H',name:'Vila Galé Náutico (hotel)',lat:37.1000,lon:-8.3560,t:'start / cíl',
+  d:'Výchozí bod. Do Marinhy 15 min, do Lagosu ~40 min autem.',
   g:'https://www.google.com/maps/search/?api=1&query=Vila+Gal%C3%A9+N%C3%A1utico'},
- {id:'1', n:'1', name:'Capela Senhora da Rocha', lat:37.09606, lon:-8.38644, t:'⏱ 15–20 min',
+ {id:'1',n:'1',name:'Capela Senhora da Rocha',lat:37.09606,lon:-8.38644,t:'⏱ 15–20 min',
   d:'Bílá kaplička na ostrohu vysoko nad mořem, tunel ve skále na vedlejší pláž. Parkování zdarma u kaple.',
   g:'https://www.google.com/maps/search/?api=1&query=37.096060,-8.386443'},
- {id:'2', n:'2', name:'Praia da Marinha — VÝCHODNÍ start stezky + šnorchl', lat:37.0906, lon:-8.4126, t:'⏱ pláž 1–2 h',
+ {id:'2',n:'2',name:'Praia da Marinha — VÝCHODNÍ start stezky + šnorchl',lat:37.0906,lon:-8.4126,t:'⏱ pláž 1–2 h',
   d:'Jedna z nejslavnějších pláží Evropy. Šnorchlování u skal na obou okrajích zátoky — ryby, mušle, průzračná voda (ráno nejklidnější). Odsud startuje stezka 7 údolí.',
   tip:'⚠ Parkoviště je malé a v červenci plné už ~9:15 — vyjet z hotelu do 8:15! Přepadové polní parkoviště je podél příjezdové Estrada da Marinha (10–20 min pěšky).',
   g:'https://www.google.com/maps/search/?api=1&query=37.091175,-8.412901&query_place_id=ChIJj5q7OwDXGg0RR7mvieo18Q4'},
- {id:'3', n:'3', name:'Stezka 7 údolí — jak na ni s autem', lat:37.0866, lon:-8.4438, t:'⏱ 1,5–4 h pěšky',
-  d:'Vede po útesech mezi Marinhou (bod 2 = VÝCHODNÍ začátek) a Vale Centeanes (bod 4 = ZÁPADNÍ konec), 5,7 km jedním směrem. AUTO: nejjednodušší je nechat ho na Marinze a jít tam a zpět — k vyhlídce nad „okem" Benagilu je to ~1,2 km, na Praia do Carvalho ~2 km, k majáku Alfanzina ~3 km. Celá stezka tam a zpět = 11,4 km / ~4 h. Kdo chce projít jen jednosměrně, z konce ve Vale Centeanes se k autu vrátí Boltem/taxíkem z Carvoeira (~10 min jízdy).',
+ {id:'3',n:'3',name:'Stezka 7 údolí — jak na ni s autem',lat:37.0866,lon:-8.4438,t:'⏱ 1,5–4 h pěšky',
+  d:'Vede po útesech mezi Marinhou (bod 2 = VÝCHODNÍ začátek) a Vale Centeanes (bod 4 = ZÁPADNÍ konec), 5,7 km jedním směrem. AUTO: nejjednodušší je nechat ho na Marinze a jít tam a zpět — k vyhlídce nad „okem" Benagilu ~1,2 km, na Praia do Carvalho ~2 km, k majáku Alfanzina ~3 km. Celá stezka tam a zpět = 11,4 km / ~4 h. Jednosměrně: z Vale Centeanes zpět k autu Bolt/taxi z Carvoeira (~10 min jízdy).',
   tip:'💡 Nulový stín — jít hned ráno, hodně vody, kšiltovka. Nechodit na hrany, drolí se. „Oko" jeskyně Benagil uvidíte shora přímo z pěšiny — zadarmo a bez lodí.',
   g:'https://www.google.com/maps/search/?api=1&query=Percurso+dos+Sete+Vales+Suspensos',
-  path:[[-8.4126,37.0906],[-8.4250,37.0868],[-8.4320,37.0852],[-8.4430,37.0878],[-8.4505,37.0895],[-8.4542,37.0907]],
-  la:'START · Marinha (2)', lb:'KONEC · Vale Centeanes (4)', ends:['2','4']},
- {id:'4', n:'4', name:'Vale Centeanes — ZÁPADNÍ konec stezky', lat:37.09065, lon:-8.45418, t:'⏱ průchozí / pláž 30–60 min',
+  path:[[37.0906,-8.4126],[37.0886,-8.4180],[37.0873,-8.4223],[37.0876,-8.4258],[37.0868,-8.4319],[37.0860,-8.4380],[37.0866,-8.4438],[37.0885,-8.4495],[37.0906,-8.4542]],
+  la:'START · Marinha (2)',lb:'KONEC · Vale Centeanes (4)',ends:['2','4']},
+ {id:'4',n:'4',name:'Vale Centeanes — ZÁPADNÍ konec stezky',lat:37.09065,lon:-8.45418,t:'⏱ průchozí / pláž 30–60 min',
   d:'Západní konec stezky u pláže Vale de Centeanes s vyhlídkou 4,8★. Parkuje se podél Estrada do Vale de Centeanes — bývá tu volněji než na Marinze, takže je to i záchranný start, kdyby Marinha byla plná. Do Carvoeira odsud 1,5 km.',
   g:'https://www.google.com/maps/search/?api=1&query=37.090653,-8.454180&query_place_id=ChIJUw2Xd3vXGg0R9OILYXW7At4'},
- {id:'5', n:'5', name:'Praia do Carvalho', lat:37.08665, lon:-8.43187, t:'⏱ 45–90 min',
+ {id:'5',n:'5',name:'Praia do Carvalho',lat:37.08665,lon:-8.43187,t:'⏱ 45–90 min',
   d:'Pláž, na kterou se vchází tunelem vytesaným ve skále. Skvělý šnorchl kolem útesů, míň lidí než Marinha; oblíbené (nepovolené) skoky ze skal.',
   g:'https://www.google.com/maps/search/?api=1&query=37.086650,-8.431870&query_place_id=ChIJA0RrC4PWGg0RVe82jEEnjy8'},
- {id:'6', n:'6', name:'Algar Seco + chodník A Boneca', lat:37.09429, lon:-8.46503, t:'⏱ 30–45 min',
+ {id:'6',n:'6',name:'Algar Seco + chodník A Boneca',lat:37.09429,lon:-8.46503,t:'⏱ 30–45 min',
   d:'Skalní terasy s „oknem" A Boneca a jeskyňkami. Z Carvoeira sem vede dřevěný chodník po hraně útesů (570 m) — krátká klifová promenáda.',
   g:'https://www.google.com/maps/search/?api=1&query=Algar+Seco+Carvoeiro',
-  path:[[-8.4716,37.0972],[-8.4690,37.0957],[-8.4663,37.0947],[-8.4650,37.0943]],
-  la:'START · Carvoeiro (7)', lb:'KONEC · Algar Seco (6)', ends:['7','6']},
- {id:'7', n:'7', name:'Carvoeiro (městečko)', lat:37.0972, lon:-8.4716, t:'⏱ 30–60 min',
+  path:[[37.0968,-8.4703],[37.0958,-8.4686],[37.0949,-8.4668],[37.0943,-8.4650]],
+  la:'START · Carvoeiro (7)',lb:'KONEC · Algar Seco (6)',ends:['7','6']},
+ {id:'7',n:'7',name:'Carvoeiro (městečko)',lat:37.0972,lon:-8.4716,t:'⏱ 30–60 min',
   d:'Náměstíčko přímo nad plážovou zátokou, bílé domky, zmrzlina a káva. Odsud startuje boardwalk na Algar Seco.',
   tip:'⚠ V centru se parkuje špatně — nechte auto na parkovišti nad městem a sejděte.',
   g:'https://www.google.com/maps/search/?api=1&query=Carvoeiro'},
- {id:'8', n:'8', name:'Praia dos Caneiros', lat:37.10496, lon:-8.51385, t:'⏱ 1–2 h',
+ {id:'8',n:'8',name:'Praia dos Caneiros',lat:37.10496,lon:-8.51385,t:'⏱ 1–2 h',
   d:'Zlatá pláž se skalisky po obou stranách (šnorchl), klidnější než Marinha, plážová restaurace. Při odlivu se dá obejít útes do vedlejší tiché zátoky.',
   g:'https://www.google.com/maps/search/?api=1&query=37.104963,-8.513845&query_place_id=ChIJ09TnorspGw0RzrIxRVJy7h8'},
- {id:'9', n:'9', name:'Ferragudo', lat:37.1236, lon:-8.5236, t:'⏱ 30–60 min',
+ {id:'9',n:'9',name:'Ferragudo',lat:37.1236,lon:-8.5236,t:'⏱ 30–60 min',
   d:'Nejfotogeničtější rybářská vesnice západu — bílé uličky s květináči spadající k řece Arade, kostelík nahoře, kavárny na náměstí u vody.',
   g:'https://www.google.com/maps/search/?api=1&query=Ferragudo'},
- {id:'10', n:'10', name:'Passadiços de Alvor — chodníky nad vodou', lat:37.12369, lon:-8.59569, t:'⏱ 45–90 min',
+ {id:'10',n:'10',name:'Passadiços de Alvor — chodníky nad vodou',lat:37.12369,lon:-8.59569,t:'⏱ 45–90 min',
   d:'To je ten dřevěný chodník: kilometry lávek nad lagunou, dunami a ústím řeky Alvor. Rovina, zdarma, ptáci, výhledy. Nejhezčí světlo pozdě odpoledne.',
   tip:'💡 Parkování zdarma přímo u pláže Alvor (východní konec). Chodník vede až ke skalám Três Irmãos (bod 11) — dá se spojit pěšky.',
   g:'https://www.google.com/maps/search/?api=1&query=37.123685,-8.595692&query_place_id=ChIJ0xlONwAvGw0Rqgwq2vpkehw',
-  path:[[-8.5804,37.1200],[-8.5880,37.1226],[-8.5957,37.1240],[-8.6045,37.1252],[-8.6105,37.1278]],
-  la:'START · Três Irmãos (11)', lb:'KONEC · ústí řeky Alvor', ends:['11','10']},
- {id:'11', n:'11', name:'Praia dos Três Irmãos', lat:37.11931, lon:-8.58041, t:'⏱ 1–2 h',
+  path:[[37.1200,-8.5804],[37.1226,-8.5880],[37.1240,-8.5957],[37.1252,-8.6045],[37.1278,-8.6105]],
+  la:'START · Três Irmãos (11)',lb:'KONEC · ústí řeky Alvor',ends:['11','10']},
+ {id:'11',n:'11',name:'Praia dos Três Irmãos',lat:37.11931,lon:-8.58041,t:'⏱ 1–2 h',
   d:'Zlaté skalní věže a tunely mezi zátokami — projdete skálou z pláže na pláž. Výborný šnorchl kolem skal, 4,8★ z 7 000+ recenzí.',
   g:'https://www.google.com/maps/search/?api=1&query=37.119306,-8.580410&query_place_id=ChIJWcThzKEvGw0Rig59wOgi7HE'},
- {id:'12', n:'12', name:'Lagos — keramika + staré město', lat:37.10173, lon:-8.67229, t:'⏱ 1–2 h',
+ {id:'12',n:'12',name:'Lagos — keramika + staré město',lat:37.10173,lon:-8.67229,t:'⏱ 1–2 h',
   d:'The Original Grater, R. 25 de Abril 28 (denně do 23:00; druhá pobočka R. Infante de Sagres 61). K tomu procházka starým městem v hradbách a přístavní promenádou.',
   g:'https://www.google.com/maps/search/?api=1&query=37.101731,-8.672286&query_place_id=ChIJ-T-45p0xGw0R0uHMamvBSIo'},
- {id:'13', n:'13', name:'Silves — maurský hrad', lat:37.19127, lon:-8.43790, t:'⏱ 1–1,5 h', inland:true,
+ {id:'13',n:'13',name:'Silves — maurský hrad',lat:37.19127,lon:-8.43790,t:'⏱ 1–1,5 h',inland:true,
   d:'Hrad z rudého pískovce nad městem pomerančů, hradby s výhledem, čapí hnízda, katedrála. Neděle 9–20 h, vstup ~3 €. Ideální zajížďka cestou domů z Lagosu.',
   g:'https://www.google.com/maps/search/?api=1&query=37.191267,-8.437900&query_place_id=ChIJw_psdbbZGg0R7gmGapxeO9k'},
- {id:'14', n:'14', name:'Fóia 902 m — střecha Algarve', lat:37.31538, lon:-8.59245, t:'⏱ 30 min + cesta', inland:true,
-  d:'Nejvyšší bod Algarve s výhledem na celé pobřeží, 4,7★. Krásná serpentinová silnice přes Monchique — ale je to ~40 min jízdy z Portimãa jedním směrem. Jen pokud zbyde energie; na západ slunce nahoře je to velkolepé.',
+ {id:'14',n:'14',name:'Fóia 902 m — střecha Algarve',lat:37.31538,lon:-8.59245,t:'⏱ 30 min + cesta',inland:true,
+  d:'Nejvyšší bod Algarve s výhledem na celé pobřeží, 4,7★. Krásná serpentinová silnice přes Monchique — ale ~40 min jízdy z Portimãa jedním směrem. Jen pokud zbyde energie; na západ slunce nahoře je to velkolepé.',
   g:'https://www.google.com/maps/search/?api=1&query=37.315383,-8.592448&query_place_id=ChIJB1q6J2YiGw0RbrUfEgBTUok'}
 ];
 
-// ---------- projection ----------
-const LO=-8.735, HIo=-8.315, LA=37.045, HA=37.345;
-const KX=1000/(HIo-LO), KY=KX/Math.cos(37.2*Math.PI/180);
-const X=lon=>(lon-LO)*KX, Y=lat=>(HA-lat)*KY;
+// ---------------- MAPA ----------------
+const map=L.map('map',{zoomControl:false,attributionControl:true});
+map.attributionControl.setPrefix(false);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+L.control.zoom({position:'topright'}).addTo(map);
+map.fitBounds(P.map(p=>[p.lat,p.lon]),{padding:[46,46]});
 
-// ---------- draw base map ----------
-const svg=document.getElementById('map');
-function poly(pts,close){return pts.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join(' ')+(close?' Z':'');}
-const coast=[[-8.735,37.095],[-8.700,37.093],[-8.676,37.099],[-8.662,37.107],[-8.640,37.100],[-8.618,37.112],
- [-8.596,37.121],[-8.580,37.116],[-8.556,37.108],[-8.532,37.108],[-8.528,37.118],[-8.522,37.108],
- [-8.514,37.103],[-8.489,37.096],[-8.472,37.095],[-8.465,37.091],[-8.443,37.086],[-8.432,37.083],
- [-8.425,37.085],[-8.413,37.089],[-8.399,37.093],[-8.386,37.094],[-8.370,37.098],[-8.356,37.099],
- [-8.340,37.094],[-8.315,37.090]];
-let g='';
-g+='<rect x="0" y="0" width="1000" height="900" fill="var(--land)"/>';
-g+='<path d="'+poly(coast)+' L '+X(HIo)+' '+Y(LA)+' L '+X(LO)+' '+Y(LA)+' Z" fill="var(--sea)"/>';
-g+='<path d="'+poly(coast)+'" fill="none" stroke="#B9CDD1" stroke-width="3"/>';
-// Arade river to Silves + Alvor lagoon
-g+='<path d="'+poly([[-8.527,37.112],[-8.505,37.140],[-8.470,37.170],[-8.438,37.189]])+'" fill="none" stroke="var(--sea)" stroke-width="8" stroke-linecap="round"/>';
-g+='<path d="'+poly([[-8.607,37.119],[-8.622,37.130],[-8.614,37.143],[-8.595,37.147],[-8.582,37.138],[-8.589,37.125]],true)+'" fill="var(--sea)"/>';
-g+='<text class="sealabel" x="430" y="'+(Y(37.052))+'">A T L A N T I K</text>';
-g+='<text class="maplabel" x="'+(X(-8.700))+'" y="'+(Y(37.115))+'">Lagos</text>';
-g+='<text class="maplabel" x="'+(X(-8.500))+'" y="'+(Y(37.075))+'">Carvoeiro</text>';
-g+='<text class="maplabel" x="'+(X(-8.560))+'" y="'+(Y(37.180))+'">Monchique →</text>';
-g+='<g id="lines"></g><g id="trail"></g><g id="dots"></g><g id="trailtop"></g>';
-svg.innerHTML=g;
-
-const dotsG=document.getElementById('dots'), linesG=document.getElementById('lines'),
-      trailG=document.getElementById('trail'), ttG=document.getElementById('trailtop');
-function clearTrail(){trailG.innerHTML='';ttG.innerHTML='';
-  document.querySelectorAll('.dot.end').forEach(d=>d.classList.remove('end'));}
-function lbl(x,y,txt){const cx=Math.max(140,Math.min(860,x));
-  return '<text class="tlabel" x="'+cx+'" y="'+y+'">'+txt+'</text>';}
-function drawTrail(p){clearTrail();
-  if(!p||!p.path||p.path.length<2)return;
-  const d=p.path.map((q,i)=>(i?'L':'M')+X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1)).join(' ');
-  const a=p.path[0], b=p.path[p.path.length-1];
-  const ax=X(a[0]), ay=Y(a[1]), bx=X(b[0]), by=Y(b[1]);
-  trailG.innerHTML='<path d="'+d+'" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>'
-   +'<path d="'+d+'" fill="none" stroke="#4C6B4F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>';
-  ttG.innerHTML='<circle cx="'+ax+'" cy="'+ay+'" r="14" fill="#4C6B4F" stroke="#fff" stroke-width="3"/>'
-   +'<circle cx="'+bx+'" cy="'+by+'" r="14" fill="#4C6B4F" stroke="#fff" stroke-width="3"/>'
-   +lbl(ax, ay+52, p.la||'START')
-   +lbl(bx, by-38, p.lb||'KONEC');
-  (p.ends||[]).forEach(id=>{const e=el(id); if(e) e.classList.add('end');});}
-P.forEach(p=>{
-  const el=document.createElementNS('http://www.w3.org/2000/svg','g');
-  el.setAttribute('class','dot'+(p.inland?' inland':''));
-  el.dataset.id=p.id;
-  const x=X(p.lon),y=Y(p.lat);
-  el.innerHTML='<circle cx="'+x+'" cy="'+y+'" r="24"/>'+
-    '<text x="'+x+'" y="'+y+'">'+p.n+'</text>'+
-    '<g class="seq" data-seq style="display:none"><circle class="seqbg" cx="'+(x+22)+'" cy="'+(y-22)+'" r="15"/><text class="seq" x="'+(x+22)+'" y="'+(y-22)+'"></text></g>';
-  el.addEventListener('click',()=>tap(p.id));
-  dotsG.appendChild(el);
-});
-
-// ---------- helpers ----------
 const byId=id=>P.find(p=>p.id===id);
-const el=id=>document.querySelector('.dot[data-id="'+id+'"]');
+const M={};
+P.forEach(p=>{
+  const ic=L.divIcon({className:'',html:'<div class="pin'+(p.inland?' inland':'')+'" id="pin-'+p.id+'">'+p.n+'</div>',
+    iconSize:[38,38],iconAnchor:[19,19]});
+  M[p.id]=L.marker([p.lat,p.lon],{icon:ic,keyboard:false}).addTo(map).on('click',()=>tap(p.id));
+});
+const pinEl=id=>document.getElementById('pin-'+id);
+
+// ---------------- UI helpers ----------------
+const sheet=document.getElementById('sheet'), shbody=document.getElementById('shbody');
+function openSheet(){sheet.classList.add('open');}
+function toast(t){const o=document.getElementById('toast');o.textContent=t;o.classList.add('show');
+  setTimeout(()=>o.classList.remove('show'),1400);}
+function copyName(name){
+  const fb=n=>{const t=document.createElement('textarea');t.value=n;document.body.appendChild(t);t.select();
+    try{document.execCommand('copy');toast('Zkopírováno ✓');}catch(e){toast('Nešlo zkopírovat');}t.remove();};
+  if(navigator.clipboard&&navigator.clipboard.writeText)
+    navigator.clipboard.writeText(name).then(()=>toast('Zkopírováno ✓'),()=>fb(name));
+  else fb(name);
+}
+
+// ---------------- stezky (overlay) ----------------
+let trailLayers=[];
+function clearTrail(){trailLayers.forEach(l=>map.removeLayer(l));trailLayers=[];
+  document.querySelectorAll('.pin.end').forEach(e=>e.classList.remove('end'));}
+function drawTrail(p){clearTrail();
+  if(!p||!p.path)return;
+  trailLayers.push(L.polyline(p.path,{color:'#fff',weight:11,opacity:1,lineCap:'round'}).addTo(map));
+  trailLayers.push(L.polyline(p.path,{color:'#3E6B45',weight:6,opacity:.95,lineCap:'round'}).addTo(map));
+  const a=p.path[0],b=p.path[p.path.length-1];
+  [[a,p.la||'START'],[b,p.lb||'KONEC']].forEach(([pt,txt])=>{
+    trailLayers.push(L.circleMarker(pt,{radius:8,color:'#fff',weight:3,fillColor:'#3E6B45',fillOpacity:1}).addTo(map));
+    trailLayers.push(L.marker(pt,{interactive:false,icon:L.divIcon({className:'',html:'<div class="tlab">'+txt+'</div>',iconSize:[0,0]})}).addTo(map));
+  });
+  (p.ends||[]).forEach(id=>{const e=pinEl(id);if(e)e.classList.add('end');});
+  trailLayers.length&&map.fitBounds(L.latLngBounds(p.path).pad(0.35));
+}
+
+// ---------------- režimy ----------------
+let plan=false,route=[];
+const mB=document.getElementById('mBrowse'),mP=document.getElementById('mPlan');
+mB.onclick=()=>setMode(false);mP.onclick=()=>setMode(true);
+function setMode(p){plan=p;mB.classList.toggle('on',!p);mP.classList.toggle('on',p);
+  clearTrail();
+  if(p){renderPlan();openSheet();}
+  else{clearRoute();sheet.classList.remove('open');clearSel();}
+}
+function clearSel(){document.querySelectorAll('.pin.sel').forEach(e=>e.classList.remove('sel'));}
+function tap(id){ if(plan){ if(route[route.length-1]!==id){route.push(id);renderPlan();} }
+  else showInfo(id); }
+
+// ---------------- prohlížení ----------------
+function showInfo(id){const p=byId(id);
+  clearSel();const e=pinEl(id);if(e)e.classList.add('sel');
+  drawTrail(p);
+  if(!p.path){ // jemně vycentrovat nad kartu
+    const size=map.getSize(), pt=map.latLngToContainerPoint([p.lat,p.lon]);
+    map.panBy([pt.x-size.x/2, pt.y-size.y*0.36],{animate:true});
+  }
+  shbody.innerHTML='<div class="sh-top"><div><div class="sh-name">'+(p.id==='H'?'🏨 ':p.n+' · ')+p.name+'</div>'+
+   '<div class="meta">'+p.t+'</div></div><button class="xbtn" onclick="closeSheet()">✕</button></div>'+
+   '<div class="sh-desc">'+p.d+'</div>'+(p.tip?'<div class="sh-tip">'+p.tip+'</div>':'')+
+   (p.path?'<div class="hint" style="margin-top:.4rem">🟢 Na mapě: '+(p.la||'start')+' → '+(p.lb||'konec')+' (orientační průběh)</div>':'')+
+   '<div class="btnrow"><a class="b go" target="_blank" rel="noopener" href="'+p.g+'">Google Maps ↗</a>'+
+   '<button class="b cp" onclick="copyName(\''+p.name.replace(/'/g,"\\'")+'\')">Kopírovat název</button></div>';
+  openSheet();
+}
+function closeSheet(){sheet.classList.remove('open');clearTrail();clearSel();}
+
+// ---------------- plánování ----------------
+let planLine=null;
 function hav(a,b){const R=6371,dLa=(b.lat-a.lat)*Math.PI/180,dLo=(b.lon-a.lon)*Math.PI/180;
  const s=Math.sin(dLa/2)**2+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLo/2)**2;
  return 2*R*Math.asin(Math.sqrt(s));}
 function legMin(a,b){const km=hav(a,b)*1.3;const v=(a.id==='14'||b.id==='14')?38:55;
- return {km:km, min:Math.round(km/v*60+3)};}
-const sheet=document.getElementById('sheet');
-function toast(t){const o=document.getElementById('toast');o.textContent=t;o.classList.add('show');setTimeout(()=>o.classList.remove('show'),1400);}
-function copyName(name){
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(name).then(()=>toast('Zkopírováno ✓'),()=>fallback(name));}
-  else fallback(name);
-  function fallback(n){const t=document.createElement('textarea');t.value=n;document.body.appendChild(t);t.select();try{document.execCommand('copy');toast('Zkopírováno ✓');}catch(e){toast('Nešlo zkopírovat');}t.remove();}
-}
-
-// ---------- modes ----------
-let plan=false, route=[];
-const mB=document.getElementById('mBrowse'), mP=document.getElementById('mPlan');
-mB.onclick=()=>setMode(false); mP.onclick=()=>setMode(true);
-function setMode(p){plan=p;mB.classList.toggle('on',!p);mP.classList.toggle('on',p);
-  clearTrail();
-  if(p){renderPlan(); if(!route.length) sheet.classList.add('open');}
-  else {clearRoute(false); sheet.classList.remove('open');}
-}
-function tap(id){ if(plan){ if(route[route.length-1]!==id){route.push(id);renderPlan();} }
-  else showInfo(id); }
-
-// ---------- browse sheet ----------
-function showInfo(id){const p=byId(id);
-  document.querySelectorAll('.dot').forEach(d=>d.classList.remove('sel'));
-  el(id).classList.add('sel');
-  drawTrail(p);
-  sheet.innerHTML='<div class="sh-top"><div><div class="sh-name">'+(p.id==='H'?'🏨 ':p.n+' · ')+p.name+'</div>'+
-   '<div class="meta">'+p.t+'</div></div><button class="xbtn" onclick="closeSheet()">✕</button></div>'+
-   '<div class="sh-desc">'+p.d+'</div>'+(p.tip?'<div class="sh-tip">'+p.tip+'</div>':'')+
-   (p.path?'<div class="hint" style="margin-top:.4rem">🟢 Na mapě: '+(p.la||'start')+' → '+(p.lb||'konec')+' (schematicky)</div>':'')+
-   '<div class="btnrow"><a class="b go" target="_blank" href="'+p.g+'">Google Maps ↗</a>'+
-   '<button class="b cp" onclick="copyName(\''+p.name.replace(/'/g,"\\'")+'\')">Kopírovat název</button></div>';
-  sheet.classList.add('open');
-}
-function closeSheet(){sheet.classList.remove('open');clearTrail();document.querySelectorAll('.dot').forEach(d=>d.classList.remove('sel'));}
-
-// ---------- plan sheet ----------
+ return{km:km,min:Math.round(km/v*60+3)};}
 function renderPlan(){
-  document.querySelectorAll('.dot').forEach(d=>{d.classList.remove('sel');const s=d.querySelector('[data-seq]');s.style.display='none';});
-  linesG.innerHTML='';
-  route.forEach((id,i)=>{const d=el(id);d.classList.add('sel');
-    const s=d.querySelector('[data-seq]');s.style.display='';s.querySelector('text').textContent=i+1;});
-  for(let i=1;i<route.length;i++){const a=byId(route[i-1]),b=byId(route[i]);
-    const L=document.createElementNS('http://www.w3.org/2000/svg','line');
-    L.setAttribute('x1',X(a.lon));L.setAttribute('y1',Y(a.lat));L.setAttribute('x2',X(b.lon));L.setAttribute('y2',Y(b.lat));
-    L.setAttribute('stroke','var(--ink)');L.setAttribute('stroke-width','4');L.setAttribute('stroke-dasharray','10 8');L.setAttribute('opacity','.55');
-    linesG.appendChild(L);}
-  let html='<div class="sh-top"><div><div class="sh-name">🚗 Plán trasy</div>'+
-    '<div class="hint">Ťukejte na body v pořadí jízdy. Časy ≈ odhad.</div></div>'+
-    '<button class="xbtn" onclick="setMode(false)">✕</button></div>';
-  if(route.length===0){ html+='<div class="sh-desc hint" style="margin-top:.5rem">Zatím nic nevybráno. Začněte třeba hotelem (H).<br><br><button class="b cp" style="width:100%" onclick="preset()">★ Načíst návrh dne (H→2→6→7→9→11→12→13→H)</button></div>'; }
-  else{
-    html+='<div class="legs">';let tot=0,totKm=0;
-    for(let i=1;i<route.length;i++){const a=byId(route[i-1]),b=byId(route[i]);const l=legMin(a,b);tot+=l.min;totKm+=l.km;
-      html+='<div>'+(a.id==='H'?'H':a.n)+' → '+(b.id==='H'?'H':b.n)+' · <b>≈ '+l.min+' min</b> <span class="hint">('+l.km.toFixed(0)+' km)</span> <span class="hint">'+b.name.split('—')[0].split('(')[0].trim()+'</span></div>';}
-    html+='</div><div class="tot">Celkem jízdy ≈ '+tot+' min · '+totKm.toFixed(0)+' km</div>';
-    html+='<div class="btnrow">'+gmapsLink()+'<button class="b gray" onclick="undo()">↩︎ Krok zpět</button><button class="b gray" onclick="clearRoute(true)">Vymazat</button></div>';
-    if(route.length>11) html+='<div class="hint" style="margin-top:.4rem">⚠ Google Maps zvládne max ~11 zastávek v jednom odkazu.</div>';
+  clearSel();
+  document.querySelectorAll('.pin[data-seq]').forEach(e=>e.removeAttribute('data-seq'));
+  if(planLine){map.removeLayer(planLine);planLine=null;}
+  route.forEach((id,i)=>{const e=pinEl(id);if(e){e.classList.add('sel');e.setAttribute('data-seq',i+1);}});
+  if(route.length>1){
+    planLine=L.polyline(route.map(id=>{const p=byId(id);return[p.lat,p.lon];}),
+      {color:'#1B2B33',weight:4,dashArray:'8 8',opacity:.6}).addTo(map);
   }
-  sheet.innerHTML=html; sheet.classList.add('open');
+  let html='<div class="sh-top"><div><div class="sh-name">🚗 Plán trasy</div>'+
+    '<div class="hint">Ťukejte na body v pořadí jízdy. Časy ≈ odhad; přesně to spočítá Google Maps.</div></div>'+
+    '<button class="xbtn" onclick="setMode(false)">✕</button></div>';
+  if(route.length===0){
+    html+='<div class="sh-desc hint" style="margin-top:.5rem">Zatím nic nevybráno. Začněte třeba hotelem (H).</div>'+
+      '<div class="btnrow"><button class="b cp" onclick="preset()">★ Načíst návrh dne (H→2→6→7→9→11→12→13→H)</button></div>';
+  }else{
+    html+='<div class="legs">';let tot=0,totKm=0;
+    for(let i=1;i<route.length;i++){const a=byId(route[i-1]),b=byId(route[i]);const l=legMin(a,b);
+      tot+=l.min;totKm+=l.km;
+      html+='<div>'+(a.id==='H'?'H':a.n)+' → '+(b.id==='H'?'H':b.n)+' · <b>≈ '+l.min+' min</b> '+
+        '<span class="hint">('+l.km.toFixed(0)+' km) '+b.name.split('—')[0].split('(')[0].trim()+'</span></div>';}
+    html+='</div><div class="tot">Celkem jízdy ≈ '+tot+' min · '+totKm.toFixed(0)+' km</div>';
+    html+='<div class="btnrow">'+gmapsLink()+
+      '<button class="b gray" onclick="undo()">↩︎ Zpět</button>'+
+      '<button class="b gray" onclick="resetRoute()">Vymazat</button></div>';
+    if(route.length>11)html+='<div class="hint" style="margin-top:.4rem">⚠ Google Maps zvládne max ~11 zastávek v jednom odkazu.</div>';
+  }
+  shbody.innerHTML=html;openSheet();
 }
-function gmapsLink(){ if(route.length<2) return '';
+function gmapsLink(){if(route.length<2)return'';
   const c=p=>p.lat.toFixed(6)+','+p.lon.toFixed(6);
-  const o=byId(route[0]), d=byId(route[route.length-1]);
+  const o=byId(route[0]),d=byId(route[route.length-1]);
   const w=route.slice(1,-1).slice(0,9).map(id=>c(byId(id))).join('%7C');
-  const u='https://www.google.com/maps/dir/?api=1&origin='+c(o)+'&destination='+c(d)+(w?'&waypoints='+w:'')+'&travelmode=driving';
-  return '<a class="b go" target="_blank" href="'+u+'">Otevřít trasu v Google Maps ↗</a>';}
+  return '<a class="b go" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin='+c(o)+
+    '&destination='+c(d)+(w?'&waypoints='+w:'')+'&travelmode=driving">Otevřít trasu v Google Maps ↗</a>';}
 function undo(){route.pop();renderPlan();}
-function clearRoute(keepMode){route=[];if(keepMode)renderPlan();else{linesG.innerHTML='';document.querySelectorAll('.dot').forEach(d=>{d.classList.remove('sel');d.querySelector('[data-seq]').style.display='none';});}}
+function resetRoute(){route=[];renderPlan();}
+function clearRoute(){route=[];
+  document.querySelectorAll('.pin[data-seq]').forEach(e=>e.removeAttribute('data-seq'));
+  if(planLine){map.removeLayer(planLine);planLine=null;}}
 function preset(){route=['H','2','6','7','9','11','12','13','H'];renderPlan();}
-window.closeSheet=closeSheet;window.copyName=copyName;window.setMode=setMode;window.undo=undo;window.clearRoute=clearRoute;window.preset=preset;
+window.closeSheet=closeSheet;window.copyName=copyName;window.setMode=setMode;
+window.undo=undo;window.resetRoute=resetRoute;window.preset=preset;
 </script>
 </body>
 </html>
