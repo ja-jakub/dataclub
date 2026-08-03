@@ -6,152 +6,158 @@
 <title>Vaprio · E-mailing report · Červenec 2026</title>
 <style>
   :root{
-    --bg:#F4F4F0; --card:#FFFFFF; --ink:#151F28; --muted:#66727C; --soft:#98A1A9;
+    --bg:#F6F6F3; --card:#FFFFFF; --ink:#17212B; --muted:#69747E; --soft:#9AA3AB;
     --brand:#0D1B24; --brand2:#12252F; --accent:#0FA3A0; --accent-ink:#0B7A78;
-    --gold:#F5B32E; --bad:#D4593F; --good:#2E9E6B; --line:#E5E5DE; --line2:#EEEEE8;
+    --gold:#E8A23D; --bad:#D4593F; --good:#2E9E6B; --line:#E8E8E2; --line2:#F0F0EA;
     --chip:#EDF6F5;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; font-size:15px; line-height:1.45; -webkit-font-smoothing:antialiased;}
+  body{background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; font-size:14.5px; line-height:1.5; -webkit-font-smoothing:antialiased;}
   .num{font-variant-numeric:tabular-nums;}
 
   /* ---------- header ---------- */
-  header{background:var(--brand); color:#fff; padding:26px 0 0;}
-  .shell{max-width:1180px; margin:0 auto; padding:0 28px;}
+  header{background:var(--brand); color:#fff; padding:28px 0 0;}
+  .shell{max-width:1150px; margin:0 auto; padding:0 30px;}
   .hd-top{display:flex; align-items:center; justify-content:space-between; gap:20px;}
-  .hd-brand{display:flex; align-items:center; gap:14px;}
-  .hd-brand img{height:30px; display:block;}
-  .hd-brand .logotext{font-weight:800; letter-spacing:.16em; font-size:17px;}
-  .hd-brand .sep{width:1px; height:26px; background:rgba(255,255,255,.25);}
-  .hd-brand .client{font-size:15px; font-weight:600; color:#E8ECEA; letter-spacing:.02em;}
-  .hd-tag{font-size:12.5px; color:#8FA0A6; font-style:italic;}
-  .hd-title{margin-top:22px; padding-bottom:22px;}
-  .hd-title h1{font-size:27px; font-weight:750; letter-spacing:-.01em;}
-  .hd-title .sub{margin-top:6px; color:#AEBDC2; font-size:14px; display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
-  .hd-title .dot{width:4px;height:4px;border-radius:50%;background:#4E6570;display:inline-block;}
-  .badge{display:inline-block; background:rgba(15,163,160,.18); border:1px solid rgba(15,163,160,.45); color:#7BD8D2; font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:999px; letter-spacing:.04em;}
+  .hd-brand{display:flex; align-items:center; gap:15px;}
+  .hd-brand img{height:28px; display:block;}
+  .hd-brand .logotext{font-weight:800; letter-spacing:.16em; font-size:16px; white-space:nowrap;}
+  .hd-brand .sep{width:1px; height:24px; background:rgba(255,255,255,.22);}
+  .hd-brand .client{font-size:15px; font-weight:650; color:#E8ECEA;}
+  .hd-tag{font-size:12.5px; color:#7E939C; font-style:italic;}
+  .hd-title{margin-top:24px; padding-bottom:24px;}
+  .hd-title h1{font-size:26px; font-weight:750; letter-spacing:-.01em;}
+  .hd-title .sub{margin-top:7px; color:#9FB2B9; font-size:13.5px; display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
+  .hd-title .dot{width:3.5px;height:3.5px;border-radius:50%;background:#4E6570;display:inline-block;}
+  .badge{display:inline-block; background:rgba(15,163,160,.16); border:1px solid rgba(15,163,160,.4); color:#7BD8D2; font-size:11.5px; font-weight:650; padding:3px 10px; border-radius:999px; letter-spacing:.04em;}
 
   /* ---------- KPI ---------- */
-  .kpis{max-width:1180px; margin:-1px auto 0; padding:0 28px; position:relative;}
-  .kpi-strip{background:var(--brand2); border-radius:0 0 14px 14px; padding:16px 22px 24px; box-shadow:0 14px 30px -18px rgba(13,27,36,.55);}
-  .kpi-head{display:flex; align-items:baseline; gap:12px; padding:4px 14px 13px; border-bottom:1px solid rgba(255,255,255,.09); margin-bottom:15px;}
-  .kpi-head .t{font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#7E939C;}
-  .kpi-head .p{font-size:14px; font-weight:750; color:#fff; letter-spacing:.02em;}
+  .kpis{max-width:1150px; margin:0 auto; padding:0 30px;}
+  .kpi-strip{background:var(--brand2); border-radius:0 0 16px 16px; padding:18px 26px 26px; box-shadow:0 16px 32px -20px rgba(13,27,36,.5);}
+  .kpi-head{display:flex; align-items:baseline; gap:12px; padding:2px 2px 14px; border-bottom:1px solid rgba(255,255,255,.09); margin-bottom:18px;}
+  .kpi-head .t{font-size:10.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#7E939C;}
+  .kpi-head .p{font-size:14px; font-weight:750; color:#fff;}
   .kpi-head .x{font-size:12px; color:#8DA2AA; margin-left:auto;}
-  .kpi-cells{display:grid; grid-template-columns:repeat(6,1fr); gap:10px;}
-  .kpi{padding:6px 14px; border-left:1px solid rgba(255,255,255,.09);}
-  .kpi:first-child{border-left:none;}
-  .kpi .lbl{font-size:11px; font-weight:650; letter-spacing:.1em; text-transform:uppercase; color:#7E939C; margin-bottom:7px;}
-  .kpi .val{font-size:24px; font-weight:750; color:#fff; letter-spacing:-.01em;}
-  .kpi .val small{font-size:13px; font-weight:600; color:#9FB2B9; margin-left:2px;}
-  .kpi .split{margin-top:6px; font-size:12px; color:#8DA2AA;}
+  .kpi-cells{display:grid; grid-template-columns:repeat(6,1fr); gap:26px;}
+  .kpi .lbl{font-size:10.5px; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:#7E939C; margin-bottom:8px; white-space:nowrap;}
+  .kpi .val{font-size:26px; font-weight:750; color:#fff; letter-spacing:-.015em; line-height:1.1;}
+  .kpi .split{margin-top:7px; font-size:12px; color:#8DA2AA; line-height:1.45;}
   .kpi .split b{color:#C4D2D6; font-weight:650;}
   .kpi .accent{color:var(--gold);}
 
   /* ---------- tabs ---------- */
-  nav.tabs{max-width:1180px; margin:30px auto 0; padding:0 28px; display:flex; gap:6px; border-bottom:1px solid var(--line);}
-  nav.tabs button{appearance:none; border:none; background:none; font:inherit; font-size:14.5px; font-weight:600; color:var(--muted); padding:10px 16px 12px; cursor:pointer; border-bottom:2.5px solid transparent; margin-bottom:-1px;}
+  nav.tabs{max-width:1150px; margin:34px auto 0; padding:0 30px; display:flex; gap:2px; border-bottom:1px solid var(--line);}
+  nav.tabs button{appearance:none; border:none; background:none; font:inherit; font-size:14.5px; font-weight:600; color:var(--muted); padding:10px 18px 13px; cursor:pointer; border-bottom:2.5px solid transparent; margin-bottom:-1px;}
   nav.tabs button:hover{color:var(--ink);}
-  nav.tabs button.on{color:var(--ink); border-color:var(--accent);}
-  main{max-width:1180px; margin:0 auto; padding:26px 28px 60px;}
+  nav.tabs button.on{color:var(--ink); font-weight:700; border-color:var(--accent);}
+  main{max-width:1150px; margin:0 auto; padding:30px 30px 64px;}
   section.pane{display:none;}
   section.pane.on{display:block;}
-  h2.sec{font-size:19px; font-weight:720; letter-spacing:-.01em; margin:4px 0 4px;}
-  .sec-note{color:var(--muted); font-size:13.5px; margin-bottom:18px;}
+  .sec-row{display:flex; align-items:flex-end; justify-content:space-between; gap:18px; margin-bottom:14px; flex-wrap:wrap;}
+  h2.sec{font-size:19px; font-weight:750; letter-spacing:-.01em;}
+  .sec-note{color:var(--muted); font-size:13px; margin-top:4px;}
+  .legend{display:flex; align-items:center; gap:14px; font-size:12px; color:var(--muted); white-space:nowrap; flex-wrap:wrap;}
+  .legend .lbm{color:var(--soft);}
+  .bdot{display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:6px; vertical-align:1.5px;}
+  .bdot.g{background:var(--good);} .bdot.a{background:var(--gold);} .bdot.r{background:var(--bad);}
 
-  /* ---------- table ---------- */
-  .card{background:var(--card); border:1px solid var(--line); border-radius:12px; overflow-x:auto;}
+  /* ---------- master table ---------- */
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; overflow-x:auto;}
   table.master{width:100%; border-collapse:collapse;}
-  table.master thead th{font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--soft); font-weight:700; text-align:right; padding:12px 12px; border-bottom:1px solid var(--line); white-space:nowrap; background:#FBFBF8;}
-  table.master thead th:first-child{text-align:left; padding-left:20px;}
-  table.master tbody td{padding:13px 12px; border-bottom:1px solid var(--line2); text-align:right; vertical-align:top; white-space:nowrap;}
-  table.master tbody td:first-child{text-align:left; padding-left:20px; white-space:normal;}
+  table.master thead th{font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--soft); font-weight:700; text-align:right; padding:13px 14px; border-bottom:1px solid var(--line); white-space:nowrap; background:#FBFBF8;}
+  table.master thead th:first-child{text-align:left; padding-left:22px;}
+  table.master tbody td{padding:16px 14px; border-bottom:1px solid var(--line2); text-align:right; vertical-align:middle; white-space:nowrap;}
+  table.master tbody td:first-child{text-align:left; padding-left:22px; white-space:normal;}
+  table.master tbody tr:last-child td{border-bottom:none;}
   table.master tbody tr.row{cursor:pointer; transition:background .12s;}
-  table.master tbody tr.row:hover{background:#F7FAF9;}
-  table.master tbody tr.row.open{background:var(--chip);}
-  .camp-name{font-weight:680; font-size:14.5px;}
-  .camp-meta{font-size:12px; color:var(--muted); margin-top:3px; max-width:330px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-  .camp-date{display:inline-block; font-size:11px; font-weight:700; color:var(--accent-ink); background:var(--chip); border-radius:5px; padding:1.5px 7px; margin-right:8px; letter-spacing:.03em;}
-  .big{font-size:15px; font-weight:680;}
-  .sub2{display:block; font-size:11.5px; color:var(--soft); margin-top:3px; font-weight:500;}
-  .chev{display:inline-block; margin-left:10px; color:var(--soft); transition:transform .15s; font-size:11px;}
-  tr.row.open .chev{transform:rotate(90deg);}
-
-  .mbar{display:block; margin:6px 0 4px;}
+  table.master tbody tr.row:hover{background:#F8FAF9;}
+  table.master tbody tr.row.open{background:#F4F9F8; box-shadow:inset 3px 0 0 var(--accent);}
+  .camp-name{font-weight:700; font-size:14.5px;}
+  .camp-date{color:var(--accent-ink); font-weight:700; font-size:12.5px; margin-right:9px;}
+  .camp-meta{font-size:12px; color:var(--soft); margin-top:3px; max-width:320px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .big{font-size:15px; font-weight:700;}
+  .sub2{display:block; font-size:11.5px; color:var(--soft); margin-top:4px; font-weight:500;}
+  td.chv{width:34px; color:var(--soft); font-size:11px; padding-right:20px !important;}
+  td.chv span{display:inline-block; transition:transform .15s;}
+  tr.row.open td.chv span{transform:rotate(90deg); color:var(--accent-ink);}
 
   /* ---------- detail ---------- */
-  tr.detail>td{background:#FCFCF9; padding:0 !important; border-bottom:1px solid var(--line); white-space:normal;}
-  .det{padding:22px 26px 26px; text-align:left;}
-  .det h4{font-size:11px; letter-spacing:.11em; text-transform:uppercase; color:var(--soft); font-weight:700; margin:22px 0 9px;}
-  .det h4:first-child{margin-top:0;}
-  .det-grid{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:28px;}
+  tr.detail>td{background:#FBFBF8; padding:0 !important; border-bottom:1px solid var(--line) !important; white-space:normal;}
+  .det{padding:20px 26px 28px; text-align:left;}
+  .det-head{display:flex; align-items:flex-start; justify-content:space-between; gap:18px; padding-bottom:16px; margin-bottom:20px; border-bottom:1px solid var(--line);}
+  .det-head .linkrow{flex:0 0 auto; flex-wrap:nowrap;}
+  .dh-t{font-size:15.5px; font-weight:750;}
+  .dh-t small{font-size:12.5px; font-weight:600; color:var(--muted); margin-left:8px;}
+  .dh-s{font-size:12.5px; color:var(--muted); margin-top:5px; line-height:1.55;}
+  .dh-s b{font-weight:700; color:var(--soft); font-size:10.5px; letter-spacing:.06em;}
+  .det h4{font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--soft); font-weight:700; margin:0 0 10px;}
+  .det h4.later{margin-top:24px;}
+  .det-grid{display:grid; grid-template-columns:minmax(0,1.06fr) minmax(0,1fr); gap:30px;}
   .det-grid>div{min-width:0;}
-  table.mini{width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:10px; overflow:hidden;}
-  table.mini th{font-size:10.5px; color:var(--soft); text-transform:uppercase; letter-spacing:.08em; text-align:right; padding:8px 12px; border-bottom:1px solid var(--line); font-weight:700; background:#FBFBF7;}
+  table.mini{width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:11px; overflow:hidden;}
+  table.mini th{font-size:10.5px; color:var(--soft); text-transform:uppercase; letter-spacing:.08em; text-align:right; padding:9px 13px; border-bottom:1px solid var(--line); font-weight:700; background:#FBFBF7;}
   table.mini th:first-child{text-align:left;}
-  table.mini td{font-size:13px; padding:7.5px 12px; border-bottom:1px solid var(--line2); text-align:right; font-variant-numeric:tabular-nums;}
+  table.mini td{font-size:13px; padding:8px 13px; border-bottom:1px solid var(--line2); text-align:right; font-variant-numeric:tabular-nums;}
   table.mini td:first-child{text-align:left; color:var(--muted); font-weight:550;}
   table.mini tr:last-child td{border-bottom:none;}
-  table.mini td b{font-weight:680;}
+  table.mini td b{font-weight:700;}
   table.mini small{color:var(--soft); font-size:11px; font-weight:500;}
-  table.mini td.tc{background:#F7FAF9; font-weight:650;}
-  table.mini th.tc{color:var(--accent-ink); background:#F1F7F6;}
-  .conv-list{background:#fff; border:1px solid var(--line); border-radius:10px; overflow:hidden;}
-  .conv-row{display:flex; align-items:center; gap:14px; padding:10px 14px; border-bottom:1px solid var(--line2);}
-  .conv-row .t{flex:0 0 96px; font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--soft);}
+  table.mini td.tc{background:#F6FAF9; font-weight:650;}
+  table.mini th.tc{color:var(--accent-ink); background:#F0F7F6;}
+  .conv-list{background:#fff; border:1px solid var(--line); border-radius:11px; overflow:hidden;}
+  .conv-row{display:flex; align-items:center; gap:14px; padding:11px 15px; border-bottom:1px solid var(--line2);}
+  .conv-row .t{flex:0 0 94px; font-size:10.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--soft);}
   .conv-row .n{font-size:16.5px; font-weight:750; white-space:nowrap;}
   .conv-row .n small{font-size:12px; font-weight:550; color:var(--muted);}
   .conv-row .r{margin-left:auto; text-align:right; font-size:12px; color:var(--muted); white-space:nowrap; line-height:1.5;}
-  .conv-row .r b{color:var(--ink); font-weight:680; font-size:13px;}
+  .conv-row .r b{color:var(--ink); font-weight:700; font-size:13px;}
   .conv-row.hl{background:var(--chip);}
   .conv-row.hl .t{color:var(--accent-ink);}
-  .conv-foot{padding:8px 14px; font-size:12px; color:var(--muted); background:#FBFBF7;}
-  .linkrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:4px;}
-  .plink{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; color:var(--accent-ink); background:var(--chip); border:1px solid #CBE5E3; padding:5px 11px; border-radius:7px; text-decoration:none;}
-  .plink:hover{background:#E2F1F0;}
-  .waves{font-size:12.5px; color:var(--muted);}
-  .waves td{padding:6px 12px !important;}
+  .conv-foot{padding:9px 15px; font-size:12px; color:var(--muted); background:#FBFBF7;}
+  .waves td, .waves th{padding:7px 13px !important; font-size:12.5px !important;}
+  .linkrow{display:flex; gap:10px; flex-wrap:wrap;}
+  .plink{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:650; color:var(--accent-ink); background:#fff; border:1px solid #C9E2E0; padding:6px 13px; border-radius:8px; text-decoration:none; white-space:nowrap;}
+  .plink:hover{background:var(--chip);}
 
   /* ---------- kosik ---------- */
   .k-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:16px;}
-  .k-card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 20px;}
-  .k-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2px;}
-  .k-head .nm{font-weight:700; font-size:15px;}
-  .flag{display:inline-block; font-size:10.5px; font-weight:750; letter-spacing:.06em; border-radius:5px; padding:2px 7px; margin-left:8px; vertical-align:1px;}
+  .k-card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 22px 20px;}
+  .k-head{display:flex; justify-content:space-between; align-items:center; gap:10px;}
+  .k-head .nm{font-weight:750; font-size:14.5px;}
+  .flag{display:inline-block; font-size:10px; font-weight:750; letter-spacing:.06em; border-radius:5px; padding:2px 7px; margin-left:9px; vertical-align:1.5px;}
   .flag.cz{background:#E8EFF8; color:#3D5A87;}
   .flag.sk{background:#F4ECF8; color:#7A4E96;}
-  .k-sub{font-size:12.5px; color:var(--muted); margin-bottom:14px;}
-  .k-mets{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; border-top:1px solid var(--line2); padding-top:13px;}
-  .k-met .l{font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--soft); font-weight:650;}
-  .k-met .v{font-size:17px; font-weight:720; margin-top:3px;}
-  .k-met .v small{font-size:11.5px; color:var(--muted); font-weight:550;}
-  .k-note{margin-top:16px; font-size:13px; color:var(--muted); background:#FBF7EC; border:1px solid #F0E3C0; border-radius:9px; padding:11px 14px;}
+  .k-sub{font-size:12.5px; color:var(--soft); margin:4px 0 15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .k-mets{display:grid; grid-template-columns:repeat(4,1fr); gap:14px 10px; border-top:1px solid var(--line2); padding-top:14px;}
+  .k-met .l{font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:var(--soft); font-weight:700; white-space:nowrap;}
+  .k-met .v{font-size:16.5px; font-weight:750; margin-top:4px;}
+  .k-note{margin-top:16px; font-size:13px; color:var(--muted); background:#FBF7EC; border:1px solid #F0E3C0; border-radius:10px; padding:12px 15px;}
   .k-note b{color:var(--ink);}
 
   /* ---------- compare ---------- */
-  .ctrls{display:flex; gap:18px; flex-wrap:wrap; margin:14px 0 18px; align-items:center;}
-  .seg{display:inline-flex; background:#ECECE6; border-radius:9px; padding:3px;}
-  .seg button{appearance:none; border:none; background:none; font:inherit; font-size:13px; font-weight:600; color:var(--muted); padding:6px 13px; border-radius:7px; cursor:pointer;}
-  .seg button.on{background:#fff; color:var(--ink); box-shadow:0 1px 4px rgba(0,0,0,.09);}
-  .ctrl-lbl{font-size:11.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--soft); margin-right:-8px;}
-  .chart-wrap{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:22px 24px 10px;}
-  .bench-note{font-size:12px; color:var(--muted); padding:10px 4px 12px; display:flex; align-items:center; gap:7px;}
+  .ctrls{display:flex; gap:20px; flex-wrap:wrap; margin:16px 0 18px; align-items:center;}
+  .seg{display:inline-flex; background:#ECECE6; border-radius:10px; padding:3px;}
+  .seg button{appearance:none; border:none; background:none; font:inherit; font-size:13px; font-weight:600; color:var(--muted); padding:6px 14px; border-radius:8px; cursor:pointer; white-space:nowrap;}
+  .seg button.on{background:#fff; color:var(--ink); font-weight:700; box-shadow:0 1px 4px rgba(0,0,0,.09);}
+  .ctrl-lbl{font-size:10.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--soft); margin-right:-10px;}
+  .chart-wrap{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px 26px 12px;}
+  .bench-note{font-size:12px; color:var(--muted); padding:12px 4px 12px; display:flex; align-items:center; gap:8px;}
   .bench-swatch{display:inline-block; width:18px; height:0; border-top:2px dashed var(--bad);}
 
-  /* ---------- footer / methodology ---------- */
-  .meth{font-size:13.5px; color:var(--muted); line-height:1.6;}
-  .meth dt{font-weight:700; color:var(--ink); margin-top:14px; font-size:13.5px;}
-  .meth dd{margin:2px 0 0;}
-  footer{border-top:1px solid var(--line); margin-top:26px;}
-  .ft{max-width:1180px; margin:0 auto; padding:18px 28px 26px; display:flex; justify-content:space-between; gap:20px; font-size:12.5px; color:var(--soft); flex-wrap:wrap;}
+  /* ---------- methodology / footer ---------- */
+  .meth{font-size:13.5px; color:var(--muted); line-height:1.65;}
+  .meth dt{font-weight:700; color:var(--ink); margin-top:15px; font-size:13.5px;}
+  .meth dd{margin:3px 0 0;}
+  .meth dt:first-child{margin-top:0;}
+  footer{border-top:1px solid var(--line); margin-top:30px;}
+  .ft{max-width:1150px; margin:0 auto; padding:18px 30px 28px; display:flex; justify-content:space-between; gap:20px; font-size:12.5px; color:var(--soft); flex-wrap:wrap;}
   .ft b{color:var(--muted); font-weight:650;}
 
   @media (max-width:980px){
-    .kpi-cells{grid-template-columns:repeat(3,1fr);}
-    .kpi{border-left:none;}
+    .kpi-cells{grid-template-columns:repeat(3,1fr); gap:18px;}
     .det-grid{grid-template-columns:1fr;}
     .k-grid{grid-template-columns:1fr;}
+    .det-head{flex-direction:column;}
   }
   @media print{
     nav.tabs{display:none;} section.pane{display:block !important; page-break-before:always;}
@@ -177,7 +183,7 @@
       <h1>E-mailing report — červenec 2026</h1>
       <div class="sub">
         <span class="badge">SmartEmailing</span>
-        <span>Newslettery + automatizace opuštěného košíku</span>
+        <span>Newslettery + opuštěný košík</span>
         <span class="dot"></span>
         <span>CZ + SK</span>
       </div>
@@ -197,12 +203,22 @@
 <main>
   <!-- ================= NEWSLETTERY ================= -->
   <section class="pane on" id="p-nl">
-    <h2 class="sec">Newslettery — 5 kampaní</h2>
-    <div class="sec-note">Klik na řádek = detail kampaně (rozpad CZ / SK, konverze, vlny, náhled e-mailu). Šedá značka v ukazateli a údaj „bench.“ = orientační e-commerce benchmark.</div>
+    <div class="sec-row">
+      <div>
+        <h2 class="sec">Newslettery — 5 kampaní</h2>
+        <div class="sec-note">Kliknutím na řádek otevřete detail: rozpad CZ / SK, konverze, rozesílací vlny a náhled e-mailu.</div>
+      </div>
+      <div class="legend">
+        <span><span class="bdot g"></span>nad benchmarkem</span>
+        <span><span class="bdot a"></span>blízko</span>
+        <span><span class="bdot r"></span>pod ním</span>
+        <span class="lbm">—&nbsp; benchmarky: OR ~20 % · CTOR ~8 % · odhlášení &lt; 0,3 %</span>
+      </div>
+    </div>
     <div class="card">
       <table class="master" id="nl-table">
         <thead><tr>
-          <th>Kampaň</th><th>Odesláno</th><th>Otevření · OR</th><th>Prokliky · CTOR</th><th>Odhlášení</th><th>Konverze</th><th>Tržby s DPH</th>
+          <th>Kampaň</th><th>Odesláno</th><th>Open rate</th><th>CTOR</th><th>Odhlášení</th><th>Objednávky</th><th>Tržby s DPH</th><th></th>
         </tr></thead>
         <tbody></tbody>
       </table>
@@ -211,11 +227,21 @@
 
   <!-- ================= KOŠÍK ================= -->
   <section class="pane" id="p-kosik">
-    <h2 class="sec">Opuštěný košík — automatizace</h2>
-    <div class="sec-note" id="k-note-range"></div>
-    <div class="card" style="margin-bottom:4px">
+    <div class="sec-row">
+      <div>
+        <h2 class="sec">Opuštěný košík</h2>
+        <div class="sec-note" id="k-note-range"></div>
+      </div>
+      <div class="legend">
+        <span><span class="bdot g"></span>nad benchmarkem</span>
+        <span><span class="bdot a"></span>blízko</span>
+        <span><span class="bdot r"></span>pod ním</span>
+        <span class="lbm">—&nbsp; benchmarky: OR ~40 % · CR ~2,5 %</span>
+      </div>
+    </div>
+    <div class="card">
       <table class="master" id="k-summary">
-        <thead><tr><th>Souhrn</th><th>Odesláno</th><th>Otevření · OR</th><th>Prokliky · CTOR</th><th>Konverze · CR</th><th>Tržby s DPH</th></tr></thead>
+        <thead><tr><th>Souhrn</th><th>Odesláno</th><th>Open rate</th><th>CTOR</th><th>Objednávky · CR</th><th>Tržby s DPH</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -224,8 +250,12 @@
 
   <!-- ================= SROVNÁNÍ ================= -->
   <section class="pane" id="p-cmp">
-    <h2 class="sec">Srovnání newsletterů</h2>
-    <div class="sec-note">Porovnání kampaní podle zvolené metriky. Přerušovaná čára = orientační e-commerce benchmark.</div>
+    <div class="sec-row">
+      <div>
+        <h2 class="sec">Srovnání newsletterů</h2>
+        <div class="sec-note">Kampaně vedle sebe podle zvolené metriky. Přerušovaná čára = orientační benchmark.</div>
+      </div>
+    </div>
     <div class="ctrls">
       <span class="ctrl-lbl">Metrika</span>
       <div class="seg" id="cmp-metric">
@@ -250,11 +280,11 @@
 
   <!-- ================= METODIKA ================= -->
   <section class="pane" id="p-meth">
-    <h2 class="sec">Metodika &amp; poznámky</h2>
-    <div class="card" style="padding:22px 26px">
+    <div class="sec-row"><div><h2 class="sec">Metodika &amp; poznámky</h2></div></div>
+    <div class="card" style="padding:24px 28px">
       <dl class="meth">
         <dt>Zdroj dat</dt><dd id="m-source"></dd>
-        <dt>Co je zahrnuto</dt><dd>Všechny ostré rozesílky newsletterů (5 kampaní, CZ + SK, včetně obou rozesílacích vln) a produkční automatizace opuštěného košíku (krok 1 a krok 2, CZ + SK) za období 1.–31. 7. 2026.</dd>
+        <dt>Co je zahrnuto</dt><dd>Všechny ostré rozesílky newsletterů (5 kampaní, CZ + SK, včetně obou rozesílacích vln) a produkční automatizace opuštěného košíku (krok 1 a 2, CZ + SK) za období 1.–31. 7. 2026.</dd>
         <dt>Co je odfiltrováno</dt><dd id="m-excluded"></dd>
         <dt>Definice metrik</dt>
         <dd>
@@ -1136,9 +1166,9 @@ const DATA = {
 };
 
 /* ---------- helpers ---------- */
-const CZ = new Intl.NumberFormat('cs-CZ');
-const fmtN = n => CZ.format(Math.round(n));
-const fmtK = n => CZ.format(Math.round(n)) + ' Kč';
+const CZf = new Intl.NumberFormat('cs-CZ');
+const fmtN = n => CZf.format(Math.round(n));
+const fmtK = n => CZf.format(Math.round(n)) + ' Kč';
 const pct = (x, d=1) => (x*100).toLocaleString('cs-CZ',{minimumFractionDigits:d, maximumFractionDigits:d}) + ' %';
 const R = m => ({
   OR:  m.delivered ? m.opens_u/m.delivered : 0,
@@ -1151,16 +1181,12 @@ const R = m => ({
 const BENCH = {OR:.20, CTOR:.08, UNS:.003, CR:.005, RPM:null};
 const BENCH_K = {OR:.40, CR:.025};
 
-/* inline benchmark micro-bar: value vs benchmark scale */
-function mbar(val, bench, w=64){
-  const max = Math.max(bench*1.15, val*1.1, 1e-9);
-  const vw = Math.max(1.5, val/max*w), bx = Math.min(w-1.6, bench/max*w);
-  const col = val >= bench*0.85 ? 'var(--good)' : (val >= bench*0.4 ? 'var(--gold)' : 'var(--bad)');
-  return `<svg class="mbar" width="${w}" height="9" aria-hidden="true">
-    <rect x="0" y="2.5" width="${w}" height="4" rx="2" fill="#ECECE4"/>
-    <rect x="0" y="2.5" width="${vw.toFixed(1)}" height="4" rx="2" fill="${col}"/>
-    <rect x="${bx.toFixed(1)}" y="0" width="1.6" height="9" fill="#98A19A"/>
-  </svg>`;
+/* benchmark status dot */
+function bdot(val, bench, inverse=false){
+  let c;
+  if(inverse) c = val<=bench ? 'g' : (val<=bench*2 ? 'a' : 'r');
+  else        c = val>=bench*0.85 ? 'g' : (val>=bench*0.4 ? 'a' : 'r');
+  return `<span class="bdot ${c}"></span>`;
 }
 
 /* ---------- KPI strip ---------- */
@@ -1170,17 +1196,17 @@ function mbar(val, bench, w=64){
   const skS = DATA.totals.nl_sk.sent + DATA.totals.kosik_sk.sent;
   const cells = [
     {l:'Odesláno', v:fmtN(a.sent), s:`CZ <b>${fmtN(czS)}</b> · SK <b>${fmtN(skS)}</b>`},
-    {l:'Doručeno', v:pct(r.DLV,1), s:`${fmtN(a.delivered)} e-mailů · bounce ${fmtN(a.sent-a.delivered)}`},
-    {l:'Otevření · OR', v:pct(r.OR,1), s:`${fmtN(a.opens_u)} unikátních otevření`},
-    {l:'Prokliky · CTOR', v:pct(r.CTOR,1), s:`${fmtN(a.clicks_u)} unikátních prokliků`},
-    {l:'Odhlášení', v:fmtN(a.unsubs), s:`${pct(r.UNS,2)} z doručených · spam ${fmtN(a.spam)}`},
-    {l:'Konverze', v:`<span class="accent">${fmtN(a.ct_n)}</span>`, s:`<b>${fmtK(a.ct_rev_vat)}</b> s DPH · ${fmtK(a.ct_rev)} bez DPH`}
+    {l:'Doručeno', v:pct(r.DLV,1), s:`${fmtN(a.delivered)} e-mailů`},
+    {l:'Otevření · OR', v:pct(r.OR,1), s:`${fmtN(a.opens_u)} unikátních`},
+    {l:'Prokliky · CTOR', v:pct(r.CTOR,1), s:`${fmtN(a.clicks_u)} unikátních`},
+    {l:'Odhlášení', v:fmtN(a.unsubs), s:`${pct(r.UNS,2)} z doručených`},
+    {l:'Konverze', v:`<span class="accent">${fmtN(a.ct_n)}</span>`, s:`<b>${fmtK(a.ct_rev_vat)}</b> s DPH`}
   ];
   document.getElementById('kpi-strip').innerHTML =
     `<div class="kpi-head"><span class="t">Souhrn za období</span><span class="p">1.–31. 7. 2026</span><span class="x">newslettery + opuštěný košík · bez testovacích rozesílek</span></div>` +
     `<div class="kpi-cells">` + cells.map(c =>
     `<div class="kpi"><div class="lbl">${c.l}</div><div class="val num">${c.v}</div><div class="split num">${c.s}</div></div>`).join('') + `</div>`;
-  document.getElementById('m-source').textContent = DATA.source + ' — statistiky kampaní (emailStatisticReport), staženo ' + DATA.generated.split('-').reverse().join('. ') + '.';
+  document.getElementById('m-source').textContent = DATA.source + ' — statistiky kampaní za 1.–31. 7. 2026.';
   document.getElementById('m-excluded').textContent = DATA.excluded_note;
   document.getElementById('ft-note').textContent = 'Období: 1.–31. 7. 2026 · měna CZK · zdroj SmartEmailing';
 })();
@@ -1242,16 +1268,27 @@ function wavesTable(n){
   tb.innerHTML = DATA.newsletters.map((n,i)=>{
     const m = n.tot, r = R(m);
     return `<tr class="row" data-i="${i}">
-      <td><span class="camp-date">${dFmt(n.date)}</span><span class="camp-name">${n.title}</span><span class="chev">▶</span>
+      <td><span class="camp-date">${dFmt(n.date)}</span><span class="camp-name">${n.title}</span>
           <div class="camp-meta" title="${(n.subject.CZ||'')}">${n.subject.CZ||''}</div></td>
       <td class="num"><span class="big">${fmtN(m.sent)}</span><span class="sub2">CZ ${fmtN(n.CZ.sent)} · SK ${fmtN(n.SK.sent)}</span></td>
-      <td class="num"><span class="big">${pct(r.OR,1)}</span>${mbar(r.OR, BENCH.OR)}<span class="sub2">${fmtN(m.opens_u)} · bench. 20 %</span></td>
-      <td class="num"><span class="big">${pct(r.CTOR,1)}</span>${mbar(r.CTOR, BENCH.CTOR)}<span class="sub2">${fmtN(m.clicks_u)} prokliků · bench. 8 %</span></td>
-      <td class="num"><span class="big">${fmtN(m.unsubs)}</span><span class="sub2">${pct(r.UNS,2)} · max 0,3 %</span></td>
+      <td class="num"><span class="big">${bdot(r.OR,BENCH.OR)}${pct(r.OR,1)}</span><span class="sub2">${fmtN(m.opens_u)} otevření</span></td>
+      <td class="num"><span class="big">${bdot(r.CTOR,BENCH.CTOR)}${pct(r.CTOR,1)}</span><span class="sub2">${fmtN(m.clicks_u)} prokliků</span></td>
+      <td class="num"><span class="big">${bdot(r.UNS,BENCH.UNS,true)}${fmtN(m.unsubs)}</span><span class="sub2">${pct(r.UNS,2)}</span></td>
       <td class="num"><span class="big">${fmtN(m.ct_n)}</span><span class="sub2">CR ${pct(r.CR,3)}</span></td>
-      <td class="num"><span class="big">${fmtK(m.ct_rev_vat)}</span><span class="sub2">${fmtK(R(m).RPM)} / 1 000 mailů</span></td>
+      <td class="num"><span class="big">${fmtK(m.ct_rev_vat)}</span><span class="sub2">${fmtK(r.RPM)} / 1 000</span></td>
+      <td class="chv"><span>▶</span></td>
     </tr>
-    <tr class="detail" style="display:none"><td colspan="7"><div class="det">
+    <tr class="detail" style="display:none"><td colspan="8"><div class="det">
+      <div class="det-head">
+        <div>
+          <div class="dh-t">${n.title}<small>rozesláno ${dFmt(n.date)} 2026</small></div>
+          <div class="dh-s"><b>CZ</b> „${n.subject.CZ||'—'}“ &nbsp;·&nbsp; <b>SK</b> „${n.subject.SK||'—'}“</div>
+        </div>
+        <div class="linkrow">
+          ${n.preview.CZ?`<a class="plink" href="${n.preview.CZ}" target="_blank" rel="noopener">↗ Náhled CZ</a>`:''}
+          ${n.preview.SK?`<a class="plink" href="${n.preview.SK}" target="_blank" rel="noopener">↗ Náhled SK</a>`:''}
+        </div>
+      </div>
       <div class="det-grid">
         <div>
           <h4>Rozpad CZ / SK</h4>
@@ -1260,13 +1297,8 @@ function wavesTable(n){
         <div>
           <h4>Konverze (CZ + SK)</h4>
           ${convList(m)}
-          <h4>Rozesílací vlny</h4>
+          <h4 class="later">Rozesílací vlny</h4>
           ${wavesTable(n)}
-          <h4>Náhled e-mailu</h4>
-          <div class="linkrow">
-            ${n.preview.CZ?`<a class="plink" href="${n.preview.CZ}" target="_blank" rel="noopener">↗ Náhled CZ verze</a>`:''}
-            ${n.preview.SK?`<a class="plink" href="${n.preview.SK}" target="_blank" rel="noopener">↗ Náhled SK verze</a>`:''}
-          </div>
         </div>
       </div>
     </div></td></tr>`;
@@ -1285,13 +1317,13 @@ function wavesTable(n){
   const K = DATA.kosik;
   const rng = K.map(k=>k.from.slice(0,10)).sort()[0].split('-');
   document.getElementById('k-note-range').textContent =
-    `Automatizace jsou v provozu od ${+rng[2]}. ${+rng[1]}. ${rng[0]} — data níže pokrývají provoz do 31. 7. 2026. Krok 1 = připomínka košíku, krok 2 = připomínka se slevou 5 %.`;
-  const sumRow = (lbl, m, hl) => { const r=R(m); return `<tr>
+    `V provozu od ${+rng[2]}. ${+rng[1]}. ${rng[0]}, data do 31. 7. 2026. Krok 1 = připomínka košíku, krok 2 = připomínka se slevou 5 %.`;
+  const sumRow = (lbl, m) => { const r=R(m); return `<tr>
     <td><span class="camp-name">${lbl}</span></td>
     <td class="num"><span class="big">${fmtN(m.sent)}</span></td>
-    <td class="num"><span class="big">${pct(r.OR,1)}</span>${mbar(r.OR, BENCH_K.OR)}<span class="sub2">${fmtN(m.opens_u)} · bench. 40 %</span></td>
+    <td class="num"><span class="big">${bdot(r.OR,BENCH_K.OR)}${pct(r.OR,1)}</span><span class="sub2">${fmtN(m.opens_u)} otevření</span></td>
     <td class="num"><span class="big">${pct(r.CTOR,1)}</span><span class="sub2">${fmtN(m.clicks_u)} prokliků</span></td>
-    <td class="num"><span class="big">${fmtN(m.ct_n)}</span><span class="sub2">CR ${pct(r.CR,2)} · bench. 2,5 %</span></td>
+    <td class="num"><span class="big">${bdot(r.CR,BENCH_K.CR)}${fmtN(m.ct_n)}</span><span class="sub2">CR ${pct(r.CR,2)}</span></td>
     <td class="num"><span class="big">${m.ct_rev_vat?fmtK(m.ct_rev_vat):'—'}</span>${m.ct_rev?`<span class="sub2">${fmtK(m.ct_rev)} bez DPH</span>`:''}</td>
   </tr>`;};
   document.querySelector('#k-summary tbody').innerHTML =
@@ -1319,7 +1351,7 @@ function wavesTable(n){
   }).join('');
   const kNote = document.createElement('div');
   kNote.className = 'k-note';
-  kNote.innerHTML = `<b>Poznámka k SK:</b> u slovenských větví zatím neevidujeme žádnou konverzi — jde ale o malý vzorek (${fmtN(DATA.totals.kosik_sk.sent)} e-mailů za ${'necelé 2 týdny'} provozu). Hodnotit má smysl po ~měsíci dat.`;
+  kNote.innerHTML = `<b>Poznámka k SK:</b> u slovenských větví zatím neevidujeme žádnou konverzi — jde ale o malý vzorek (${fmtN(DATA.totals.kosik_sk.sent)} e-mailů za necelé 2 týdny provozu). Hodnotit má smysl po ~měsíci dat.`;
   document.getElementById('k-grid').after(kNote);
 })();
 
@@ -1333,35 +1365,33 @@ function drawCmp(){
   const {metric, mkt} = CMP;
   const items = DATA.newsletters.map(n=>({t:`${dFmt(n.date)} ${n.title}`, v:R(n[mkt]||n.tot)[metric]}));
   const bench = BENCH[metric];
-  const W=1060, H=300, padL=10, padR=10, padT=26, padB=54;
+  const W=1040, H=300, padL=10, padR=10, padT=28, padB=54;
   const innerW = W-padL-padR, innerH = H-padT-padB;
   const max = Math.max(...items.map(i=>i.v), bench||0) * 1.15 || 1;
-  const bw = Math.min(120, innerW/items.length*0.52), gap=(innerW-bw*items.length)/(items.length+1);
+  const bw = Math.min(110, innerW/items.length*0.5), gap=(innerW-bw*items.length)/(items.length+1);
   let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block">`;
-  /* gridlines */
   for(let g=1;g<=3;g++){
     const y = padT+innerH-(innerH*g/4);
-    s += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#EFEFE8" stroke-width="1"/>`;
+    s += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#F0F0E9" stroke-width="1"/>`;
   }
-  s += `<line x1="${padL}" y1="${padT+innerH}" x2="${W-padR}" y2="${padT+innerH}" stroke="#D8D8D0" stroke-width="1.2"/>`;
+  s += `<line x1="${padL}" y1="${padT+innerH}" x2="${W-padR}" y2="${padT+innerH}" stroke="#DCDCD4" stroke-width="1.2"/>`;
   items.forEach((it,i)=>{
     const x = padL+gap+(bw+gap)*i;
     const h = Math.max(2, it.v/max*innerH), y = padT+innerH-h;
     const isBest = it.v === Math.max(...items.map(z=>z.v));
-    const worst = metric==='UNS' ? isBest : it.v === Math.min(...items.map(z=>z.v));
     const fill = metric==='UNS'
-      ? (isBest ? 'var(--bad)' : 'var(--accent)')
-      : (isBest ? 'var(--accent)' : '#B9CFCC');
+      ? (isBest ? '#D4593F' : '#0FA3A0')
+      : (isBest ? '#0FA3A0' : '#BCD3D0');
     s += `<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="6" fill="${fill}"/>`;
-    s += `<text x="${x+bw/2}" y="${y-8}" text-anchor="middle" font-size="13.5" font-weight="700" fill="#151F28">${M_FMT[metric](it.v)}</text>`;
+    s += `<text x="${x+bw/2}" y="${y-9}" text-anchor="middle" font-size="13.5" font-weight="700" fill="#17212B">${M_FMT[metric](it.v)}</text>`;
     const words = it.t.split(' ');
     const l1 = words.slice(0,2).join(' '), l2 = words.slice(2).join(' ');
-    s += `<text x="${x+bw/2}" y="${padT+innerH+18}" text-anchor="middle" font-size="11.5" fill="#66727C">${l1}</text>`;
-    if(l2) s += `<text x="${x+bw/2}" y="${padT+innerH+33}" text-anchor="middle" font-size="11.5" fill="#66727C">${l2}</text>`;
+    s += `<text x="${x+bw/2}" y="${padT+innerH+19}" text-anchor="middle" font-size="11.5" fill="#69747E">${l1}</text>`;
+    if(l2) s += `<text x="${x+bw/2}" y="${padT+innerH+34}" text-anchor="middle" font-size="11.5" fill="#69747E">${l2}</text>`;
   });
   if(bench){
     const y = padT+innerH-(bench/max*innerH);
-    if(y>padT-2) s += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="var(--bad)" stroke-width="1.6" stroke-dasharray="6 5"/>`;
+    if(y>padT-2) s += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#D4593F" stroke-width="1.6" stroke-dasharray="6 5"/>`;
   }
   s += '</svg>';
   document.getElementById('cmp-chart').innerHTML = s;
@@ -1369,7 +1399,6 @@ function drawCmp(){
   const txt = M_BENCH_TXT[metric];
   bn.style.display = txt ? '' : 'none';
   bn.querySelector('span:last-child').textContent = `${M_LABEL[metric]} — ${txt}${(bench && Math.max(...items.map(i=>i.v)) < bench*0.9) ? ' · benchmark je nad rozsahem grafu' : ''}`;
-  /* hide dashed swatch if bench off-scale */
   bn.querySelector('.bench-swatch').style.display = (bench && (padT+innerH-(bench/max*innerH))>padT-2) ? '' : 'none';
 }
 document.getElementById('cmp-metric').addEventListener('click', e=>{
