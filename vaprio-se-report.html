@@ -202,7 +202,7 @@
     <div class="card">
       <table class="master" id="nl-table">
         <thead><tr>
-          <th>Kampaň</th><th>Odesláno</th><th>Otevření · OR</th><th>Prokliky · CTR</th><th>CTOR</th><th>Odhlášení</th><th>Konverze</th><th>Tržby s DPH</th>
+          <th>Kampaň</th><th>Odesláno</th><th>Otevření · OR</th><th>Prokliky · CTOR</th><th>Odhlášení</th><th>Konverze</th><th>Tržby s DPH</th>
         </tr></thead>
         <tbody></tbody>
       </table>
@@ -215,7 +215,7 @@
     <div class="sec-note" id="k-note-range"></div>
     <div class="card" style="margin-bottom:4px">
       <table class="master" id="k-summary">
-        <thead><tr><th>Souhrn</th><th>Odesláno</th><th>Otevření · OR</th><th>Prokliky · CTR</th><th>CTOR</th><th>Konverze · CR</th><th>Tržby s DPH</th></tr></thead>
+        <thead><tr><th>Souhrn</th><th>Odesláno</th><th>Otevření · OR</th><th>Prokliky · CTOR</th><th>Konverze · CR</th><th>Tržby s DPH</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -230,7 +230,6 @@
       <span class="ctrl-lbl">Metrika</span>
       <div class="seg" id="cmp-metric">
         <button data-m="OR" class="on">Open rate</button>
-        <button data-m="CTR">CTR</button>
         <button data-m="CTOR">CTOR</button>
         <button data-m="CR">Konverzní poměr</button>
         <button data-m="RPM">Tržba / 1 000 mailů</button>
@@ -259,12 +258,12 @@
         <dt>Co je odfiltrováno</dt><dd id="m-excluded"></dd>
         <dt>Definice metrik</dt>
         <dd>
-          <b>OR (open rate)</b> = unikátní otevření / doručené · <b>CTR</b> = unikátní prokliky / doručené · <b>CTOR</b> = unikátní prokliky / unikátní otevření · <b>Míra odhlášení</b> = odhlášení / doručené · <b>CR</b> = objednávky celkem / doručené · <b>Tržba / 1 000 mailů</b> = tržby s DPH / doručené × 1 000. Otevření jsou měřena sledovacím pixelem — reálná čísla mohou být mírně odlišná (blokování obrázků, Apple Mail Privacy Protection).
+          <b>OR (open rate)</b> = unikátní otevření / doručené · <b>CTOR</b> = unikátní prokliky / unikátní otevření · <b>Míra odhlášení</b> = odhlášení / doručené · <b>CR</b> = objednávky celkem / doručené · <b>Tržba / 1 000 mailů</b> = tržby s DPH / doručené × 1 000. Otevření jsou měřena sledovacím pixelem — reálná čísla mohou být mírně odlišná (blokování obrázků, Apple Mail Privacy Protection).
         </dd>
         <dt>Konverze</dt>
         <dd><b>Přímé (direct)</b> = objednávka bezprostředně po prokliku z e-mailu. <b>Asistované (assisted)</b> = objednávka v atribučním okně SmartEmailingu po interakci s e-mailem. V přehledech uvádíme součet, v detailu kampaně rozpad. Tržby jsou v CZK (SK objednávky přepočítává SmartEmailing).</dd>
         <dt>Benchmarky</dt>
-        <dd>Orientační hodnoty pro e-commerce: newslettery OR ≈ 20 %, CTR ≈ 1,5 %, CTOR ≈ 8 %, odhlášení &lt; 0,3 %; opuštěný košík OR ≈ 40 %, CTR ≈ 6 %, CR ≈ 2,5 %. Různé zdroje se liší — berte jako vodítko, ne normu.</dd>
+        <dd>Orientační hodnoty pro e-commerce: newslettery OR ≈ 20 %, CTOR ≈ 8 %, odhlášení &lt; 0,3 %; opuštěný košík OR ≈ 40 %, CR ≈ 2,5 %. Různé zdroje se liší — berte jako vodítko, ne normu.</dd>
       </dl>
     </div>
   </section>
@@ -1143,15 +1142,14 @@ const fmtK = n => CZ.format(Math.round(n)) + ' Kč';
 const pct = (x, d=1) => (x*100).toLocaleString('cs-CZ',{minimumFractionDigits:d, maximumFractionDigits:d}) + ' %';
 const R = m => ({
   OR:  m.delivered ? m.opens_u/m.delivered : 0,
-  CTR: m.delivered ? m.clicks_u/m.delivered : 0,
   CTOR:m.opens_u ? m.clicks_u/m.opens_u : 0,
   UNS: m.delivered ? m.unsubs/m.delivered : 0,
   CR:  m.delivered ? m.ct_n/m.delivered : 0,
   RPM: m.delivered ? m.ct_rev_vat/m.delivered*1000 : 0,
   DLV: m.sent ? m.delivered/m.sent : 0
 });
-const BENCH = {OR:.20, CTR:.015, CTOR:.08, UNS:.003, CR:.005, RPM:null};
-const BENCH_K = {OR:.40, CTR:.06, CR:.025};
+const BENCH = {OR:.20, CTOR:.08, UNS:.003, CR:.005, RPM:null};
+const BENCH_K = {OR:.40, CR:.025};
 
 /* inline benchmark micro-bar: value vs benchmark scale */
 function mbar(val, bench, w=64){
@@ -1174,7 +1172,7 @@ function mbar(val, bench, w=64){
     {l:'Odesláno', v:fmtN(a.sent), s:`CZ <b>${fmtN(czS)}</b> · SK <b>${fmtN(skS)}</b>`},
     {l:'Doručeno', v:pct(r.DLV,1), s:`${fmtN(a.delivered)} e-mailů · bounce ${fmtN(a.sent-a.delivered)}`},
     {l:'Otevření · OR', v:pct(r.OR,1), s:`${fmtN(a.opens_u)} unikátních otevření`},
-    {l:'Prokliky · CTR', v:pct(r.CTR,2), s:`${fmtN(a.clicks_u)} unikátních · CTOR <b>${pct(r.CTOR,1)}</b>`},
+    {l:'Prokliky · CTOR', v:pct(r.CTOR,1), s:`${fmtN(a.clicks_u)} unikátních prokliků`},
     {l:'Odhlášení', v:fmtN(a.unsubs), s:`${pct(r.UNS,2)} z doručených · spam ${fmtN(a.spam)}`},
     {l:'Konverze', v:`<span class="accent">${fmtN(a.ct_n)}</span>`, s:`<b>${fmtK(a.ct_rev_vat)}</b> s DPH · ${fmtK(a.ct_rev)} bez DPH`}
   ];
@@ -1205,7 +1203,6 @@ function miniMarketTable(n){
     'Otevření': fmtN(m.opens_u),
     'Open rate': `<b>${pct(r.OR,2)}</b>`,
     'Prokliky': fmtN(m.clicks_u),
-    'CTR': `<b>${pct(r.CTR,2)}</b>`,
     'CTOR': `<b>${pct(r.CTOR,2)}</b>`,
     'Odhlášení': `${fmtN(m.unsubs)} <small>${pct(r.UNS,2)}</small>`,
     'Spam stížnosti': fmtN(m.spam),
@@ -1249,13 +1246,12 @@ function wavesTable(n){
           <div class="camp-meta" title="${(n.subject.CZ||'')}">${n.subject.CZ||''}</div></td>
       <td class="num"><span class="big">${fmtN(m.sent)}</span><span class="sub2">CZ ${fmtN(n.CZ.sent)} · SK ${fmtN(n.SK.sent)}</span></td>
       <td class="num"><span class="big">${pct(r.OR,1)}</span>${mbar(r.OR, BENCH.OR)}<span class="sub2">${fmtN(m.opens_u)} · bench. 20 %</span></td>
-      <td class="num"><span class="big">${pct(r.CTR,2)}</span>${mbar(r.CTR, BENCH.CTR)}<span class="sub2">${fmtN(m.clicks_u)} · bench. 1,5 %</span></td>
-      <td class="num"><span class="big">${pct(r.CTOR,1)}</span>${mbar(r.CTOR, BENCH.CTOR)}<span class="sub2">bench. 8 %</span></td>
+      <td class="num"><span class="big">${pct(r.CTOR,1)}</span>${mbar(r.CTOR, BENCH.CTOR)}<span class="sub2">${fmtN(m.clicks_u)} prokliků · bench. 8 %</span></td>
       <td class="num"><span class="big">${fmtN(m.unsubs)}</span><span class="sub2">${pct(r.UNS,2)} · max 0,3 %</span></td>
       <td class="num"><span class="big">${fmtN(m.ct_n)}</span><span class="sub2">CR ${pct(r.CR,3)}</span></td>
       <td class="num"><span class="big">${fmtK(m.ct_rev_vat)}</span><span class="sub2">${fmtK(R(m).RPM)} / 1 000 mailů</span></td>
     </tr>
-    <tr class="detail" style="display:none"><td colspan="8"><div class="det">
+    <tr class="detail" style="display:none"><td colspan="7"><div class="det">
       <div class="det-grid">
         <div>
           <h4>Rozpad CZ / SK</h4>
@@ -1294,8 +1290,7 @@ function wavesTable(n){
     <td><span class="camp-name">${lbl}</span></td>
     <td class="num"><span class="big">${fmtN(m.sent)}</span></td>
     <td class="num"><span class="big">${pct(r.OR,1)}</span>${mbar(r.OR, BENCH_K.OR)}<span class="sub2">${fmtN(m.opens_u)} · bench. 40 %</span></td>
-    <td class="num"><span class="big">${pct(r.CTR,2)}</span>${mbar(r.CTR, BENCH_K.CTR)}<span class="sub2">${fmtN(m.clicks_u)} · bench. 6 %</span></td>
-    <td class="num"><span class="big">${pct(r.CTOR,1)}</span></td>
+    <td class="num"><span class="big">${pct(r.CTOR,1)}</span><span class="sub2">${fmtN(m.clicks_u)} prokliků</span></td>
     <td class="num"><span class="big">${fmtN(m.ct_n)}</span><span class="sub2">CR ${pct(r.CR,2)} · bench. 2,5 %</span></td>
     <td class="num"><span class="big">${m.ct_rev_vat?fmtK(m.ct_rev_vat):'—'}</span>${m.ct_rev?`<span class="sub2">${fmtK(m.ct_rev)} bez DPH</span>`:''}</td>
   </tr>`;};
@@ -1313,8 +1308,8 @@ function wavesTable(n){
       <div class="k-mets">
         <div class="k-met"><div class="l">Odesláno</div><div class="v num">${fmtN(k.sent)}</div></div>
         <div class="k-met"><div class="l">Open rate</div><div class="v num">${pct(r.OR,1)}</div></div>
-        <div class="k-met"><div class="l">CTR</div><div class="v num">${pct(r.CTR,1)}</div></div>
         <div class="k-met"><div class="l">CTOR</div><div class="v num">${pct(r.CTOR,1)}</div></div>
+        <div class="k-met"><div class="l">Prokliky</div><div class="v num">${fmtN(k.clicks_u)}</div></div>
         <div class="k-met"><div class="l">Objednávky</div><div class="v num">${fmtN(k.ct_n)}</div></div>
         <div class="k-met"><div class="l">CR</div><div class="v num">${pct(r.CR,2)}</div></div>
         <div class="k-met"><div class="l">Tržby s DPH</div><div class="v num">${k.ct_rev_vat?fmtK(k.ct_rev_vat):'—'}</div></div>
@@ -1330,9 +1325,9 @@ function wavesTable(n){
 
 /* ---------- srovnání ---------- */
 const CMP = {metric:'OR', mkt:'tot'};
-const M_LABEL = {OR:'Open rate', CTR:'CTR', CTOR:'CTOR', CR:'Konverzní poměr', RPM:'Tržba s DPH na 1 000 doručených', UNS:'Míra odhlášení'};
-const M_FMT = {OR:v=>pct(v,1), CTR:v=>pct(v,2), CTOR:v=>pct(v,1), CR:v=>pct(v,3), RPM:v=>fmtK(v), UNS:v=>pct(v,2)};
-const M_BENCH_TXT = {OR:'benchmark ≈ 20 %', CTR:'benchmark ≈ 1,5 %', CTOR:'benchmark ≈ 8 %', CR:'benchmark ≈ 0,5 %', RPM:'', UNS:'hranice ≈ 0,3 % (méně = lépe)'};
+const M_LABEL = {OR:'Open rate', CTOR:'CTOR', CR:'Konverzní poměr', RPM:'Tržba s DPH na 1 000 doručených', UNS:'Míra odhlášení'};
+const M_FMT = {OR:v=>pct(v,1), CTOR:v=>pct(v,1), CR:v=>pct(v,3), RPM:v=>fmtK(v), UNS:v=>pct(v,2)};
+const M_BENCH_TXT = {OR:'benchmark ≈ 20 %', CTOR:'benchmark ≈ 8 %', CR:'benchmark ≈ 0,5 %', RPM:'', UNS:'hranice ≈ 0,3 % (méně = lépe)'};
 
 function drawCmp(){
   const {metric, mkt} = CMP;
