@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vaprio · E-mailing report · Červenec 2026</title>
+<style>
+  :root{
+    --bg:#F4F4F0; --card:#FFFFFF; --ink:#151F28; --muted:#66727C; --soft:#98A1A9;
+    --brand:#0D1B24; --brand2:#12252F; --accent:#0FA3A0; --accent-ink:#0B7A78;
+    --gold:#F5B32E; --bad:#D4593F; --good:#2E9E6B; --line:#E5E5DE; --line2:#EEEEE8;
+    --chip:#EDF6F5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; font-size:15px; line-height:1.45; -webkit-font-smoothing:antialiased;}
+  .num{font-variant-numeric:tabular-nums;}
+
+  /* ---------- header ---------- */
+  header{background:var(--brand); color:#fff; padding:26px 0 0;}
+  .shell{max-width:1180px; margin:0 auto; padding:0 28px;}
+  .hd-top{display:flex; align-items:center; justify-content:space-between; gap:20px;}
+  .hd-brand{display:flex; align-items:center; gap:14px;}
+  .hd-brand img{height:30px; display:block;}
+  .hd-brand .logotext{font-weight:800; letter-spacing:.16em; font-size:17px;}
+  .hd-brand .sep{width:1px; height:26px; background:rgba(255,255,255,.25);}
+  .hd-brand .client{font-size:15px; font-weight:600; color:#E8ECEA; letter-spacing:.02em;}
+  .hd-tag{font-size:12.5px; color:#8FA0A6; font-style:italic;}
+  .hd-title{margin-top:22px; padding-bottom:22px;}
+  .hd-title h1{font-size:27px; font-weight:750; letter-spacing:-.01em;}
+  .hd-title .sub{margin-top:6px; color:#AEBDC2; font-size:14px; display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
+  .hd-title .dot{width:4px;height:4px;border-radius:50%;background:#4E6570;display:inline-block;}
+  .badge{display:inline-block; background:rgba(15,163,160,.18); border:1px solid rgba(15,163,160,.45); color:#7BD8D2; font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:999px; letter-spacing:.04em;}
+
+  /* ---------- KPI ---------- */
+  .kpis{max-width:1180px; margin:-1px auto 0; padding:0 28px; position:relative;}
+  .kpi-strip{background:var(--brand2); border-radius:0 0 14px 14px; padding:16px 22px 24px; box-shadow:0 14px 30px -18px rgba(13,27,36,.55);}
+  .kpi-head{display:flex; align-items:baseline; gap:12px; padding:4px 14px 13px; border-bottom:1px solid rgba(255,255,255,.09); margin-bottom:15px;}
+  .kpi-head .t{font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#7E939C;}
+  .kpi-head .p{font-size:14px; font-weight:750; color:#fff; letter-spacing:.02em;}
+  .kpi-head .x{font-size:12px; color:#8DA2AA; margin-left:auto;}
+  .kpi-cells{display:grid; grid-template-columns:repeat(6,1fr); gap:10px;}
+  .kpi{padding:6px 14px; border-left:1px solid rgba(255,255,255,.09);}
+  .kpi:first-child{border-left:none;}
+  .kpi .lbl{font-size:11px; font-weight:650; letter-spacing:.1em; text-transform:uppercase; color:#7E939C; margin-bottom:7px;}
+  .kpi .val{font-size:24px; font-weight:750; color:#fff; letter-spacing:-.01em;}
+  .kpi .val small{font-size:13px; font-weight:600; color:#9FB2B9; margin-left:2px;}
+  .kpi .split{margin-top:6px; font-size:12px; color:#8DA2AA;}
+  .kpi .split b{color:#C4D2D6; font-weight:650;}
+  .kpi .accent{color:var(--gold);}
+
+  /* ---------- tabs ---------- */
+  nav.tabs{max-width:1180px; margin:30px auto 0; padding:0 28px; display:flex; gap:6px; border-bottom:1px solid var(--line);}
+  nav.tabs button{appearance:none; border:none; background:none; font:inherit; font-size:14.5px; font-weight:600; color:var(--muted); padding:10px 16px 12px; cursor:pointer; border-bottom:2.5px solid transparent; margin-bottom:-1px;}
+  nav.tabs button:hover{color:var(--ink);}
+  nav.tabs button.on{color:var(--ink); border-color:var(--accent);}
+  main{max-width:1180px; margin:0 auto; padding:26px 28px 60px;}
+  section.pane{display:none;}
+  section.pane.on{display:block;}
+  h2.sec{font-size:19px; font-weight:720; letter-spacing:-.01em; margin:4px 0 4px;}
+  .sec-note{color:var(--muted); font-size:13.5px; margin-bottom:18px;}
+
+  /* ---------- table ---------- */
+  .card{background:var(--card); border:1px solid var(--line); border-radius:12px; overflow-x:auto;}
+  table.master{width:100%; border-collapse:collapse;}
+  table.master thead th{font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--soft); font-weight:700; text-align:right; padding:12px 12px; border-bottom:1px solid var(--line); white-space:nowrap; background:#FBFBF8;}
+  table.master thead th:first-child{text-align:left; padding-left:20px;}
+  table.master tbody td{padding:13px 12px; border-bottom:1px solid var(--line2); text-align:right; vertical-align:top; white-space:nowrap;}
+  table.master tbody td:first-child{text-align:left; padding-left:20px; white-space:normal;}
+  table.master tbody tr.row{cursor:pointer; transition:background .12s;}
+  table.master tbody tr.row:hover{background:#F7FAF9;}
+  table.master tbody tr.row.open{background:var(--chip);}
+  .camp-name{font-weight:680; font-size:14.5px;}
+  .camp-meta{font-size:12px; color:var(--muted); margin-top:3px; max-width:330px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .camp-date{display:inline-block; font-size:11px; font-weight:700; color:var(--accent-ink); background:var(--chip); border-radius:5px; padding:1.5px 7px; margin-right:8px; letter-spacing:.03em;}
+  .big{font-size:15px; font-weight:680;}
+  .sub2{display:block; font-size:11.5px; color:var(--soft); margin-top:3px; font-weight:500;}
+  .chev{display:inline-block; margin-left:10px; color:var(--soft); transition:transform .15s; font-size:11px;}
+  tr.row.open .chev{transform:rotate(90deg);}
+
+  .mbar{display:block; margin:6px 0 4px;}
+
+  /* ---------- detail ---------- */
+  tr.detail>td{background:#FCFCF9; padding:0 !important; border-bottom:1px solid var(--line); white-space:normal;}
+  .det{padding:22px 26px 26px; text-align:left;}
+  .det h4{font-size:11px; letter-spacing:.11em; text-transform:uppercase; color:var(--soft); font-weight:700; margin:22px 0 9px;}
+  .det h4:first-child{margin-top:0;}
+  .det-grid{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:28px;}
+  .det-grid>div{min-width:0;}
+  table.mini{width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  table.mini th{font-size:10.5px; color:var(--soft); text-transform:uppercase; letter-spacing:.08em; text-align:right; padding:8px 12px; border-bottom:1px solid var(--line); font-weight:700; background:#FBFBF7;}
+  table.mini th:first-child{text-align:left;}
+  table.mini td{font-size:13px; padding:7.5px 12px; border-bottom:1px solid var(--line2); text-align:right; font-variant-numeric:tabular-nums;}
+  table.mini td:first-child{text-align:left; color:var(--muted); font-weight:550;}
+  table.mini tr:last-child td{border-bottom:none;}
+  table.mini td b{font-weight:680;}
+  table.mini small{color:var(--soft); font-size:11px; font-weight:500;}
+  table.mini td.tc{background:#F7FAF9; font-weight:650;}
+  table.mini th.tc{color:var(--accent-ink); background:#F1F7F6;}
+  .conv-list{background:#fff; border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .conv-row{display:flex; align-items:center; gap:14px; padding:10px 14px; border-bottom:1px solid var(--line2);}
+  .conv-row .t{flex:0 0 96px; font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--soft);}
+  .conv-row .n{font-size:16.5px; font-weight:750; white-space:nowrap;}
+  .conv-row .n small{font-size:12px; font-weight:550; color:var(--muted);}
+  .conv-row .r{margin-left:auto; text-align:right; font-size:12px; color:var(--muted); white-space:nowrap; line-height:1.5;}
+  .conv-row .r b{color:var(--ink); font-weight:680; font-size:13px;}
+  .conv-row.hl{background:var(--chip);}
+  .conv-row.hl .t{color:var(--accent-ink);}
+  .conv-foot{padding:8px 14px; font-size:12px; color:var(--muted); background:#FBFBF7;}
+  .linkrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:4px;}
+  .plink{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; color:var(--accent-ink); background:var(--chip); border:1px solid #CBE5E3; padding:5px 11px; border-radius:7px; text-decoration:none;}
+  .plink:hover{background:#E2F1F0;}
+  .waves{font-size:12.5px; color:var(--muted);}
+  .waves td{padding:6px 12px !important;}
+
+  /* ---------- kosik ---------- */
+  .k-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:16px;}
+  .k-card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 20px;}
+  .k-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2px;}
+  .k-head .nm{font-weight:700; font-size:15px;}
+  .flag{display:inline-block; font-size:10.5px; font-weight:750; letter-spacing:.06em; border-radius:5px; padding:2px 7px; margin-left:8px; vertical-align:1px;}
+  .flag.cz{background:#E8EFF8; color:#3D5A87;}
+  .flag.sk{background:#F4ECF8; color:#7A4E96;}
+  .k-sub{font-size:12.5px; color:var(--muted); margin-bottom:14px;}
+  .k-mets{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; border-top:1px solid var(--line2); padding-top:13px;}
+  .k-met .l{font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--soft); font-weight:650;}
+  .k-met .v{font-size:17px; font-weight:720; margin-top:3px;}
+  .k-met .v small{font-size:11.5px; color:var(--muted); font-weight:550;}
+  .k-note{margin-top:16px; font-size:13px; color:var(--muted); background:#FBF7EC; border:1px solid #F0E3C0; border-radius:9px; padding:11px 14px;}
+  .k-note b{color:var(--ink);}
+
+  /* ---------- compare ---------- */
+  .ctrls{display:flex; gap:18px; flex-wrap:wrap; margin:14px 0 18px; align-items:center;}
+  .seg{display:inline-flex; background:#ECECE6; border-radius:9px; padding:3px;}
+  .seg button{appearance:none; border:none; background:none; font:inherit; font-size:13px; font-weight:600; color:var(--muted); padding:6px 13px; border-radius:7px; cursor:pointer;}
+  .seg button.on{background:#fff; color:var(--ink); box-shadow:0 1px 4px rgba(0,0,0,.09);}
+  .ctrl-lbl{font-size:11.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--soft); margin-right:-8px;}
+  .chart-wrap{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:22px 24px 10px;}
+  .bench-note{font-size:12px; color:var(--muted); padding:10px 4px 12px; display:flex; align-items:center; gap:7px;}
+  .bench-swatch{display:inline-block; width:18px; height:0; border-top:2px dashed var(--bad);}
+
+  /* ---------- footer / methodology ---------- */
+  .meth{font-size:13.5px; color:var(--muted); line-height:1.6;}
+  .meth dt{font-weight:700; color:var(--ink); margin-top:14px; font-size:13.5px;}
+  .meth dd{margin:2px 0 0;}
+  footer{border-top:1px solid var(--line); margin-top:26px;}
+  .ft{max-width:1180px; margin:0 auto; padding:18px 28px 26px; display:flex; justify-content:space-between; gap:20px; font-size:12.5px; color:var(--soft); flex-wrap:wrap;}
+  .ft b{color:var(--muted); font-weight:650;}
+
+  @media (max-width:980px){
+    .kpi-cells{grid-template-columns:repeat(3,1fr);}
+    .kpi{border-left:none;}
+    .det-grid{grid-template-columns:1fr;}
+    .k-grid{grid-template-columns:1fr;}
+  }
+  @media print{
+    nav.tabs{display:none;} section.pane{display:block !important; page-break-before:always;}
+    .kpi-strip{box-shadow:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="shell">
+    <div class="hd-top">
+      <div class="hd-brand">
+        <img src="https://static.wixstatic.com/media/adef48_69edde1bf9e6449694d7e0d5698bf62b~mv2.png" alt="Data Club"
+             onerror="this.remove();document.getElementById('logofb').style.display='inline'">
+        <span class="logotext" id="logofb" style="display:none">DATA CLUB</span>
+        <span class="sep"></span>
+        <span class="client">Vaprio</span>
+      </div>
+      <div class="hd-tag">No data, no fun!</div>
+    </div>
+    <div class="hd-title">
+      <h1>E-mailing report — červenec 2026</h1>
+      <div class="sub">
+        <span class="badge">SmartEmailing</span>
+        <span>Newslettery + automatizace opuštěného košíku</span>
+        <span class="dot"></span>
+        <span>CZ + SK</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="kpis"><div class="kpi-strip" id="kpi-strip"></div></div>
+
+<nav class="tabs" id="tabs">
+  <button data-pane="p-nl" class="on">Newslettery</button>
+  <button data-pane="p-kosik">Opuštěný košík</button>
+  <button data-pane="p-cmp">Srovnání</button>
+  <button data-pane="p-meth">Metodika</button>
+</nav>
+
+<main>
+  <!-- ================= NEWSLETTERY ================= -->
+  <section class="pane on" id="p-nl">
+    <h2 class="sec">Newslettery — 5 kampaní</h2>
+    <div class="sec-note">Klik na řádek = detail kampaně (rozpad CZ / SK, konverze, vlny, náhled e-mailu). Šedá značka v ukazateli a údaj „bench.“ = orientační e-commerce benchmark.</div>
+    <div class="card">
+      <table class="master" id="nl-table">
+        <thead><tr>
+          <th>Kampaň</th><th>Odesláno</th><th>Otevření · OR</th><th>Prokliky · CTR</th><th>CTOR</th><th>Odhlášení</th><th>Konverze</th><th>Tržby s DPH</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= KOŠÍK ================= -->
+  <section class="pane" id="p-kosik">
+    <h2 class="sec">Opuštěný košík — automatizace</h2>
+    <div class="sec-note" id="k-note-range"></div>
+    <div class="card" style="margin-bottom:4px">
+      <table class="master" id="k-summary">
+        <thead><tr><th>Souhrn</th><th>Odesláno</th><th>Otevření · OR</th><th>Prokliky · CTR</th><th>CTOR</th><th>Konverze · CR</th><th>Tržby s DPH</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="k-grid" id="k-grid"></div>
+  </section>
+
+  <!-- ================= SROVNÁNÍ ================= -->
+  <section class="pane" id="p-cmp">
+    <h2 class="sec">Srovnání newsletterů</h2>
+    <div class="sec-note">Porovnání kampaní podle zvolené metriky. Přerušovaná čára = orientační e-commerce benchmark.</div>
+    <div class="ctrls">
+      <span class="ctrl-lbl">Metrika</span>
+      <div class="seg" id="cmp-metric">
+        <button data-m="OR" class="on">Open rate</button>
+        <button data-m="CTR">CTR</button>
+        <button data-m="CTOR">CTOR</button>
+        <button data-m="CR">Konverzní poměr</button>
+        <button data-m="RPM">Tržba / 1 000 mailů</button>
+        <button data-m="UNS">Odhlášení</button>
+      </div>
+      <span class="ctrl-lbl">Trh</span>
+      <div class="seg" id="cmp-mkt">
+        <button data-k="tot" class="on">Celkem</button>
+        <button data-k="CZ">CZ</button>
+        <button data-k="SK">SK</button>
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <div id="cmp-chart"></div>
+      <div class="bench-note" id="cmp-bench"><span class="bench-swatch"></span><span></span></div>
+    </div>
+  </section>
+
+  <!-- ================= METODIKA ================= -->
+  <section class="pane" id="p-meth">
+    <h2 class="sec">Metodika &amp; poznámky</h2>
+    <div class="card" style="padding:22px 26px">
+      <dl class="meth">
+        <dt>Zdroj dat</dt><dd id="m-source"></dd>
+        <dt>Co je zahrnuto</dt><dd>Všechny ostré rozesílky newsletterů (5 kampaní, CZ + SK, včetně obou rozesílacích vln) a produkční automatizace opuštěného košíku (krok 1 a krok 2, CZ + SK) za období 1.–31. 7. 2026.</dd>
+        <dt>Co je odfiltrováno</dt><dd id="m-excluded"></dd>
+        <dt>Definice metrik</dt>
+        <dd>
+          <b>OR (open rate)</b> = unikátní otevření / doručené · <b>CTR</b> = unikátní prokliky / doručené · <b>CTOR</b> = unikátní prokliky / unikátní otevření · <b>Míra odhlášení</b> = odhlášení / doručené · <b>CR</b> = objednávky celkem / doručené · <b>Tržba / 1 000 mailů</b> = tržby s DPH / doručené × 1 000. Otevření jsou měřena sledovacím pixelem — reálná čísla mohou být mírně odlišná (blokování obrázků, Apple Mail Privacy Protection).
+        </dd>
+        <dt>Konverze</dt>
+        <dd><b>Přímé (direct)</b> = objednávka bezprostředně po prokliku z e-mailu. <b>Asistované (assisted)</b> = objednávka v atribučním okně SmartEmailingu po interakci s e-mailem. V přehledech uvádíme součet, v detailu kampaně rozpad. Tržby jsou v CZK (SK objednávky přepočítává SmartEmailing).</dd>
+        <dt>Benchmarky</dt>
+        <dd>Orientační hodnoty pro e-commerce: newslettery OR ≈ 20 %, CTR ≈ 1,5 %, CTOR ≈ 8 %, odhlášení &lt; 0,3 %; opuštěný košík OR ≈ 40 %, CTR ≈ 6 %, CR ≈ 2,5 %. Různé zdroje se liší — berte jako vodítko, ne normu.</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer><div class="ft">
+  <span><b>Data Club</b> × Vaprio · e-mailingový report</span>
+  <span id="ft-note"></span>
+</div></footer>
+
+<script>
+const DATA = {
+ "period": "Červenec 2026",
+ "generated": "2026-08-03",
+ "source": "SmartEmailing — účet Vaprio Data Club",
+ "excluded_note": "Odfiltrováno 29 testovacích/interních rozesílek (celkem 220 e-mailů: testy šablon, náhledy, testovací větve automatizací).",
+ "totals": {
+  "all": {
+   "sent": 851086,
+   "delivered": 847904,
+   "soft_b": 3047,
+   "hard_b": 135,
+   "opens_u": 57594,
+   "opens_t": 80422,
+   "clicks_u": 3246,
+   "clicks_t": 5283,
+   "unsubs": 906,
+   "spam": 78,
+   "cd_n": 158,
+   "cd_rev": 149739.38,
+   "cd_rev_vat": 181778.34,
+   "ca_n": 353,
+   "ca_rev": 390591.37,
+   "ca_rev_vat": 473521.2,
+   "ct_n": 511,
+   "ct_rev": 540330.75,
+   "ct_rev_vat": 655299.54
+  },
+  "nl": {
+   "sent": 850181,
+   "delivered": 847003,
+   "soft_b": 3043,
+   "hard_b": 135,
+   "opens_u": 57446,
+   "opens_t": 80168,
+   "clicks_u": 3222,
+   "clicks_t": 5253,
+   "unsubs": 906,
+   "spam": 78,
+   "cd_n": 153,
+   "cd_rev": 145113.77,
+   "cd_rev_vat": 176181.34,
+   "ca_n": 340,
+   "ca_rev": 373443.4,
+   "ca_rev_vat": 452772.2,
+   "ct_n": 493,
+   "ct_rev": 518557.17,
+   "ct_rev_vat": 628953.54
+  },
+  "nl_cz": {
+   "sent": 672056,
+   "delivered": 669791,
+   "soft_b": 2180,
+   "hard_b": 85,
+   "opens_u": 48231,
+   "opens_t": 66360,
+   "clicks_u": 2536,
+   "clicks_t": 4277,
+   "unsubs": 694,
+   "spam": 77,
+   "cd_n": 125,
+   "cd_rev": 115249.12,
+   "cd_rev_vat": 139452.0,
+   "ca_n": 293,
+   "ca_rev": 333865.6,
+   "ca_rev_vat": 404092.78,
+   "ct_n": 418,
+   "ct_rev": 449114.72,
+   "ct_rev_vat": 543544.78
+  },
+  "nl_sk": {
+   "sent": 178125,
+   "delivered": 177212,
+   "soft_b": 863,
+   "hard_b": 50,
+   "opens_u": 9215,
+   "opens_t": 13808,
+   "clicks_u": 686,
+   "clicks_t": 976,
+   "unsubs": 212,
+   "spam": 1,
+   "cd_n": 28,
+   "cd_rev": 29864.65,
+   "cd_rev_vat": 36729.34,
+   "ca_n": 47,
+   "ca_rev": 39577.8,
+   "ca_rev_vat": 48679.42,
+   "ct_n": 75,
+   "ct_rev": 69442.45,
+   "ct_rev_vat": 85408.76
+  },
+  "kosik": {
+   "sent": 905,
+   "delivered": 901,
+   "soft_b": 4,
+   "hard_b": 0,
+   "opens_u": 148,
+   "opens_t": 254,
+   "clicks_u": 24,
+   "clicks_t": 30,
+   "unsubs": 0,
+   "spam": 0,
+   "cd_n": 5,
+   "cd_rev": 4625.61,
+   "cd_rev_vat": 5597.0,
+   "ca_n": 13,
+   "ca_rev": 17147.97,
+   "ca_rev_vat": 20749.0,
+   "ct_n": 18,
+   "ct_rev": 21773.58,
+   "ct_rev_vat": 26346.0
+  },
+  "kosik_cz": {
+   "sent": 741,
+   "delivered": 739,
+   "soft_b": 2,
+   "hard_b": 0,
+   "opens_u": 120,
+   "opens_t": 217,
+   "clicks_u": 21,
+   "clicks_t": 27,
+   "unsubs": 0,
+   "spam": 0,
+   "cd_n": 5,
+   "cd_rev": 4625.61,
+   "cd_rev_vat": 5597.0,
+   "ca_n": 13,
+   "ca_rev": 17147.97,
+   "ca_rev_vat": 20749.0,
+   "ct_n": 18,
+   "ct_rev": 21773.58,
+   "ct_rev_vat": 26346.0
+  },
+  "kosik_sk": {
+   "sent": 164,
+   "delivered": 162,
+   "soft_b": 2,
+   "hard_b": 0,
+   "opens_u": 28,
+   "opens_t": 37,
+   "clicks_u": 3,
+   "clicks_t": 3,
+   "unsubs": 0,
+   "spam": 0,
+   "cd_n": 0,
+   "cd_rev": 0,
+   "cd_rev_vat": 0,
+   "ca_n": 0,
+   "ca_rev": 0,
+   "ca_rev_vat": 0,
+   "ct_n": 0,
+   "ct_rev": 0,
+   "ct_rev_vat": 0
+  }
+ },
+ "newsletters": [
+  {
+   "key": "20260707_voopoo_argus_novinka",
+   "title": "VOOPOO Argus G4 a G4 mini",
+   "date": "2026-07-07",
+   "CZ": {
+    "sent": 157115,
+    "delivered": 156594,
+    "soft_b": 471,
+    "hard_b": 50,
+    "opens_u": 14559,
+    "opens_t": 20611,
+    "clicks_u": 842,
+    "clicks_t": 1421,
+    "unsubs": 329,
+    "spam": 32,
+    "cd_n": 34,
+    "cd_rev": 32881.68,
+    "cd_rev_vat": 39787.0,
+    "ca_n": 89,
+    "ca_rev": 128695.94,
+    "ca_rev_vat": 155724.08,
+    "ct_n": 123,
+    "ct_rev": 161577.62,
+    "ct_rev_vat": 195511.08
+   },
+   "SK": {
+    "sent": 41696,
+    "delivered": 41463,
+    "soft_b": 197,
+    "hard_b": 36,
+    "opens_u": 2312,
+    "opens_t": 3559,
+    "clicks_u": 223,
+    "clicks_t": 361,
+    "unsubs": 83,
+    "spam": 1,
+    "cd_n": 8,
+    "cd_rev": 8368.08,
+    "cd_rev_vat": 10292.4,
+    "ca_n": 15,
+    "ca_rev": 16774.43,
+    "ca_rev_vat": 20633.23,
+    "ct_n": 23,
+    "ct_rev": 25142.51,
+    "ct_rev_vat": 30925.63
+   },
+   "tot": {
+    "sent": 198811,
+    "delivered": 198057,
+    "soft_b": 668,
+    "hard_b": 86,
+    "opens_u": 16871,
+    "opens_t": 24170,
+    "clicks_u": 1065,
+    "clicks_t": 1782,
+    "unsubs": 412,
+    "spam": 33,
+    "cd_n": 42,
+    "cd_rev": 41249.76,
+    "cd_rev_vat": 50079.4,
+    "ca_n": 104,
+    "ca_rev": 145470.37,
+    "ca_rev_vat": 176357.31,
+    "ct_n": 146,
+    "ct_rev": 186720.13,
+    "ct_rev_vat": 226436.71
+   },
+   "subject": {
+    "CZ": "🔥 Horká novinka: VOOPOO Argus G4 a G4 mini",
+    "SK": "Horúca novinka: VOOPOO Argus G4 a G4 mini"
+   },
+   "preview": {
+    "CZ": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f179694756aeb08c353cecef38fd8f",
+    "SK": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f179d682ad088e82fc9c69b462e2e5"
+   },
+   "waves": [
+    {
+     "mkt": "CZ",
+     "from": "2026-07-07T13:00:00Z",
+     "to": "2026-07-07T15:00:00Z",
+     "sent": 30834,
+     "delivered": 30728,
+     "opens_u": 2718,
+     "clicks_u": 152,
+     "conv": 13,
+     "rev": 16900.78
+    },
+    {
+     "mkt": "CZ",
+     "from": "2026-07-07T16:00:00Z",
+     "to": "2026-07-07T20:00:00Z",
+     "sent": 126281,
+     "delivered": 125866,
+     "opens_u": 11841,
+     "clicks_u": 690,
+     "conv": 110,
+     "rev": 144676.84
+    },
+    {
+     "mkt": "SK",
+     "from": "2026-07-07T13:00:00Z",
+     "to": "2026-07-07T13:00:00Z",
+     "sent": 8101,
+     "delivered": 8067,
+     "opens_u": 501,
+     "clicks_u": 38,
+     "conv": 4,
+     "rev": 3844.03
+    },
+    {
+     "mkt": "SK",
+     "from": "2026-07-07T15:00:00Z",
+     "to": "2026-07-07T18:00:00Z",
+     "sent": 33595,
+     "delivered": 33396,
+     "opens_u": 1811,
+     "clicks_u": 185,
+     "conv": 19,
+     "rev": 21298.48
+    }
+   ]
+  },
+  {
+   "key": "20260714_vaporesso_xros_se_novinka",
+   "title": "Vaporesso XROS SE",
+   "date": "2026-07-14",
+   "CZ": {
+    "sent": 156833,
+    "delivered": 156348,
+    "soft_b": 470,
+    "hard_b": 15,
+    "opens_u": 10957,
+    "opens_t": 14937,
+    "clicks_u": 462,
+    "clicks_t": 847,
+    "unsubs": 144,
+    "spam": 26,
+    "cd_n": 20,
+    "cd_rev": 17599.07,
+    "cd_rev_vat": 21295.0,
+    "ca_n": 65,
+    "ca_rev": 68667.46,
+    "ca_rev_vat": 83115.9,
+    "ct_n": 85,
+    "ct_rev": 86266.53,
+    "ct_rev_vat": 104410.9
+   },
+   "SK": {
+    "sent": 41589,
+    "delivered": 41393,
+    "soft_b": 189,
+    "hard_b": 7,
+    "opens_u": 2237,
+    "opens_t": 3376,
+    "clicks_u": 129,
+    "clicks_t": 172,
+    "unsubs": 47,
+    "spam": 0,
+    "cd_n": 6,
+    "cd_rev": 4594.52,
+    "cd_rev_vat": 5649.92,
+    "ca_n": 7,
+    "ca_rev": 3512.0,
+    "ca_rev_vat": 4320.39,
+    "ct_n": 13,
+    "ct_rev": 8106.52,
+    "ct_rev_vat": 9970.31
+   },
+   "tot": {
+    "sent": 198422,
+    "delivered": 197741,
+    "soft_b": 659,
+    "hard_b": 22,
+    "opens_u": 13194,
+    "opens_t": 18313,
+    "clicks_u": 591,
+    "clicks_t": 1019,
+    "unsubs": 191,
+    "spam": 26,
+    "cd_n": 26,
+    "cd_rev": 22193.59,
+    "cd_rev_vat": 26944.92,
+    "ca_n": 72,
+    "ca_rev": 72179.46,
+    "ca_rev_vat": 87436.29,
+    "ct_n": 98,
+    "ct_rev": 94373.05,
+    "ct_rev_vat": 114381.21
+   },
+   "subject": {
+    "CZ": "Znáte pod systém, který se nastaví sám?",
+    "SK": "Poznáte pod systém, ktorý sa nastaví sám?"
+   },
+   "preview": {
+    "CZ": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f17eaac81e32d49e8d3cecef38fa8c",
+    "SK": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f17ee1d67ba6e08bc53cecef38fd8f"
+   },
+   "waves": [
+    {
+     "mkt": "CZ",
+     "from": "2026-07-14T13:00:00Z",
+     "to": "2026-07-14T13:00:00Z",
+     "sent": 30835,
+     "delivered": 30737,
+     "opens_u": 1966,
+     "clicks_u": 94,
+     "conv": 17,
+     "rev": 18818.13
+    },
+    {
+     "mkt": "CZ",
+     "from": "2026-07-14T14:00:00Z",
+     "to": "2026-07-14T17:00:00Z",
+     "sent": 125998,
+     "delivered": 125611,
+     "opens_u": 8991,
+     "clicks_u": 368,
+     "conv": 68,
+     "rev": 67448.4
+    },
+    {
+     "mkt": "SK",
+     "from": "2026-07-14T13:00:00Z",
+     "to": "2026-07-14T13:00:00Z",
+     "sent": 8011,
+     "delivered": 7981,
+     "opens_u": 451,
+     "clicks_u": 30,
+     "conv": 5,
+     "rev": 3898.51
+    },
+    {
+     "mkt": "SK",
+     "from": "2026-07-14T14:00:00Z",
+     "to": "2026-07-14T16:00:00Z",
+     "sent": 33578,
+     "delivered": 33412,
+     "opens_u": 1786,
+     "clicks_u": 99,
+     "conv": 8,
+     "rev": 4208.01
+    }
+   ]
+  },
+  {
+   "key": "20260716_kickit_novinky",
+   "title": "Newsletter Kickit",
+   "date": "2026-07-16",
+   "CZ": {
+    "sent": 44080,
+    "delivered": 43895,
+    "soft_b": 184,
+    "hard_b": 1,
+    "opens_u": 3495,
+    "opens_t": 4934,
+    "clicks_u": 225,
+    "clicks_t": 297,
+    "unsubs": 32,
+    "spam": 0,
+    "cd_n": 22,
+    "cd_rev": 19417.25,
+    "cd_rev_vat": 23495.0,
+    "ca_n": 40,
+    "ca_rev": 42476.39,
+    "ca_rev_vat": 51412.97,
+    "ct_n": 62,
+    "ct_rev": 61893.64,
+    "ct_rev_vat": 74907.97
+   },
+   "SK": {
+    "sent": 11376,
+    "delivered": 11319,
+    "soft_b": 56,
+    "hard_b": 1,
+    "opens_u": 805,
+    "opens_t": 1329,
+    "clicks_u": 62,
+    "clicks_t": 80,
+    "unsubs": 7,
+    "spam": 0,
+    "cd_n": 4,
+    "cd_rev": 3954.7,
+    "cd_rev_vat": 4864.06,
+    "ca_n": 7,
+    "ca_rev": 4846.39,
+    "ca_rev_vat": 5959.91,
+    "ct_n": 11,
+    "ct_rev": 8801.09,
+    "ct_rev_vat": 10823.97
+   },
+   "tot": {
+    "sent": 55456,
+    "delivered": 55214,
+    "soft_b": 240,
+    "hard_b": 2,
+    "opens_u": 4300,
+    "opens_t": 6263,
+    "clicks_u": 287,
+    "clicks_t": 377,
+    "unsubs": 39,
+    "spam": 0,
+    "cd_n": 26,
+    "cd_rev": 23371.95,
+    "cd_rev_vat": 28359.06,
+    "ca_n": 47,
+    "ca_rev": 47322.78,
+    "ca_rev_vat": 57372.88,
+    "ct_n": 73,
+    "ct_rev": 70694.73,
+    "ct_rev_vat": 85731.94
+   },
+   "subject": {
+    "SK": "NOVÉ PRÍCHUTE Kickit sú tu!",
+    "CZ": "NOVÉ PŘÍCHUTĚ Kickit jsou tady!"
+   },
+   "preview": {
+    "SK": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f180616affbec0bf603cecef38fd8f",
+    "CZ": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f18035f735b4ca8e949c69b462e2e5"
+   },
+   "waves": [
+    {
+     "mkt": "CZ",
+     "from": "2026-07-16T11:00:00Z",
+     "to": "2026-07-16T15:00:00Z",
+     "sent": 44080,
+     "delivered": 43895,
+     "opens_u": 3495,
+     "clicks_u": 225,
+     "conv": 62,
+     "rev": 61893.64
+    },
+    {
+     "mkt": "SK",
+     "from": "2026-07-16T11:00:00Z",
+     "to": "2026-07-16T15:00:00Z",
+     "sent": 11376,
+     "delivered": 11319,
+     "opens_u": 805,
+     "clicks_u": 62,
+     "conv": 11,
+     "rev": 8801.09
+    }
+   ]
+  },
+  {
+   "key": "20260722_dual_mesh_vibe_se_2_novinka",
+   "title": "Dual Mesh Vibe SE 2",
+   "date": "2026-07-22",
+   "CZ": {
+    "sent": 156679,
+    "delivered": 156159,
+    "soft_b": 510,
+    "hard_b": 10,
+    "opens_u": 9769,
+    "opens_t": 13432,
+    "clicks_u": 551,
+    "clicks_t": 963,
+    "unsubs": 103,
+    "spam": 9,
+    "cd_n": 26,
+    "cd_rev": 27937.92,
+    "cd_rev_vat": 33805.0,
+    "ca_n": 53,
+    "ca_rev": 51522.78,
+    "ca_rev_vat": 62410.83,
+    "ct_n": 79,
+    "ct_rev": 79460.7,
+    "ct_rev_vat": 96215.83
+   },
+   "SK": {
+    "sent": 41537,
+    "delivered": 41330,
+    "soft_b": 205,
+    "hard_b": 2,
+    "opens_u": 1566,
+    "opens_t": 2224,
+    "clicks_u": 123,
+    "clicks_t": 182,
+    "unsubs": 30,
+    "spam": 0,
+    "cd_n": 4,
+    "cd_rev": 5157.09,
+    "cd_rev_vat": 6343.75,
+    "ca_n": 9,
+    "ca_rev": 6529.5,
+    "ca_rev_vat": 8030.49,
+    "ct_n": 13,
+    "ct_rev": 11686.59,
+    "ct_rev_vat": 14374.24
+   },
+   "tot": {
+    "sent": 198216,
+    "delivered": 197489,
+    "soft_b": 715,
+    "hard_b": 12,
+    "opens_u": 11335,
+    "opens_t": 15656,
+    "clicks_u": 674,
+    "clicks_t": 1145,
+    "unsubs": 133,
+    "spam": 9,
+    "cd_n": 30,
+    "cd_rev": 33095.01,
+    "cd_rev_vat": 40148.75,
+    "ca_n": 62,
+    "ca_rev": 58052.28,
+    "ca_rev_vat": 70441.32,
+    "ct_n": 92,
+    "ct_rev": 91147.29,
+    "ct_rev_vat": 110590.07
+   },
+   "subject": {
+    "CZ": "Dva styly vapování s jedním podem",
+    "SK": "Dva štýly vapovania s jedným podom"
+   },
+   "preview": {
+    "CZ": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f18418a52418f288153cecef38fa8c",
+    "SK": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f18418eb908690a3ce3cecef38fa8c"
+   },
+   "waves": [
+    {
+     "mkt": "CZ",
+     "from": "2026-07-22T07:00:00Z",
+     "to": "2026-07-22T07:00:00Z",
+     "sent": 30777,
+     "delivered": 30685,
+     "opens_u": 1832,
+     "clicks_u": 94,
+     "conv": 10,
+     "rev": 11381.73
+    },
+    {
+     "mkt": "CZ",
+     "from": "2026-07-22T08:00:00Z",
+     "to": "2026-07-22T09:00:00Z",
+     "sent": 125902,
+     "delivered": 125474,
+     "opens_u": 7937,
+     "clicks_u": 457,
+     "conv": 69,
+     "rev": 68078.97
+    },
+    {
+     "mkt": "SK",
+     "from": "2026-07-22T07:00:00Z",
+     "to": "2026-07-22T07:00:00Z",
+     "sent": 7981,
+     "delivered": 7950,
+     "opens_u": 421,
+     "clicks_u": 25,
+     "conv": 3,
+     "rev": 3863.4
+    },
+    {
+     "mkt": "SK",
+     "from": "2026-07-22T08:00:00Z",
+     "to": "2026-07-22T09:00:00Z",
+     "sent": 33556,
+     "delivered": 33380,
+     "opens_u": 1145,
+     "clicks_u": 98,
+     "conv": 10,
+     "rev": 7823.19
+    }
+   ]
+  },
+  {
+   "key": "20260728_vaporesso_luxe_Q3_novinka",
+   "title": "Vaporesso LUXE Q3",
+   "date": "2026-07-28",
+   "CZ": {
+    "sent": 157349,
+    "delivered": 156795,
+    "soft_b": 545,
+    "hard_b": 9,
+    "opens_u": 9451,
+    "opens_t": 12446,
+    "clicks_u": 456,
+    "clicks_t": 749,
+    "unsubs": 86,
+    "spam": 10,
+    "cd_n": 23,
+    "cd_rev": 17413.2,
+    "cd_rev_vat": 21070.0,
+    "ca_n": 46,
+    "ca_rev": 42503.03,
+    "ca_rev_vat": 51429.0,
+    "ct_n": 69,
+    "ct_rev": 59916.23,
+    "ct_rev_vat": 72499.0
+   },
+   "SK": {
+    "sent": 41927,
+    "delivered": 41707,
+    "soft_b": 216,
+    "hard_b": 4,
+    "opens_u": 2295,
+    "opens_t": 3320,
+    "clicks_u": 149,
+    "clicks_t": 181,
+    "unsubs": 45,
+    "spam": 0,
+    "cd_n": 6,
+    "cd_rev": 7790.26,
+    "cd_rev_vat": 9579.21,
+    "ca_n": 9,
+    "ca_rev": 7915.48,
+    "ca_rev_vat": 9735.4,
+    "ct_n": 15,
+    "ct_rev": 15705.74,
+    "ct_rev_vat": 19314.61
+   },
+   "tot": {
+    "sent": 199276,
+    "delivered": 198502,
+    "soft_b": 761,
+    "hard_b": 13,
+    "opens_u": 11746,
+    "opens_t": 15766,
+    "clicks_u": 605,
+    "clicks_t": 930,
+    "unsubs": 131,
+    "spam": 10,
+    "cd_n": 29,
+    "cd_rev": 25203.46,
+    "cd_rev_vat": 30649.21,
+    "ca_n": 55,
+    "ca_rev": 50418.51,
+    "ca_rev_vat": 61164.4,
+    "ct_n": 84,
+    "ct_rev": 75621.97,
+    "ct_rev_vat": 91813.61
+   },
+   "subject": {
+    "CZ": "Elegantní v každém detailu ",
+    "SK": "Elegantný v každom detaile"
+   },
+   "preview": {
+    "CZ": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f189bbdf90507a8ffe9c69b462e2e5",
+    "SK": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f189bbf571308ab9f69c69b462e2e5"
+   },
+   "waves": [
+    {
+     "mkt": "CZ",
+     "from": "2026-07-28T13:00:00Z",
+     "to": "2026-07-28T13:00:00Z",
+     "sent": 30937,
+     "delivered": 30828,
+     "opens_u": 1823,
+     "clicks_u": 94,
+     "conv": 15,
+     "rev": 11486.79
+    },
+    {
+     "mkt": "CZ",
+     "from": "2026-07-28T14:00:00Z",
+     "to": "2026-07-28T15:00:00Z",
+     "sent": 126412,
+     "delivered": 125967,
+     "opens_u": 7628,
+     "clicks_u": 362,
+     "conv": 54,
+     "rev": 48429.44
+    },
+    {
+     "mkt": "SK",
+     "from": "2026-07-28T13:00:00Z",
+     "to": "2026-07-28T13:00:00Z",
+     "sent": 8097,
+     "delivered": 8059,
+     "opens_u": 412,
+     "clicks_u": 30,
+     "conv": 2,
+     "rev": 1659.62
+    },
+    {
+     "mkt": "SK",
+     "from": "2026-07-28T14:00:00Z",
+     "to": "2026-07-28T15:00:00Z",
+     "sent": 33830,
+     "delivered": 33648,
+     "opens_u": 1883,
+     "clicks_u": 119,
+     "conv": 13,
+     "rev": 14046.12
+    }
+   ]
+  }
+ ],
+ "kosik": [
+  {
+   "mkt": "CZ",
+   "step": 1,
+   "name": "Opuštěný košík 1 - CZ",
+   "subject": "Nenech si to vyfouknout 🌬️",
+   "preview": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f17f9089899cdea3e43cecef38fd8f",
+   "from": "2026-07-21T14:00:00Z",
+   "to": "2026-07-31T23:00:00Z",
+   "sent": 465,
+   "delivered": 464,
+   "soft_b": 1,
+   "hard_b": 0,
+   "opens_u": 74,
+   "opens_t": 116,
+   "clicks_u": 8,
+   "clicks_t": 10,
+   "unsubs": 0,
+   "spam": 0,
+   "cd_n": 0,
+   "cd_rev": 0,
+   "cd_rev_vat": 0,
+   "ca_n": 8,
+   "ca_rev": 9376.85,
+   "ca_rev_vat": 11346.0,
+   "ct_n": 8,
+   "ct_rev": 9376.85,
+   "ct_rev_vat": 11346.0
+  },
+  {
+   "mkt": "CZ",
+   "step": 2,
+   "name": "Opuštěný košík 2 - CZ - Sleva 5%",
+   "subject": "Pssst, něco jsme pro tebe schovali 🎁",
+   "preview": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f1810a80c6e27a87753cecef38fa8c",
+   "from": "2026-07-21T14:00:00Z",
+   "to": "2026-07-31T20:00:00Z",
+   "sent": 276,
+   "delivered": 275,
+   "soft_b": 1,
+   "hard_b": 0,
+   "opens_u": 46,
+   "opens_t": 101,
+   "clicks_u": 13,
+   "clicks_t": 17,
+   "unsubs": 0,
+   "spam": 0,
+   "cd_n": 5,
+   "cd_rev": 4625.61,
+   "cd_rev_vat": 5597.0,
+   "ca_n": 5,
+   "ca_rev": 7771.12,
+   "ca_rev_vat": 9403.0,
+   "ct_n": 10,
+   "ct_rev": 12396.73,
+   "ct_rev_vat": 15000.0
+  },
+  {
+   "mkt": "SK",
+   "step": 1,
+   "name": "Opuštěný košík 1 - SK",
+   "subject": "Nenechaj si to vyfúknuť 🌬️",
+   "preview": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f181d2aba4606cbb6f9c69b462e2e5",
+   "from": "2026-07-21T14:00:00Z",
+   "to": "2026-07-31T21:00:00Z",
+   "sent": 104,
+   "delivered": 103,
+   "soft_b": 1,
+   "hard_b": 0,
+   "opens_u": 17,
+   "opens_t": 22,
+   "clicks_u": 1,
+   "clicks_t": 1,
+   "unsubs": 0,
+   "spam": 0,
+   "cd_n": 0,
+   "cd_rev": 0,
+   "cd_rev_vat": 0,
+   "ca_n": 0,
+   "ca_rev": 0,
+   "ca_rev_vat": 0,
+   "ct_n": 0,
+   "ct_rev": 0,
+   "ct_rev_vat": 0
+  },
+  {
+   "mkt": "SK",
+   "step": 2,
+   "name": "Opuštěný košík 2 - SK - Sleva 5%",
+   "subject": "Pssst, niečo sme pre teba schovali 🎁",
+   "preview": "https://account-content.smartemailing.cz/preview/default?a=92430f06-715b-11f1-ad59-9c69b462e2e5&e=11f18112b475a9828f243cecef38fd8f",
+   "from": "2026-07-22T17:00:00Z",
+   "to": "2026-07-31T18:00:00Z",
+   "sent": 60,
+   "delivered": 59,
+   "soft_b": 1,
+   "hard_b": 0,
+   "opens_u": 11,
+   "opens_t": 15,
+   "clicks_u": 2,
+   "clicks_t": 2,
+   "unsubs": 0,
+   "spam": 0,
+   "cd_n": 0,
+   "cd_rev": 0,
+   "cd_rev_vat": 0,
+   "ca_n": 0,
+   "ca_rev": 0,
+   "ca_rev_vat": 0,
+   "ct_n": 0,
+   "ct_rev": 0,
+   "ct_rev_vat": 0
+  }
+ ]
+};
+
+/* ---------- helpers ---------- */
+const CZ = new Intl.NumberFormat('cs-CZ');
+const fmtN = n => CZ.format(Math.round(n));
+const fmtK = n => CZ.format(Math.round(n)) + ' Kč';
+const pct = (x, d=1) => (x*100).toLocaleString('cs-CZ',{minimumFractionDigits:d, maximumFractionDigits:d}) + ' %';
+const R = m => ({
+  OR:  m.delivered ? m.opens_u/m.delivered : 0,
+  CTR: m.delivered ? m.clicks_u/m.delivered : 0,
+  CTOR:m.opens_u ? m.clicks_u/m.opens_u : 0,
+  UNS: m.delivered ? m.unsubs/m.delivered : 0,
+  CR:  m.delivered ? m.ct_n/m.delivered : 0,
+  RPM: m.delivered ? m.ct_rev_vat/m.delivered*1000 : 0,
+  DLV: m.sent ? m.delivered/m.sent : 0
+});
+const BENCH = {OR:.20, CTR:.015, CTOR:.08, UNS:.003, CR:.005, RPM:null};
+const BENCH_K = {OR:.40, CTR:.06, CR:.025};
+
+/* inline benchmark micro-bar: value vs benchmark scale */
+function mbar(val, bench, w=64){
+  const max = Math.max(bench*1.15, val*1.1, 1e-9);
+  const vw = Math.max(1.5, val/max*w), bx = Math.min(w-1.6, bench/max*w);
+  const col = val >= bench*0.85 ? 'var(--good)' : (val >= bench*0.4 ? 'var(--gold)' : 'var(--bad)');
+  return `<svg class="mbar" width="${w}" height="9" aria-hidden="true">
+    <rect x="0" y="2.5" width="${w}" height="4" rx="2" fill="#ECECE4"/>
+    <rect x="0" y="2.5" width="${vw.toFixed(1)}" height="4" rx="2" fill="${col}"/>
+    <rect x="${bx.toFixed(1)}" y="0" width="1.6" height="9" fill="#98A19A"/>
+  </svg>`;
+}
+
+/* ---------- KPI strip ---------- */
+(function(){
+  const a = DATA.totals.all, r = R(a);
+  const czS = DATA.totals.nl_cz.sent + DATA.totals.kosik_cz.sent;
+  const skS = DATA.totals.nl_sk.sent + DATA.totals.kosik_sk.sent;
+  const cells = [
+    {l:'Odesláno', v:fmtN(a.sent), s:`CZ <b>${fmtN(czS)}</b> · SK <b>${fmtN(skS)}</b>`},
+    {l:'Doručeno', v:pct(r.DLV,1), s:`${fmtN(a.delivered)} e-mailů · bounce ${fmtN(a.sent-a.delivered)}`},
+    {l:'Otevření · OR', v:pct(r.OR,1), s:`${fmtN(a.opens_u)} unikátních otevření`},
+    {l:'Prokliky · CTR', v:pct(r.CTR,2), s:`${fmtN(a.clicks_u)} unikátních · CTOR <b>${pct(r.CTOR,1)}</b>`},
+    {l:'Odhlášení', v:fmtN(a.unsubs), s:`${pct(r.UNS,2)} z doručených · spam ${fmtN(a.spam)}`},
+    {l:'Konverze', v:`<span class="accent">${fmtN(a.ct_n)}</span>`, s:`<b>${fmtK(a.ct_rev_vat)}</b> s DPH · ${fmtK(a.ct_rev)} bez DPH`}
+  ];
+  document.getElementById('kpi-strip').innerHTML =
+    `<div class="kpi-head"><span class="t">Souhrn za období</span><span class="p">1.–31. 7. 2026</span><span class="x">newslettery + opuštěný košík · bez testovacích rozesílek</span></div>` +
+    `<div class="kpi-cells">` + cells.map(c =>
+    `<div class="kpi"><div class="lbl">${c.l}</div><div class="val num">${c.v}</div><div class="split num">${c.s}</div></div>`).join('') + `</div>`;
+  document.getElementById('m-source').textContent = DATA.source + ' — statistiky kampaní (emailStatisticReport), staženo ' + DATA.generated.split('-').reverse().join('. ') + '.';
+  document.getElementById('m-excluded').textContent = DATA.excluded_note;
+  document.getElementById('ft-note').textContent = 'Období: 1.–31. 7. 2026 · měna CZK · zdroj SmartEmailing';
+})();
+
+/* ---------- tabs ---------- */
+document.getElementById('tabs').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('nav.tabs button').forEach(x=>x.classList.toggle('on', x===b));
+  document.querySelectorAll('section.pane').forEach(p=>p.classList.toggle('on', p.id===b.dataset.pane));
+});
+
+/* ---------- newsletter master table ---------- */
+const dFmt = iso => { const [y,m,d] = iso.split('-'); return `${+d}. ${+m}.`; };
+
+function miniMarketTable(n){
+  const mk = (m)=>{ const r=R(m); return {
+    'Odesláno': fmtN(m.sent),
+    'Doručeno': `${fmtN(m.delivered)} <small>${pct(m.sent?m.delivered/m.sent:0,1)}</small>`,
+    'Bounce soft / hard': `<small>${fmtN(m.soft_b)} / ${fmtN(m.hard_b)}</small>`,
+    'Otevření': fmtN(m.opens_u),
+    'Open rate': `<b>${pct(r.OR,2)}</b>`,
+    'Prokliky': fmtN(m.clicks_u),
+    'CTR': `<b>${pct(r.CTR,2)}</b>`,
+    'CTOR': `<b>${pct(r.CTOR,2)}</b>`,
+    'Odhlášení': `${fmtN(m.unsubs)} <small>${pct(r.UNS,2)}</small>`,
+    'Spam stížnosti': fmtN(m.spam),
+    'Objednávky': `<b>${fmtN(m.ct_n)}</b>`,
+    'Konverzní poměr': pct(r.CR,3),
+    'Tržby s DPH': `<b>${fmtK(m.ct_rev_vat)}</b>`,
+    'Tržba / 1 000 mailů': fmtK(r.RPM)
+  };};
+  const cz = mk(n.CZ), sk = mk(n.SK), tc = mk(n.tot);
+  const labels = Object.keys(cz);
+  return `<table class="mini"><thead><tr><th></th><th>CZ</th><th>SK</th><th class="tc">Celkem</th></tr></thead><tbody>
+    ${labels.map(l=>`<tr><td>${l}</td><td class="num">${cz[l]}</td><td class="num">${sk[l]}</td><td class="num tc">${tc[l]}</td></tr>`).join('')}
+  </tbody></table>`;
+}
+
+function convList(m){
+  const d = m.delivered||1;
+  const row = (t,cn,rv,rn,hl='') => `<div class="conv-row ${hl}"><span class="t">${t}</span><span class="n num">${fmtN(cn)} <small>obj.</small></span><span class="r num"><b>${fmtK(rv)} s DPH</b><br>${fmtK(rn)} bez DPH</span></div>`;
+  return `<div class="conv-list">
+    ${row('Přímé', m.cd_n, m.cd_rev_vat, m.cd_rev)}
+    ${row('Asistované', m.ca_n, m.ca_rev_vat, m.ca_rev)}
+    ${row('Celkem', m.ct_n, m.ct_rev_vat, m.ct_rev, 'hl')}
+    <div class="conv-foot num">Průměrná objednávka ${m.ct_n?fmtK(m.ct_rev_vat/m.ct_n):'—'} s DPH · konverzní poměr ${pct(m.ct_n/d,3)} z doručených</div>
+  </div>`;
+}
+
+function wavesTable(n){
+  const t = iso => iso.slice(11,16);
+  const d = iso => { const p=iso.slice(0,10).split('-'); return `${+p[2]}. ${+p[1]}.`; };
+  return `<table class="mini waves"><thead><tr><th>Vlna</th><th>Čas</th><th>Odesláno</th><th>Otevření</th><th>Prokliky</th><th>Obj.</th></tr></thead><tbody>
+  ${n.waves.map(w=>`<tr><td>${w.mkt}</td><td class="num">${d(w.from)} ${t(w.from)}–${t(w.to)}</td><td class="num">${fmtN(w.sent)}</td><td class="num">${fmtN(w.opens_u)}</td><td class="num">${fmtN(w.clicks_u)}</td><td class="num">${fmtN(w.conv)}</td></tr>`).join('')}
+  </tbody></table>`;
+}
+
+(function(){
+  const tb = document.querySelector('#nl-table tbody');
+  tb.innerHTML = DATA.newsletters.map((n,i)=>{
+    const m = n.tot, r = R(m);
+    return `<tr class="row" data-i="${i}">
+      <td><span class="camp-date">${dFmt(n.date)}</span><span class="camp-name">${n.title}</span><span class="chev">▶</span>
+          <div class="camp-meta" title="${(n.subject.CZ||'')}">${n.subject.CZ||''}</div></td>
+      <td class="num"><span class="big">${fmtN(m.sent)}</span><span class="sub2">CZ ${fmtN(n.CZ.sent)} · SK ${fmtN(n.SK.sent)}</span></td>
+      <td class="num"><span class="big">${pct(r.OR,1)}</span>${mbar(r.OR, BENCH.OR)}<span class="sub2">${fmtN(m.opens_u)} · bench. 20 %</span></td>
+      <td class="num"><span class="big">${pct(r.CTR,2)}</span>${mbar(r.CTR, BENCH.CTR)}<span class="sub2">${fmtN(m.clicks_u)} · bench. 1,5 %</span></td>
+      <td class="num"><span class="big">${pct(r.CTOR,1)}</span>${mbar(r.CTOR, BENCH.CTOR)}<span class="sub2">bench. 8 %</span></td>
+      <td class="num"><span class="big">${fmtN(m.unsubs)}</span><span class="sub2">${pct(r.UNS,2)} · max 0,3 %</span></td>
+      <td class="num"><span class="big">${fmtN(m.ct_n)}</span><span class="sub2">CR ${pct(r.CR,3)}</span></td>
+      <td class="num"><span class="big">${fmtK(m.ct_rev_vat)}</span><span class="sub2">${fmtK(R(m).RPM)} / 1 000 mailů</span></td>
+    </tr>
+    <tr class="detail" style="display:none"><td colspan="8"><div class="det">
+      <div class="det-grid">
+        <div>
+          <h4>Rozpad CZ / SK</h4>
+          ${miniMarketTable(n)}
+        </div>
+        <div>
+          <h4>Konverze (CZ + SK)</h4>
+          ${convList(m)}
+          <h4>Rozesílací vlny</h4>
+          ${wavesTable(n)}
+          <h4>Náhled e-mailu</h4>
+          <div class="linkrow">
+            ${n.preview.CZ?`<a class="plink" href="${n.preview.CZ}" target="_blank" rel="noopener">↗ Náhled CZ verze</a>`:''}
+            ${n.preview.SK?`<a class="plink" href="${n.preview.SK}" target="_blank" rel="noopener">↗ Náhled SK verze</a>`:''}
+          </div>
+        </div>
+      </div>
+    </div></td></tr>`;
+  }).join('');
+  tb.addEventListener('click', e=>{
+    if(e.target.closest('a')) return;
+    const tr = e.target.closest('tr.row'); if(!tr) return;
+    const det = tr.nextElementSibling, open = det.style.display !== 'none';
+    det.style.display = open ? 'none' : '';
+    tr.classList.toggle('open', !open);
+  });
+})();
+
+/* ---------- košík ---------- */
+(function(){
+  const K = DATA.kosik;
+  const rng = K.map(k=>k.from.slice(0,10)).sort()[0].split('-');
+  document.getElementById('k-note-range').textContent =
+    `Automatizace jsou v provozu od ${+rng[2]}. ${+rng[1]}. ${rng[0]} — data níže pokrývají provoz do 31. 7. 2026. Krok 1 = připomínka košíku, krok 2 = připomínka se slevou 5 %.`;
+  const sumRow = (lbl, m, hl) => { const r=R(m); return `<tr>
+    <td><span class="camp-name">${lbl}</span></td>
+    <td class="num"><span class="big">${fmtN(m.sent)}</span></td>
+    <td class="num"><span class="big">${pct(r.OR,1)}</span>${mbar(r.OR, BENCH_K.OR)}<span class="sub2">${fmtN(m.opens_u)} · bench. 40 %</span></td>
+    <td class="num"><span class="big">${pct(r.CTR,2)}</span>${mbar(r.CTR, BENCH_K.CTR)}<span class="sub2">${fmtN(m.clicks_u)} · bench. 6 %</span></td>
+    <td class="num"><span class="big">${pct(r.CTOR,1)}</span></td>
+    <td class="num"><span class="big">${fmtN(m.ct_n)}</span><span class="sub2">CR ${pct(r.CR,2)} · bench. 2,5 %</span></td>
+    <td class="num"><span class="big">${m.ct_rev_vat?fmtK(m.ct_rev_vat):'—'}</span>${m.ct_rev?`<span class="sub2">${fmtK(m.ct_rev)} bez DPH</span>`:''}</td>
+  </tr>`;};
+  document.querySelector('#k-summary tbody').innerHTML =
+    sumRow('Košík celkem (CZ + SK)', DATA.totals.kosik) +
+    sumRow('— CZ', DATA.totals.kosik_cz) +
+    sumRow('— SK', DATA.totals.kosik_sk);
+
+  document.getElementById('k-grid').innerHTML = K.map(k=>{
+    const r = R(k);
+    return `<div class="k-card">
+      <div class="k-head"><span class="nm">Opuštěný košík ${k.step}${k.step===2?' · sleva 5 %':''}<span class="flag ${k.mkt.toLowerCase()}">${k.mkt}</span></span>
+        <a class="plink" href="${k.preview}" target="_blank" rel="noopener">↗ Náhled</a></div>
+      <div class="k-sub">„${k.subject}“</div>
+      <div class="k-mets">
+        <div class="k-met"><div class="l">Odesláno</div><div class="v num">${fmtN(k.sent)}</div></div>
+        <div class="k-met"><div class="l">Open rate</div><div class="v num">${pct(r.OR,1)}</div></div>
+        <div class="k-met"><div class="l">CTR</div><div class="v num">${pct(r.CTR,1)}</div></div>
+        <div class="k-met"><div class="l">CTOR</div><div class="v num">${pct(r.CTOR,1)}</div></div>
+        <div class="k-met"><div class="l">Objednávky</div><div class="v num">${fmtN(k.ct_n)}</div></div>
+        <div class="k-met"><div class="l">CR</div><div class="v num">${pct(r.CR,2)}</div></div>
+        <div class="k-met"><div class="l">Tržby s DPH</div><div class="v num">${k.ct_rev_vat?fmtK(k.ct_rev_vat):'—'}</div></div>
+        <div class="k-met"><div class="l">Odhlášení</div><div class="v num">${fmtN(k.unsubs)}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+  const kNote = document.createElement('div');
+  kNote.className = 'k-note';
+  kNote.innerHTML = `<b>Poznámka k SK:</b> u slovenských větví zatím neevidujeme žádnou konverzi — jde ale o malý vzorek (${fmtN(DATA.totals.kosik_sk.sent)} e-mailů za ${'necelé 2 týdny'} provozu). Hodnotit má smysl po ~měsíci dat.`;
+  document.getElementById('k-grid').after(kNote);
+})();
+
+/* ---------- srovnání ---------- */
+const CMP = {metric:'OR', mkt:'tot'};
+const M_LABEL = {OR:'Open rate', CTR:'CTR', CTOR:'CTOR', CR:'Konverzní poměr', RPM:'Tržba s DPH na 1 000 doručených', UNS:'Míra odhlášení'};
+const M_FMT = {OR:v=>pct(v,1), CTR:v=>pct(v,2), CTOR:v=>pct(v,1), CR:v=>pct(v,3), RPM:v=>fmtK(v), UNS:v=>pct(v,2)};
+const M_BENCH_TXT = {OR:'benchmark ≈ 20 %', CTR:'benchmark ≈ 1,5 %', CTOR:'benchmark ≈ 8 %', CR:'benchmark ≈ 0,5 %', RPM:'', UNS:'hranice ≈ 0,3 % (méně = lépe)'};
+
+function drawCmp(){
+  const {metric, mkt} = CMP;
+  const items = DATA.newsletters.map(n=>({t:`${dFmt(n.date)} ${n.title}`, v:R(n[mkt]||n.tot)[metric]}));
+  const bench = BENCH[metric];
+  const W=1060, H=300, padL=10, padR=10, padT=26, padB=54;
+  const innerW = W-padL-padR, innerH = H-padT-padB;
+  const max = Math.max(...items.map(i=>i.v), bench||0) * 1.15 || 1;
+  const bw = Math.min(120, innerW/items.length*0.52), gap=(innerW-bw*items.length)/(items.length+1);
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block">`;
+  /* gridlines */
+  for(let g=1;g<=3;g++){
+    const y = padT+innerH-(innerH*g/4);
+    s += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#EFEFE8" stroke-width="1"/>`;
+  }
+  s += `<line x1="${padL}" y1="${padT+innerH}" x2="${W-padR}" y2="${padT+innerH}" stroke="#D8D8D0" stroke-width="1.2"/>`;
+  items.forEach((it,i)=>{
+    const x = padL+gap+(bw+gap)*i;
+    const h = Math.max(2, it.v/max*innerH), y = padT+innerH-h;
+    const isBest = it.v === Math.max(...items.map(z=>z.v));
+    const worst = metric==='UNS' ? isBest : it.v === Math.min(...items.map(z=>z.v));
+    const fill = metric==='UNS'
+      ? (isBest ? 'var(--bad)' : 'var(--accent)')
+      : (isBest ? 'var(--accent)' : '#B9CFCC');
+    s += `<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="6" fill="${fill}"/>`;
+    s += `<text x="${x+bw/2}" y="${y-8}" text-anchor="middle" font-size="13.5" font-weight="700" fill="#151F28">${M_FMT[metric](it.v)}</text>`;
+    const words = it.t.split(' ');
+    const l1 = words.slice(0,2).join(' '), l2 = words.slice(2).join(' ');
+    s += `<text x="${x+bw/2}" y="${padT+innerH+18}" text-anchor="middle" font-size="11.5" fill="#66727C">${l1}</text>`;
+    if(l2) s += `<text x="${x+bw/2}" y="${padT+innerH+33}" text-anchor="middle" font-size="11.5" fill="#66727C">${l2}</text>`;
+  });
+  if(bench){
+    const y = padT+innerH-(bench/max*innerH);
+    if(y>padT-2) s += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="var(--bad)" stroke-width="1.6" stroke-dasharray="6 5"/>`;
+  }
+  s += '</svg>';
+  document.getElementById('cmp-chart').innerHTML = s;
+  const bn = document.getElementById('cmp-bench');
+  const txt = M_BENCH_TXT[metric];
+  bn.style.display = txt ? '' : 'none';
+  bn.querySelector('span:last-child').textContent = `${M_LABEL[metric]} — ${txt}${(bench && Math.max(...items.map(i=>i.v)) < bench*0.9) ? ' · benchmark je nad rozsahem grafu' : ''}`;
+  /* hide dashed swatch if bench off-scale */
+  bn.querySelector('.bench-swatch').style.display = (bench && (padT+innerH-(bench/max*innerH))>padT-2) ? '' : 'none';
+}
+document.getElementById('cmp-metric').addEventListener('click', e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  CMP.metric=b.dataset.m;
+  document.querySelectorAll('#cmp-metric button').forEach(x=>x.classList.toggle('on',x===b));
+  drawCmp();
+});
+document.getElementById('cmp-mkt').addEventListener('click', e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  CMP.mkt=b.dataset.k;
+  document.querySelectorAll('#cmp-mkt button').forEach(x=>x.classList.toggle('on',x===b));
+  drawCmp();
+});
+drawCmp();
+</script>
+</body>
+</html>
