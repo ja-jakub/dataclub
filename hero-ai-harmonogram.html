@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmapa - Mikrosegmentace a doporučování zájezdů s AI · Fischer &amp; Exim · Data Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#190058; --magenta:#D82CF6; --cyan:#29BDEF; --orange:#FF8E4E; --green:#0a9e63;
+  --bg:#F6F5FD; --alt:#EFEBFB; --card:#FFFFFF; --ink-soft:#4A4172; --muted:#837DA3; --line:#EBE8F6;
+  --deep:#12013D; --deeper:#0E0130;
+  --grad:linear-gradient(120deg,#D82CF6,#29BDEF);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.55}
+.page{max-width:920px;margin:0 auto;padding:0 clamp(20px,4vw,40px) 56px}
+h1,h2,h3,.eyebrow,.when,.tag{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-.02em}
+h1{font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:800;line-height:1.08;letter-spacing:-.035em}
+p{color:var(--ink-soft)}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:18px clamp(20px,4vw,40px);max-width:920px;margin:0 auto}
+.brand-logo{height:32px;width:auto;display:block}
+.topbar .meta{font-size:.78rem;color:var(--muted);font-weight:600}
+.hero{background:radial-gradient(120% 140% at 12% 0%,#1d0a52 0%,var(--deep) 48%,var(--deeper) 100%);color:#fff;border-radius:20px;padding:clamp(26px,4vw,40px);margin-bottom:30px}
+.hero h1{color:#fff}
+.hero p{color:#C9C2E8;font-size:1rem;max-width:64ch;margin-top:12px}
+.eyebrow{display:inline-flex;align-items:center;gap:11px;font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;color:#fff}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--grad);border-radius:2px;flex:none}
+/* overview strip */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:30px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.chip b{font-family:'Plus Jakarta Sans';font-size:.78rem;display:block}
+.chip span{font-size:.72rem;color:var(--muted);display:block;margin-top:2px}
+.chip.done{border-left:3px solid var(--green)}
+.chip.now{border-left:3px solid var(--magenta)}
+/* timeline */
+.tl{position:relative;margin-top:6px}
+.tl::before{content:"";position:absolute;left:21px;top:10px;bottom:26px;width:2px;background:linear-gradient(var(--magenta),var(--cyan));opacity:.22}
+.ms{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;margin-bottom:14px;position:relative}
+.dot{width:44px;height:44px;border-radius:50%;background:var(--grad);color:#fff;font-family:'Plus Jakarta Sans';font-weight:800;font-size:.95rem;display:flex;align-items:center;justify-content:center;z-index:1;box-shadow:0 0 0 5px var(--bg)}
+.ms.done .dot{background:var(--green)}
+.ms.client .dot{background:#fff;color:var(--magenta);border:2px solid var(--magenta)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+.ms.done .card{border-left:3px solid var(--green)}
+.ms.client .card{border-left:3px dashed var(--magenta);background:linear-gradient(160deg,#fff,#fdf6ff)}
+.head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.head h2{font-size:1.08rem;font-weight:800}
+.when{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--magenta);background:#fbeeff;border-radius:7px;padding:4px 10px;white-space:nowrap}
+.ms.done .when{color:var(--green);background:#e9f8f1}
+.card ul{list-style:none;margin-top:8px}
+.card li{position:relative;padding-left:16px;font-size:.88rem;color:var(--ink-soft);margin-top:5px}
+.card li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--grad)}
+.out{margin-top:11px;font-size:.85rem;background:var(--alt);border-radius:9px;padding:8px 12px}
+.out b{font-family:'Plus Jakarta Sans'}
+.you{margin-top:8px;font-size:.82rem;color:var(--ink);background:#fff7f0;border:1px solid #ffe3cc;border-radius:9px;padding:8px 12px}
+.you b{font-family:'Plus Jakarta Sans';color:#b5540f}
+.dep{font-size:.72rem;color:var(--muted);margin-top:8px}
+/* goal */
+.goal{margin-top:26px;background:radial-gradient(120% 140% at 12% 0%,#1d0a52 0%,var(--deep) 60%,var(--deeper) 100%);color:#fff;border-radius:16px;padding:22px 26px}
+.goal h2{font-size:1.05rem;font-weight:800;margin-bottom:6px}
+.goal p{color:#C9C2E8;font-size:.92rem}
+.footline{display:flex;justify-content:space-between;align-items:center;margin-top:26px;padding-top:14px;border-top:1px solid var(--line);font-size:.76rem;color:var(--muted);flex-wrap:wrap;gap:8px}
+@media print{body{background:#fff}.hero,.goal{-webkit-print-color-adjust:exact;print-color-adjust:exact}.ms{page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <img class="brand-logo" src="https://drive.google.com/thumbnail?id=1Ea88F_W1BE7NTEuusW0vMTf0H2ik-_Jw&amp;sz=w400" alt="Data Club">
+  <div class="meta">Roadmapa projektu · září - prosinec 2026</div>
+</div>
+<div class="page">
+
+  <div class="hero">
+    <div class="eyebrow">HERO product · roadmapa</div>
+    <h1>Mikrosegmentace a doporučování zájezdů <span class="grad-text">s AI</span></h1>
+    <p>Harmonogram projektu pro Fischer (pilot) s následnou migrací na Exim - milníky, návaznosti a co v jednotlivých krocích vzniká.</p>
+  </div>
+
+  <div class="strip">
+    <div class="chip done"><b>✅ Srpen</b><span>Data a byznys vstupy</span></div>
+    <div class="chip now"><b>Září</b><span>Segmenty + stavba pipeline</span></div>
+    <div class="chip"><b>Konec září</b><span>Komunikační manuál (DT)</span></div>
+    <div class="chip"><b>Říjen</b><span>AI texty + zapojení do e-mailů</span></div>
+    <div class="chip"><b>Listopad</b><span>Pilot - 3 kampaně</span></div>
+    <div class="chip"><b>Prosinec</b><span>Vyhodnocení + Exim</span></div>
+  </div>
+
+  <div class="tl">
+
+    <div class="ms done">
+      <div class="dot">✓</div>
+      <div class="card">
+        <div class="head"><h2>Příprava a data</h2><span class="when">srpen · hotovo</span></div>
+        <ul>
+          <li>Schválení projektu a architektury</li>
+          <li>Příprava zákaznických dat (objednávky, chování na webu, souhlasy) a předání datovému analytikovi</li>
+          <li>Byznysové vstupy k segmentům - společný workshop 28. 8. a jejich zapracování</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ms">
+      <div class="dot">1</div>
+      <div class="card">
+        <div class="head"><h2>Definice mikrosegmentů</h2><span class="when">září · 1.-3. týden</span></div>
+        <ul>
+          <li>Datová analýza báze a návrh mikrosegmentů - kombinace bonitních clusterů (TOP / MEDIUM / OTHER) a životních situací (rodiny, senioři, páry…)</li>
+          <li>Promítnutí vašich kritérií: destinace, kategorie hotelu, strava, FM/LM, kluby, frekvence</li>
+          <li>Společné odsouhlasení finálního seznamu segmentů</li>
+        </ul>
+        <div class="out"><b>Výstup:</b> finální seznam mikrosegmentů - u každého kdo to je, co mu nabízíme a jak s ním mluvíme</div>
+        <div class="you"><b>Od vás potřebujeme:</b> číselníky z webu (destinace a parametry vyhledávání - v řešení s Filipem) a účast na odsouhlasení segmentů</div>
+      </div>
+    </div>
+
+    <div class="ms">
+      <div class="dot">2</div>
+      <div class="card">
+        <div class="head"><h2>Technická stavba pipeline</h2><span class="when">září · souběžně</span></div>
+        <ul>
+          <li>Napojení na vyhledávací API - pro každý segment se denně najdou aktuální zájezdy</li>
+          <li>Automatické rozřazování zákazníků do segmentů a denní zápis doporučení do CDP</li>
+          <li>Tabulka hodnocení hotelů (Customer Gauge) - špatně hodnocené hotely se nedoporučují</li>
+        </ul>
+        <div class="out"><b>Výstup:</b> pipeline, která každý den sama napočítá nabídku pro každý segment</div>
+        <div class="dep">Běží souběžně s definicí segmentů - vzájemně se neblokují.</div>
+      </div>
+    </div>
+
+    <div class="ms client">
+      <div class="dot">3</div>
+      <div class="card">
+        <div class="head"><h2>Komunikační manuál</h2><span class="when">konec září · strana DT</span></div>
+        <ul>
+          <li>Key segmenty a tón komunikace per brand (součást projektu brand manuálů na vaší straně)</li>
+          <li>Slouží jako předloha pro AI - jak má psát texty za Fischer pro jednotlivé segmenty</li>
+        </ul>
+        <div class="you"><b>Od vás potřebujeme:</b> dodání manuálu - AI textace na něj navazuje. My mezitím připravíme technické zázemí AI vrstvy, ať se po dodání hned rozjede.</div>
+      </div>
+    </div>
+
+    <div class="ms">
+      <div class="dot">4</div>
+      <div class="card">
+        <div class="head"><h2>AI textace a zapojení do e-mailů</h2><span class="when">říjen</span></div>
+        <ul>
+          <li>Nastavení AI dle komunikačního manuálu - styl textu na míru každému segmentu</li>
+          <li>AI pracuje jen s fakty o konkrétní nabídce (pojistka proti vymýšlení), u dobře hodnocených hotelů zmíní hodnocení</li>
+          <li>Kontrolní proces: vygenerované texty chodí marketingu ke kontrole</li>
+          <li>Blok v SmartEmailing šabloně + interní testy celého řetězce</li>
+        </ul>
+        <div class="out"><b>Výstup:</b> newsletter se automaticky naplní personalizovanou nabídkou s textem na míru</div>
+        <div class="dep">Navazuje na komunikační manuál (krok 3) a hotovou pipeline (krok 2).</div>
+      </div>
+    </div>
+
+    <div class="ms">
+      <div class="dot">5</div>
+      <div class="card">
+        <div class="head"><h2>Pilot</h2><span class="when">listopad</span></div>
+        <ul>
+          <li>3 pilotní kampaně s personalizovaným blokem + kontrolní skupina s běžnou komunikací</li>
+          <li>Průběžný monitoring a lidská kontrola textů</li>
+        </ul>
+        <div class="out"><b>Výstup:</b> vyhodnocení dopadu - otevírání, kliky, konverze, revenue vs. kontrolní skupina</div>
+        <div class="you"><b>Od vás potřebujeme:</b> výběr 3 kampaní a schvalování textů</div>
+      </div>
+    </div>
+
+    <div class="ms">
+      <div class="dot">6</div>
+      <div class="card">
+        <div class="head"><h2>Vyhodnocení a rozšíření</h2><span class="when">prosinec</span></div>
+        <ul>
+          <li>Optimalizace segmentů a textace podle výsledků pilotu</li>
+          <li>Rozjezd Fischer na celou bázi (s trvalou kontrolní skupinou pro měření přínosu)</li>
+          <li>Migrace hotové pipeline na Exim</li>
+        </ul>
+        <div class="out"><b>Výstup:</b> personalizace běží naplno pro Fischer, Exim spuštěn na stejném řešení</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="goal">
+    <h2>Cíl projektu</h2>
+    <p>Každý zákazník dostává v newsletterech právě tu dovolenou, která mu sedí, s textem psaným jeho jazykem. Relevantnější e-maily → vyšší angažovanost → efektivnější emailing → revenue. Řešení je škálovatelné na další brandy i kanály.</p>
+  </div>
+
+  <div class="footline">
+    <span>Data Club · pro Fischer &amp; Exim</span>
+    <span>Mikrosegmentace a doporučování zájezdů s AI · roadmapa</span>
+  </div>
+</div>
+</body>
+</html>
