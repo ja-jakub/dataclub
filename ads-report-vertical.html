@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datová architektura reportingu reklamních kampaní</title>
+<style>
+  body{margin:0;background:#f4f5f7;color:#111827;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .top{padding:22px 28px 14px;background:#fff;border-bottom:1px solid #e5e7eb}
+  .top h1{font-size:19px;margin:0;font-weight:700;letter-spacing:-.01em}
+  .top .sub{font-size:13px;color:#6b7280;margin-top:2px}
+  .wrap{max-width:1200px;margin:0 auto;padding:18px 16px 48px}
+  svg{width:100%;height:auto;display:block}
+  @media (max-width:760px){ .wrap{overflow-x:auto} svg{min-width:760px} }
+  @media print{ body{background:#fff} .wrap{padding:0} @page{size:A4 portrait;margin:8mm} }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>Datová architektura reportingu reklamních kampaní</h1>
+  <div class="sub">DER Touristik × Data Club</div>
+</div>
+
+<div class="wrap">
+<svg viewBox="0 0 1200 1230" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity=".08"/></filter>
+    <clipPath id="c1"><rect x="180" y="64" width="225" height="130" rx="12"/></clipPath>
+    <clipPath id="c2"><rect x="435" y="64" width="225" height="130" rx="12"/></clipPath>
+    <clipPath id="c3"><rect x="690" y="64" width="225" height="130" rx="12"/></clipPath>
+    <clipPath id="c4"><rect x="945" y="64" width="225" height="130" rx="12"/></clipPath>
+    <clipPath id="c5"><rect x="435" y="270" width="735" height="180" rx="12"/></clipPath>
+    <clipPath id="c6"><rect x="180" y="580" width="990" height="120" rx="12"/></clipPath>
+  </defs>
+
+  <!-- ===== lišta fází vlevo ===== -->
+  <line x1="150" y1="64" x2="150" y2="1040" stroke="#d1d5db" stroke-width="2"/>
+  <g font-size="12" font-weight="700" fill="#6b7280" letter-spacing=".1em">
+    <circle cx="150" cy="129" r="5" fill="#6b7280"/><text x="40" y="133">ZDROJE DAT</text>
+    <circle cx="150" cy="360" r="5" fill="#6b7280"/><text x="40" y="364">MEIRO CDP</text>
+    <circle cx="150" cy="640" r="5" fill="#6b7280"/><text x="40" y="636">ZPRACOVÁNÍ</text><text x="40" y="652">DATA CLUB</text>
+    <circle cx="150" cy="832" r="5" fill="#6b7280"/><text x="40" y="828">DWH</text><text x="40" y="844">DER TOURISTIK</text>
+    <circle cx="150" cy="995" r="5" fill="#6b7280"/><text x="40" y="999">POWER BI</text>
+  </g>
+
+  <!-- ===== trubky ===== -->
+  <g fill="none" stroke-linecap="round" opacity=".9">
+    <!-- náklady: přímo do zpracování, mimo CDP -->
+    <path d="M292 194 L292 580" stroke="#1a56db" stroke-width="12"/>
+    <!-- web -> CDP -->
+    <path d="M525 194 L525 270" stroke="#059669" stroke-width="12"/>
+    <path d="M570 194 L570 270" stroke="#d97706" stroke-width="12"/>
+    <!-- rezervační systém -> CDP -->
+    <path d="M802 194 L802 270" stroke="#dc2626" stroke-width="12"/>
+    <!-- CRM -> CDP -->
+    <path d="M1057 194 L1057 270" stroke="#d97706" stroke-width="12"/>
+    <!-- CDP -> zpracování -->
+    <path d="M700 450 L700 580" stroke="#059669" stroke-width="10"/>
+    <path d="M760 450 L760 580" stroke="#d97706" stroke-width="10"/>
+    <path d="M820 450 L820 580" stroke="#dc2626" stroke-width="10"/>
+    <path d="M880 450 L880 580" stroke="#7c3aed" stroke-width="10"/>
+    <!-- zpracování -> tabulky -->
+    <path d="M270 700 L270 790" stroke="#1a56db" stroke-width="9"/>
+    <path d="M473 700 L473 790" stroke="#059669" stroke-width="9"/>
+    <path d="M675 700 L675 790" stroke="#7c3aed" stroke-width="9"/>
+    <path d="M878 700 L878 790" stroke="#dc2626" stroke-width="9"/>
+    <path d="M1080 700 L1080 790" stroke="#d97706" stroke-width="9"/>
+  </g>
+  <text x="180" y="500" font-size="12" fill="#9ca3af">náklady</text>
+  <text x="180" y="516" font-size="12" fill="#9ca3af">tečou přímo</text>
+  <!-- DWH -> Power BI -->
+  <path d="M675 874 L675 926" stroke="#9ca3af" stroke-width="9" stroke-linecap="round" fill="none"/>
+  <path d="M664 922 L675 938 L686 922 Z" fill="#9ca3af"/>
+
+  <!-- ===== ZDROJE ===== -->
+  <g filter="url(#sh)">
+    <rect x="180" y="64" width="225" height="130" rx="12" fill="#fff" stroke="#1a56db" stroke-width="1.6"/>
+    <rect x="180" y="64" width="6" height="130" fill="#1a56db" clip-path="url(#c1)"/>
+    <text x="204" y="94" font-size="16" font-weight="700">Reklamní systémy</text>
+    <text x="204" y="116" font-size="13" fill="#4b5563">Google Ads · Meta</text>
+    <text x="204" y="134" font-size="13" fill="#4b5563">Sklik · Microsoft</text>
+    <text x="204" y="162" font-size="13" font-weight="700" fill="#1a56db">náklady a výkon kampaní</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="435" y="64" width="225" height="130" rx="12" fill="#fff" stroke="#059669" stroke-width="1.6"/>
+    <rect x="435" y="64" width="6" height="130" fill="#059669" clip-path="url(#c2)"/>
+    <text x="459" y="94" font-size="16" font-weight="700">Weby brandů</text>
+    <text x="459" y="116" font-size="13" fill="#4b5563">Fischer · Exim</text>
+    <text x="459" y="134" font-size="13" fill="#4b5563">Nev-Dama · Kartago</text>
+    <text x="459" y="160" font-size="13" font-weight="700" fill="#059669">kliky z reklam · nákupy</text>
+    <text x="459" y="180" font-size="13" font-weight="700" fill="#d97706">leady (poptávky)</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="690" y="64" width="225" height="130" rx="12" fill="#fff" stroke="#dc2626" stroke-width="1.6"/>
+    <rect x="690" y="64" width="6" height="130" fill="#dc2626" clip-path="url(#c3)"/>
+    <text x="714" y="94" font-size="16" font-weight="700">Rezervační systém</text>
+    <text x="714" y="116" font-size="13" fill="#4b5563">DACO · AtCom</text>
+    <text x="714" y="162" font-size="13" font-weight="700" fill="#dc2626">objednávky, storna, zákazník</text>
+  </g>
+  <g filter="url(#sh)">
+    <rect x="945" y="64" width="225" height="130" rx="12" fill="#fff" stroke="#d97706" stroke-width="1.6"/>
+    <rect x="945" y="64" width="6" height="130" fill="#d97706" clip-path="url(#c4)"/>
+    <text x="969" y="94" font-size="16" font-weight="700">CRM</text>
+    <text x="969" y="116" font-size="13" fill="#4b5563">včetně prodejen</text>
+    <text x="969" y="134" font-size="13" fill="#4b5563">a call centra</text>
+    <text x="969" y="162" font-size="13" font-weight="700" fill="#d97706">leady, zákaznická ID</text>
+  </g>
+
+  <!-- ===== CDP ===== -->
+  <g filter="url(#sh)">
+    <rect x="435" y="270" width="735" height="180" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="1.6"/>
+    <rect x="435" y="270" width="735" height="6" fill="#7c3aed" clip-path="url(#c5)"/>
+    <text x="459" y="312" font-size="17" font-weight="700">Jeden zákazník napříč zdroji</text>
+    <text x="459" y="336" font-size="13" fill="#4b5563">Meiro spojí každý krok cesty:</text>
+    <text x="459" y="372" font-size="17" font-weight="700" fill="#059669">klik <tspan fill="#9ca3af">→</tspan> <tspan fill="#d97706">lead</tspan> <tspan fill="#9ca3af">→</tspan> <tspan fill="#dc2626">objednávka</tspan> <tspan fill="#9ca3af">→</tspan> <tspan fill="#7c3aed">skutečný zákazník</tspan></text>
+    <text x="459" y="406" font-size="13" fill="#4b5563">více e-mailů a zařízení = jedna osoba</text>
+    <text x="459" y="426" font-size="13" fill="#4b5563">vazba i mimo web (prodejny, call centrum)</text>
+  </g>
+
+  <!-- ===== ZPRACOVÁNÍ ===== -->
+  <g filter="url(#sh)">
+    <rect x="180" y="580" width="990" height="120" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="1.6"/>
+    <rect x="180" y="580" width="990" height="6" fill="#111827" clip-path="url(#c6)"/>
+    <text x="204" y="618" font-size="17" font-weight="700">Denní zpracování</text>
+    <text x="204" y="652" font-size="13" fill="#4b5563">náklady z API platforem</text>
+    <text x="204" y="672" font-size="13" fill="#4b5563">+ denní export z CDP</text>
+    <text x="520" y="652" font-size="13" fill="#4b5563">čištění, sjednocení kampaní,</text>
+    <text x="520" y="672" font-size="13" fill="#4b5563">zdrojů a měn, kontrola čísel</text>
+    <text x="840" y="652" font-size="13" fill="#4b5563">načtení do DWH každou noc,</text>
+    <text x="840" y="672" font-size="13" fill="#4b5563">zvlášť za každý trh</text>
+  </g>
+
+  <!-- ===== DWH ===== -->
+  <g font-size="12" fill="#4b5563" filter="url(#sh)">
+    <rect x="180" y="790" width="180" height="84" rx="12" fill="#fff" stroke="#1a56db" stroke-width="1.6"/>
+    <text x="196" y="822" font-size="15" font-weight="700" fill="#111827">Náklady kampaní</text>
+    <text x="196" y="846">den × kampaň × platforma</text>
+
+    <rect x="383" y="790" width="180" height="84" rx="12" fill="#fff" stroke="#059669" stroke-width="1.6"/>
+    <text x="399" y="822" font-size="15" font-weight="700" fill="#111827">Kliky z reklam</text>
+    <text x="399" y="846">kdo, kdy, z jaké kampaně</text>
+
+    <rect x="585" y="790" width="180" height="84" rx="12" fill="#fff" stroke="#7c3aed" stroke-width="1.6"/>
+    <text x="601" y="822" font-size="15" font-weight="700" fill="#111827">Identita</text>
+    <text x="601" y="846">návštěvník ↔ zákazník</text>
+
+    <rect x="788" y="790" width="180" height="84" rx="12" fill="#fff" stroke="#dc2626" stroke-width="1.6"/>
+    <text x="804" y="822" font-size="15" font-weight="700" fill="#111827">Objednávky</text>
+    <text x="804" y="846">BNR, cena, stav, zákazník</text>
+
+    <rect x="990" y="790" width="180" height="84" rx="12" fill="#fff" stroke="#d97706" stroke-width="1.6"/>
+    <text x="1006" y="822" font-size="15" font-weight="700" fill="#111827">Leady</text>
+    <text x="1006" y="846">lead, zákazník, CRM ID</text>
+  </g>
+
+  <!-- ===== POWER BI ===== -->
+  <g font-size="11.5" fill="#4b5563" filter="url(#sh)">
+    <rect x="180" y="950" width="155" height="90" rx="12" fill="#fff" stroke="#e5e7eb"/>
+    <text x="194" y="976" font-size="13.5" font-weight="700" fill="#111827">ROAS a náklady</text>
+    <text x="194" y="994">kampaň, kanál,</text>
+    <text x="194" y="1010">trh, brand</text>
+    <circle cx="198" cy="1026" r="4" fill="#1a56db"/><circle cx="212" cy="1026" r="4" fill="#059669"/><circle cx="226" cy="1026" r="4" fill="#dc2626"/>
+
+    <rect x="347" y="950" width="155" height="90" rx="12" fill="#fff" stroke="#e5e7eb"/>
+    <text x="361" y="976" font-size="13.5" font-weight="700" fill="#111827">Objednávky</text>
+    <text x="361" y="994">tržby připsané</text>
+    <text x="361" y="1010">konkrétní kampani</text>
+    <circle cx="365" cy="1026" r="4" fill="#059669"/><circle cx="379" cy="1026" r="4" fill="#7c3aed"/><circle cx="393" cy="1026" r="4" fill="#dc2626"/>
+
+    <rect x="514" y="950" width="155" height="90" rx="12" fill="#fff" stroke="#e5e7eb"/>
+    <text x="528" y="976" font-size="13.5" font-weight="700" fill="#111827">Leady z kampaní</text>
+    <text x="528" y="994">cena za lead,</text>
+    <text x="528" y="1010">lead → objednávka</text>
+    <circle cx="532" cy="1026" r="4" fill="#1a56db"/><circle cx="546" cy="1026" r="4" fill="#d97706"/><circle cx="560" cy="1026" r="4" fill="#dc2626"/>
+
+    <rect x="681" y="950" width="155" height="90" rx="12" fill="#fff" stroke="#e5e7eb"/>
+    <text x="695" y="976" font-size="13.5" font-weight="700" fill="#111827">Hodnota zákazníka</text>
+    <text x="695" y="994">podle zdroje,</text>
+    <text x="695" y="1010">opakované nákupy</text>
+    <circle cx="699" cy="1026" r="4" fill="#059669"/><circle cx="713" cy="1026" r="4" fill="#7c3aed"/><circle cx="727" cy="1026" r="4" fill="#dc2626"/>
+
+    <rect x="848" y="950" width="155" height="90" rx="12" fill="#fff" stroke="#e5e7eb"/>
+    <text x="862" y="976" font-size="13.5" font-weight="700" fill="#111827">Překryv brandů</text>
+    <text x="862" y="994">zákazník</text>
+    <text x="862" y="1010">u více značek</text>
+    <circle cx="866" cy="1026" r="4" fill="#7c3aed"/><circle cx="880" cy="1026" r="4" fill="#dc2626"/>
+
+    <rect x="1015" y="950" width="155" height="90" rx="12" fill="#fff" stroke="#e5e7eb"/>
+    <text x="1029" y="976" font-size="13.5" font-weight="700" fill="#111827">Kvalita měření</text>
+    <text x="1029" y="994">pokrytí,</text>
+    <text x="1029" y="1010">nepřiřazené objednávky</text>
+    <circle cx="1033" cy="1026" r="4" fill="#059669"/><circle cx="1047" cy="1026" r="4" fill="#dc2626"/>
+  </g>
+
+  <!-- ===== hlavní sdělení ===== -->
+  <g filter="url(#sh)">
+    <rect x="180" y="1076" width="990" height="52" rx="12" fill="#7c3aed"/>
+    <text x="675" y="1109" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">Každý klik z reklamy spárovaný až k leadu, objednávce a skutečnému zákazníkovi - včetně objednávek z prodejen a call centra.</text>
+  </g>
+
+  <!-- ===== legenda ===== -->
+  <g font-size="12.5" fill="#4b5563">
+    <circle cx="188" cy="1166" r="5.5" fill="#1a56db"/><text x="201" y="1171">Náklady kampaní</text>
+    <circle cx="340" cy="1166" r="5.5" fill="#059669"/><text x="353" y="1171">Kliky z reklam</text>
+    <circle cx="478" cy="1166" r="5.5" fill="#d97706"/><text x="491" y="1171">Leady</text>
+    <circle cx="566" cy="1166" r="5.5" fill="#dc2626"/><text x="579" y="1171">Objednávky</text>
+    <circle cx="690" cy="1166" r="5.5" fill="#7c3aed"/><text x="703" y="1171">Identita zákazníka</text>
+    <text x="860" y="1171" font-size="13.5" font-weight="700" fill="#4b5563">Tečky u reportů = využité datové toky.</text>
+    <text x="180" y="1202" fill="#9ca3af" font-size="12">Stejný model pro všechny trhy a brandy: CZ - Fischer, Exim, Nev-Dama · SK - Fischer, Kartago, Nev-Dama · PL - Exim, Nev-Dama · HU - Kartago</text>
+  </g>
+</svg>
+</div>
+</body>
+</html>
