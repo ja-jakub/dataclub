@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tajný Ježíšek 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#DCE8E0; --bg2:#C9DBD0; --ink:#173528; --muted:#4B6659;
+  --kraft:#D6B288; --kraft-edge:#B98F5F; --tag-ink:#2C1C0E; --tag-muted:#6B4E2E;
+  --red:#A8281F; --red-ink:#FFFFFF; --string:#A8281F; --field:#FFF8EC;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#11251C; --bg2:#0C1B14; --ink:#E6F0EA; --muted:#9DB6A9; --string:#D4584E;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11251C; --bg2:#0C1B14; --ink:#E6F0EA; --muted:#9DB6A9; --string:#D4584E;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;min-height:100%;
+  background:var(--bg);
+  background-image:radial-gradient(circle at 50% 0%,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--ink);
+  font-family:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:1.5rem 1.25rem;
+}
+h1{
+  font-family:"Caveat","Segoe Script","Bradley Hand",cursive;
+  font-weight:700;font-size:clamp(2.6rem,11vw,3.6rem);line-height:1;
+  margin:0 0 .4rem;text-align:center;
+}
+.lead{margin:0 0 2.25rem;text-align:center;color:var(--muted);font-size:1.05rem}
+
+.wrap{position:relative;width:100%;max-width:22rem}
+.string{
+  position:absolute;left:50%;top:-2.2rem;width:3px;height:3.6rem;
+  background:var(--string);transform:translateX(-50%) rotate(4deg);transform-origin:bottom;border-radius:2px;
+}
+.tag{
+  position:relative;
+  background:var(--kraft);
+  color:var(--tag-ink);
+  padding:4.25rem 1.5rem 1.75rem;
+  clip-path:polygon(22% 0,78% 0,100% 14%,100% 100%,0 100%,0 14%);
+  transform:rotate(-1.5deg);
+  text-align:center;
+  background-image:repeating-linear-gradient(95deg,rgba(90,60,20,.05) 0 2px,transparent 2px 7px);
+}
+.hole{
+  position:absolute;top:1.25rem;left:50%;width:1.35rem;height:1.35rem;margin-left:-.675rem;
+  border-radius:50%;background:var(--bg);box-shadow:0 0 0 4px var(--kraft-edge);
+}
+.tag p{margin:0}
+.small{font-size:.95rem;color:var(--tag-muted)}
+.name{
+  font-family:"Caveat","Segoe Script","Bradley Hand",cursive;
+  font-weight:700;font-size:clamp(2.4rem,11vw,3.2rem);line-height:1.05;margin:.1rem 0 1.1rem !important;
+  overflow-wrap:anywhere;
+}
+label{display:block;font-weight:600;margin-bottom:.6rem}
+input{
+  width:100%;font:inherit;font-size:1.6rem;font-weight:700;letter-spacing:.25em;text-align:center;
+  padding:.65rem .5rem;border:2px solid var(--kraft-edge);border-radius:.6rem;
+  background:var(--field);color:var(--tag-ink);
+}
+button{
+  width:100%;margin-top:.9rem;font:inherit;font-weight:700;font-size:1.05rem;
+  padding:.9rem 1rem;border:0;border-radius:.6rem;cursor:pointer;
+  background:var(--red);color:var(--red-ink);
+}
+button:active{transform:translateY(1px)}
+input:focus-visible,button:focus-visible{outline:3px solid var(--tag-ink);outline-offset:2px}
+.err{min-height:1.4em;margin-top:.7rem !important;font-size:.95rem;font-weight:600;color:#7A1710}
+.rule{border:0;border-top:2px dashed var(--kraft-edge);margin:0 0 1.1rem}
+.limit{
+  margin-top:.4rem !important;padding:.7rem .8rem;border-radius:.6rem;
+  background:rgba(255,248,236,.55);font-size:1rem;line-height:1.4;
+}
+.limit strong{white-space:nowrap}
+[hidden]{display:none !important}
+.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.pop{animation:none}}
+</style>
+</head>
+<body>
+  <h1>Tajný Ježíšek</h1>
+  <p class="lead">Rodinné losování 2026</p>
+
+  <div class="wrap">
+    <div class="string" aria-hidden="true"></div>
+    <div class="tag">
+      <div class="hole" aria-hidden="true"></div>
+
+      <div id="stepCode">
+        <label for="code">Zadej svůj kód ze zprávy</label>
+        <input id="code" inputmode="numeric" autocomplete="off" maxlength="9" placeholder="000000">
+        <button id="open" type="button">Otevřít jmenovku</button>
+        <p class="err" id="err" role="alert"></p>
+      </div>
+
+      <div id="stepMe" hidden>
+        <p class="small">Tahle jmenovka patří</p>
+        <p class="name" id="me"></p>
+        <div id="secret" hidden>
+          <hr class="rule">
+          <p class="small">Dárek dáváš</p>
+          <p class="name pop" id="to"></p>
+          <p class="limit">Dárek má být <strong>do 1000 Kč</strong>. Nikomu neříkej, koho máš.</p>
+        </div>
+        <button id="show" type="button">Ukázat, komu dávám dárek</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/*CORE*/
+var BLOBS = ["5f07fe5ee5ea9db74194862bd5df5e954ab8387af78816e3602371f4673b5a55530499c8d67de3ec7179b144bc976a753a558b4f7e8e2f2e57cd2624bdb336782b9c46243ee61e1821c55bb14244dc74","4cf6520dd4c153db0a52ea4a1205ee0ec14d01bb227f37c3768317551787643511ad6ea5a6330cd2a5c408dd35a6f6751d57a07611cfa11d42d1761a189814fc4c0d0e3a3da720f68b1cf21590fcce28","a3e149c65a80348b8f8ed5dd7219d30893fa641536fd999d9829f6fa6df523729f98118dbffedc97735e598d1b61b44c4cea252c0686fa5f4597fdd88a380ffb6c61ba368e49443e97efeb1dd0b98624","b0b4a1606a6219cfd8b8da3efb6e118d3a3b24484c1af053b2527633d3e518edbc7e6915b1218a5b28d2eebdc1cbb75cf5a57d80bc832a3577204634af2f46cc757d7abe6ee9f0dd09c95b0c7c6b6537","9a8b33bd79743869932a018ba754686857217776ea65e7d5eba0d942b6b4a7c525b5f9faed17f0b1af2c361ae57a10eb32dd8bdf0252231f831afbd9d55053bf5da7d5635c82de5ff6d1193ab83d785b","a5662c24eb5b18099ff305bb88b4aa8827e12bb4e3da18d89a13fb206ec6745808d5f0fa957e2016e510debdcb964db58612cd3f540fb78366ca16427f205b8809412e15dbd5eb97612ffff041b67912","0db38f152d5004128f7a17b77d88218474ea7459864f224b2c4fee2735155c52c2529c4315821fb4b7740e39e63c52f49efb7935b813f71351faaa1906c4c725a35fd2c23487574893164a287733168d","c750887490f308b8db1d64024379219e1eb0e7480b6d930d8f7f27698aaf35279de62d8a8ae5b81498f146c195d5f125ac065d3b3b76cd6303b8cbb289360c70c541003a4e31b2c97023530a2371da7c","b5ded3423fa529358f5918b84a85f92b0de17e8c2f0c97b150e58f0734a2ac04770a6ade75a88a8c49f98bc1a1c05e69468bf6c96e7716f92a9b34d66a2164902f40a51bf0182a0c551e3801edec6416","20c15b2261f9f42d6f1f0d9100442333d01d8faf44f3d23124558c734ed89bd58246fd265368148ed1c65b59e3c9e05942504ca759461671173829cd87eab8415b02986b322dadd25c697d2e5fa58491"];
+var MARK = "JEZ26|";
+function seedOf(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function stream(code,n){
+  var a=seedOf("jezisek:"+code),out=[];
+  for(var i=0;i<n;i++){
+    a=(a+0x6D2B79F5)|0;var t=Math.imul(a^(a>>>15),1|a);
+    t=(t+Math.imul(t^(t>>>7),61|t))^t;
+    out.push(((t^(t>>>14))>>>0)&255);
+  }
+  return out;
+}
+function xorHex(code,bytes){var k=stream(code,bytes.length),o=new Uint8Array(bytes.length);for(var i=0;i<bytes.length;i++)o[i]=bytes[i]^k[i];return o;}
+function decryptWith(code){
+  for(var b=0;b<BLOBS.length;b++){
+    var hex=BLOBS[b],bytes=[];
+    for(var i=0;i<hex.length;i+=2)bytes.push(parseInt(hex.substr(i,2),16));
+    try{
+      var txt=new TextDecoder("utf-8",{fatal:true}).decode(xorHex(code,bytes));
+      if(txt.indexOf(MARK)===0){var p=txt.slice(MARK.length).trim().split("|");if(p.length===2)return {me:p[0],to:p[1]};}
+    }catch(e){}
+  }
+  return null;
+}
+/*ENDCORE*/
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  function tryOpen(){
+    var code=$("code").value.replace(/\D/g,"");
+    if(!code){$("err").textContent="Napiš kód, který ti přišel ve zprávě.";return;}
+    var r=decryptWith(code);
+    if(!r){$("err").textContent="Tenhle kód nesedí. Zkontroluj ho ve zprávě a zkus to znovu.";return;}
+    $("me").textContent=r.me;$("to").textContent=r.to;
+    $("stepCode").hidden=true;$("stepMe").hidden=false;$("show").focus();
+  }
+  $("open").addEventListener("click",tryOpen);
+  $("code").addEventListener("keydown",function(e){if(e.key==="Enter")tryOpen();});
+  $("code").addEventListener("input",function(){$("err").textContent="";});
+  $("show").addEventListener("click",function(){$("secret").hidden=false;$("show").hidden=true;});
+})();
+</script>
+</body>
+</html>
