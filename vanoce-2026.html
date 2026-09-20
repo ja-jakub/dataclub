@@ -1,169 +1,139 @@
+
 <!DOCTYPE html>
 <html lang="cs">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0E2A1F">
 <title>Tajný Ježíšek 2026</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%81%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-  --bg:#DCE8E0; --bg2:#C9DBD0; --ink:#173528; --muted:#4B6659;
-  --kraft:#D6B288; --kraft-edge:#B98F5F; --tag-ink:#2C1C0E; --tag-muted:#6B4E2E;
-  --red:#A8281F; --red-ink:#FFFFFF; --string:#A8281F; --field:#FFF8EC;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#11251C; --bg2:#0C1B14; --ink:#E6F0EA; --muted:#9DB6A9; --string:#D4584E;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#11251C; --bg2:#0C1B14; --ink:#E6F0EA; --muted:#9DB6A9; --string:#D4584E;
-}
-*,*::before,*::after{box-sizing:inherit}
-html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
-body{
-  margin:0;min-height:100%;
-  background:var(--bg);
-  background-image:radial-gradient(circle at 50% 0%,var(--bg) 0%,var(--bg2) 100%);
-  color:var(--ink);
-  font-family:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:1.5rem 1.25rem;
-}
-h1{
-  font-family:"Caveat","Segoe Script","Bradley Hand",cursive;
-  font-weight:700;font-size:clamp(2.6rem,11vw,3.6rem);line-height:1;
-  margin:0 0 .4rem;text-align:center;
-}
-.lead{margin:0 0 2.25rem;text-align:center;color:var(--muted);font-size:1.05rem}
-
-.wrap{position:relative;width:100%;max-width:22rem}
-.string{
-  position:absolute;left:50%;top:-2.2rem;width:3px;height:3.6rem;
-  background:var(--string);transform:translateX(-50%) rotate(4deg);transform-origin:bottom;border-radius:2px;
-}
-.tag{
-  position:relative;
-  background:var(--kraft);
-  color:var(--tag-ink);
-  padding:4.25rem 1.5rem 1.75rem;
-  clip-path:polygon(22% 0,78% 0,100% 14%,100% 100%,0 100%,0 14%);
-  transform:rotate(-1.5deg);
-  text-align:center;
-  background-image:repeating-linear-gradient(95deg,rgba(90,60,20,.05) 0 2px,transparent 2px 7px);
-}
-.hole{
-  position:absolute;top:1.25rem;left:50%;width:1.35rem;height:1.35rem;margin-left:-.675rem;
-  border-radius:50%;background:var(--bg);box-shadow:0 0 0 4px var(--kraft-edge);
-}
-.tag p{margin:0}
-.small{font-size:.95rem;color:var(--tag-muted)}
-.name{
-  font-family:"Caveat","Segoe Script","Bradley Hand",cursive;
-  font-weight:700;font-size:clamp(2.4rem,11vw,3.2rem);line-height:1.05;margin:.1rem 0 1.1rem !important;
-  overflow-wrap:anywhere;
-}
-label{display:block;font-weight:600;margin-bottom:.6rem}
-input{
-  width:100%;font:inherit;font-size:1.6rem;font-weight:700;letter-spacing:.25em;text-align:center;
-  padding:.65rem .5rem;border:2px solid var(--kraft-edge);border-radius:.6rem;
-  background:var(--field);color:var(--tag-ink);
-}
-button{
-  width:100%;margin-top:.9rem;font:inherit;font-weight:700;font-size:1.05rem;
-  padding:.9rem 1rem;border:0;border-radius:.6rem;cursor:pointer;
-  background:var(--red);color:var(--red-ink);
-}
-button:active{transform:translateY(1px)}
-input:focus-visible,button:focus-visible{outline:3px solid var(--tag-ink);outline-offset:2px}
-.err{min-height:1.4em;margin-top:.7rem !important;font-size:.95rem;font-weight:600;color:#7A1710}
-.rule{border:0;border-top:2px dashed var(--kraft-edge);margin:0 0 1.1rem}
-.limit{
-  margin-top:.4rem !important;padding:.7rem .8rem;border-radius:.6rem;
-  background:rgba(255,248,236,.55);font-size:1rem;line-height:1.4;
-}
-.limit strong{white-space:nowrap}
+:root{--pine:#0E2A1F;--pine2:#07170F;--ivory:#FFF9EE;--ink:#1E2A24;--soft:#5E6B63;--red:#B8322A;--red2:#8F231D;--gold:#D9A441;--line:#E9DFCB;--snow:#EAF3EE;--mist:#A9C2B5}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100%;display:flex;flex-direction:column;padding:calc(2rem + env(safe-area-inset-top,0px)) 1.25rem calc(2rem + env(safe-area-inset-bottom,0px));background-color:#0E2A1F;background-image:radial-gradient(120% 80% at 50% 0%,#1B4432 0%,#0E2A1F 45%,#07170F 100%);background-attachment:fixed;color:var(--snow);font-family:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.5;overflow-x:hidden}
+main{margin:auto;width:100%;max-width:24rem;position:relative;z-index:1}
+.snowfield{position:fixed;top:0;right:0;bottom:0;left:0;pointer-events:none;overflow:hidden;z-index:0}
+.flake{position:absolute;top:-12px;border-radius:50%;background:#fff;animation-name:fall;animation-timing-function:linear;animation-iteration-count:infinite}
+@keyframes fall{0%{transform:translate3d(0,-5vh,0)}50%{transform:translate3d(24px,52vh,0)}100%{transform:translate3d(-12px,110vh,0)}}
+header{text-align:center;margin-bottom:1.5rem}
+.gift{display:block;width:84px;height:84px;margin:0 auto .75rem}
+h1{margin:0;font-family:"Fraunces",Georgia,"Times New Roman",serif;font-weight:700;font-size:2.6rem;line-height:1.05;letter-spacing:-.01em;color:#fff}
+.sub{margin:.5rem 0 0;color:var(--mist);font-size:1.05rem}
+.card{position:relative;background:var(--ivory);color:var(--ink);border-radius:22px;padding:1.75rem 1.4rem 1.5rem;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06)}
+.card::before{content:"";position:absolute;top:0;left:50%;width:54px;height:10px;margin-left:-27px;background:var(--gold);border-radius:0 0 8px 8px}
+.card p{margin:0}
+.label{display:block;font-weight:700;font-size:1.15rem;margin-bottom:.25rem}
+.hint{color:var(--soft);font-size:.95rem;margin-bottom:1rem !important}
+.code{display:block;width:100%;font-family:inherit;font-size:1.9rem;font-weight:700;letter-spacing:.22em;text-indent:.22em;text-align:center;padding:.7rem .4rem;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);outline:none;-webkit-appearance:none;appearance:none}
+.code::placeholder{color:#CFC6B4}
+.code:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(217,164,65,.28)}
+.btn{display:block;width:100%;margin-top:.9rem;font-family:inherit;font-size:1.1rem;font-weight:700;padding:.95rem 1rem;border:0;border-radius:14px;background:var(--red);color:#fff;cursor:pointer;box-shadow:0 4px 0 var(--red2);-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent}
+.btn:hover{background:#C53A31}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--red2)}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.ghost{background:transparent;color:var(--soft);box-shadow:none;font-weight:600;font-size:1rem;padding:.6rem;margin-top:.6rem}
+.ghost:hover{background:transparent;color:var(--ink)}
+.ghost:active{transform:none;box-shadow:none}
+.err{min-height:1.5em;margin-top:.75rem !important;color:var(--red2);font-weight:600;font-size:.95rem}
+.shake{animation:shake .35s}
+@keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.eyebrow{color:var(--soft);font-size:1rem}
+.name{font-family:"Fraunces",Georgia,"Times New Roman",serif;font-weight:700;font-size:2.3rem;line-height:1.1;margin:.15rem 0 0 !important;overflow-wrap:anywhere}
+.to{color:var(--red);font-size:2.7rem}
+.divider{height:0;border:0;border-top:2px dashed var(--line);margin:1.25rem 0}
+.pop{animation:pop .55s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+.facts{list-style:none;margin:1.25rem 0 0;padding:0;text-align:left}
+.facts li{display:flex;align-items:center;gap:.7rem;padding:.7rem .85rem;border-radius:12px;background:#F6EEDC;font-size:1rem;line-height:1.35}
+.facts li+li{margin-top:.5rem}
+.facts span{font-size:1.35rem;line-height:1}
+.burst{position:absolute;left:50%;top:45%;width:0;height:0;pointer-events:none}
+.burst i{position:absolute;width:9px;height:14px;border-radius:2px;opacity:0;animation:fly 1.2s ease-out forwards}
+@keyframes fly{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r))}}
+.rules{list-style:none;margin:1.5rem 0 0;padding:0;color:var(--mist);font-size:.95rem;text-align:center}
+.rules li+li{margin-top:.3rem}
 [hidden]{display:none !important}
-.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
-@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.pop{animation:none}}
+@media (min-width:600px){h1{font-size:3.2rem}.card{padding:2.1rem 1.9rem 1.8rem}}
+@media (prefers-reduced-motion:reduce){.flake,.pop,.shake,.burst i{animation:none}.burst{display:none}}
 </style>
 </head>
 <body>
-  <h1>Tajný Ježíšek</h1>
-  <p class="lead">Rodinné losování 2026</p>
-
-  <div class="wrap">
-    <div class="string" aria-hidden="true"></div>
-    <div class="tag">
-      <div class="hole" aria-hidden="true"></div>
-
-      <div id="stepCode">
-        <label for="code">Zadej svůj kód ze zprávy</label>
-        <input id="code" inputmode="numeric" autocomplete="off" maxlength="9" placeholder="000000">
-        <button id="open" type="button">Otevřít jmenovku</button>
-        <p class="err" id="err" role="alert"></p>
-      </div>
-
-      <div id="stepMe" hidden>
-        <p class="small">Tahle jmenovka patří</p>
-        <p class="name" id="me"></p>
-        <div id="secret" hidden>
-          <hr class="rule">
-          <p class="small">Dárek dáváš</p>
-          <p class="name pop" id="to"></p>
-          <p class="limit">Dárek má být <strong>do 1000 Kč</strong>. Nikomu neříkej, koho máš.</p>
-        </div>
-        <button id="show" type="button">Ukázat, komu dávám dárek</button>
-      </div>
-    </div>
-  </div>
-
+<div class="snowfield" id="snow" aria-hidden="true"></div>
+<main>
+<header>
+<svg class="gift" viewBox="0 0 96 96" aria-hidden="true"><path d="M48 31c-7-16-29-15-24-2 3 7 15 5 24 2z" fill="#D9A441"/><path d="M48 31c7-16 29-15 24-2-3 7-15 5-24 2z" fill="#E8B95A"/><rect x="16" y="44" width="64" height="42" rx="5" fill="#B8322A"/><rect x="10" y="30" width="76" height="17" rx="5" fill="#CF4339"/><rect x="42" y="30" width="12" height="56" fill="#D9A441"/><circle cx="48" cy="31" r="5" fill="#C18D2E"/></svg>
+<h1>Tajný Ježíšek</h1>
+<p class="sub">Rodinné losování dárků 2026</p>
+</header>
+<section class="card" id="card">
+<div id="stepCode">
+<label class="label" for="code">Zadej svůj kód</label>
+<p class="hint">Najdeš ho ve zprávě, kterou jsi dostal(a).</p>
+<input class="code" id="code" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="6" placeholder="······" aria-describedby="err">
+<button class="btn" id="open" type="button">Otevřít jmenovku</button>
+<p class="err" id="err" role="alert"></p>
+</div>
+<div id="stepMe" hidden>
+<p class="eyebrow">Tahle jmenovka patří</p>
+<p class="name" id="me"></p>
+<div id="secret" hidden>
+<hr class="divider">
+<p class="eyebrow">Dárek dáváš</p>
+<p class="name to pop" id="to"></p>
+<ul class="facts">
+<li><span aria-hidden="true">🎁</span>Dárek má být do 1000 Kč.</li>
+<li><span aria-hidden="true">🤫</span>Nikomu neříkej, koho máš.</li>
+</ul>
+</div>
+<button class="btn" id="show" type="button">Rozbalit, komu dávám dárek</button>
+<button class="btn ghost" id="close" type="button">Zavřít jmenovku</button>
+<div class="burst" id="burst" aria-hidden="true"></div>
+</div>
+</section>
+<ul class="rules">
+<li>Každý dává jeden dárek a jeden dostane.</li>
+<li>Kdo komu dává, zůstává tajemstvím.</li>
+</ul>
+</main>
 <script>
 /*CORE*/
-var BLOBS = ["5f07fe5ee5ea9db74194862bd5df5e954ab8387af78816e3602371f4673b5a55530499c8d67de3ec7179b144bc976a753a558b4f7e8e2f2e57cd2624bdb336782b9c46243ee61e1821c55bb14244dc74","4cf6520dd4c153db0a52ea4a1205ee0ec14d01bb227f37c3768317551787643511ad6ea5a6330cd2a5c408dd35a6f6751d57a07611cfa11d42d1761a189814fc4c0d0e3a3da720f68b1cf21590fcce28","a3e149c65a80348b8f8ed5dd7219d30893fa641536fd999d9829f6fa6df523729f98118dbffedc97735e598d1b61b44c4cea252c0686fa5f4597fdd88a380ffb6c61ba368e49443e97efeb1dd0b98624","b0b4a1606a6219cfd8b8da3efb6e118d3a3b24484c1af053b2527633d3e518edbc7e6915b1218a5b28d2eebdc1cbb75cf5a57d80bc832a3577204634af2f46cc757d7abe6ee9f0dd09c95b0c7c6b6537","9a8b33bd79743869932a018ba754686857217776ea65e7d5eba0d942b6b4a7c525b5f9faed17f0b1af2c361ae57a10eb32dd8bdf0252231f831afbd9d55053bf5da7d5635c82de5ff6d1193ab83d785b","a5662c24eb5b18099ff305bb88b4aa8827e12bb4e3da18d89a13fb206ec6745808d5f0fa957e2016e510debdcb964db58612cd3f540fb78366ca16427f205b8809412e15dbd5eb97612ffff041b67912","0db38f152d5004128f7a17b77d88218474ea7459864f224b2c4fee2735155c52c2529c4315821fb4b7740e39e63c52f49efb7935b813f71351faaa1906c4c725a35fd2c23487574893164a287733168d","c750887490f308b8db1d64024379219e1eb0e7480b6d930d8f7f27698aaf35279de62d8a8ae5b81498f146c195d5f125ac065d3b3b76cd6303b8cbb289360c70c541003a4e31b2c97023530a2371da7c","b5ded3423fa529358f5918b84a85f92b0de17e8c2f0c97b150e58f0734a2ac04770a6ade75a88a8c49f98bc1a1c05e69468bf6c96e7716f92a9b34d66a2164902f40a51bf0182a0c551e3801edec6416","20c15b2261f9f42d6f1f0d9100442333d01d8faf44f3d23124558c734ed89bd58246fd265368148ed1c65b59e3c9e05942504ca759461671173829cd87eab8415b02986b322dadd25c697d2e5fa58491"];
-var MARK = "JEZ26|";
+var BLOBS=[
+"5f07fe5ee5ea9db74194862bd5df5e954ab8387af78816e3602371f4673b5a55530499c8d67de3ec7179b144bc976a753a558b4f7e8e2f2e57cd2624bdb336782b9c46243ee61e1821c55bb14244dc74",
+"4cf6520dd4c153db0a52ea4a1205ee0ec14d01bb227f37c3768317551787643511ad6ea5a6330cd2a5c408dd35a6f6751d57a07611cfa11d42d1761a189814fc4c0d0e3a3da720f68b1cf21590fcce28",
+"a3e149c65a80348b8f8ed5dd7219d30893fa641536fd999d9829f6fa6df523729f98118dbffedc97735e598d1b61b44c4cea252c0686fa5f4597fdd88a380ffb6c61ba368e49443e97efeb1dd0b98624",
+"b0b4a1606a6219cfd8b8da3efb6e118d3a3b24484c1af053b2527633d3e518edbc7e6915b1218a5b28d2eebdc1cbb75cf5a57d80bc832a3577204634af2f46cc757d7abe6ee9f0dd09c95b0c7c6b6537",
+"9a8b33bd79743869932a018ba754686857217776ea65e7d5eba0d942b6b4a7c525b5f9faed17f0b1af2c361ae57a10eb32dd8bdf0252231f831afbd9d55053bf5da7d5635c82de5ff6d1193ab83d785b",
+"a5662c24eb5b18099ff305bb88b4aa8827e12bb4e3da18d89a13fb206ec6745808d5f0fa957e2016e510debdcb964db58612cd3f540fb78366ca16427f205b8809412e15dbd5eb97612ffff041b67912",
+"0db38f152d5004128f7a17b77d88218474ea7459864f224b2c4fee2735155c52c2529c4315821fb4b7740e39e63c52f49efb7935b813f71351faaa1906c4c725a35fd2c23487574893164a287733168d",
+"c750887490f308b8db1d64024379219e1eb0e7480b6d930d8f7f27698aaf35279de62d8a8ae5b81498f146c195d5f125ac065d3b3b76cd6303b8cbb289360c70c541003a4e31b2c97023530a2371da7c",
+"b5ded3423fa529358f5918b84a85f92b0de17e8c2f0c97b150e58f0734a2ac04770a6ade75a88a8c49f98bc1a1c05e69468bf6c96e7716f92a9b34d66a2164902f40a51bf0182a0c551e3801edec6416",
+"20c15b2261f9f42d6f1f0d9100442333d01d8faf44f3d23124558c734ed89bd58246fd265368148ed1c65b59e3c9e05942504ca759461671173829cd87eab8415b02986b322dadd25c697d2e5fa58491"
+];
+var MARK="JEZ26|";
 function seedOf(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
-function stream(code,n){
-  var a=seedOf("jezisek:"+code),out=[];
-  for(var i=0;i<n;i++){
-    a=(a+0x6D2B79F5)|0;var t=Math.imul(a^(a>>>15),1|a);
-    t=(t+Math.imul(t^(t>>>7),61|t))^t;
-    out.push(((t^(t>>>14))>>>0)&255);
-  }
-  return out;
-}
-function xorHex(code,bytes){var k=stream(code,bytes.length),o=new Uint8Array(bytes.length);for(var i=0;i<bytes.length;i++)o[i]=bytes[i]^k[i];return o;}
-function decryptWith(code){
-  for(var b=0;b<BLOBS.length;b++){
-    var hex=BLOBS[b],bytes=[];
-    for(var i=0;i<hex.length;i+=2)bytes.push(parseInt(hex.substr(i,2),16));
-    try{
-      var txt=new TextDecoder("utf-8",{fatal:true}).decode(xorHex(code,bytes));
-      if(txt.indexOf(MARK)===0){var p=txt.slice(MARK.length).trim().split("|");if(p.length===2)return {me:p[0],to:p[1]};}
-    }catch(e){}
-  }
-  return null;
-}
+function stream(code,n){var a=seedOf("jezisek:"+code),out=[];for(var i=0;i<n;i++){a=(a+0x6D2B79F5)|0;var t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;out.push(((t^(t>>>14))>>>0)&255);}return out;}
+function decryptWith(code){for(var b=0;b<BLOBS.length;b++){var hex=BLOBS[b],n=hex.length/2,k=stream(code,n),o=new Uint8Array(n);for(var i=0;i<n;i++){o[i]=parseInt(hex.substr(i*2,2),16)^k[i];}try{var txt=new TextDecoder("utf-8",{fatal:true}).decode(o);if(txt.indexOf(MARK)===0){var p=txt.slice(MARK.length).trim().split("|");if(p.length===2){return {me:p[0],to:p[1]};}}}catch(e){}}return null;}
 /*ENDCORE*/
 (function(){
-  var $=function(id){return document.getElementById(id)};
-  function tryOpen(){
-    var code=$("code").value.replace(/\D/g,"");
-    if(!code){$("err").textContent="Napiš kód, který ti přišel ve zprávě.";return;}
-    var r=decryptWith(code);
-    if(!r){$("err").textContent="Tenhle kód nesedí. Zkontroluj ho ve zprávě a zkus to znovu.";return;}
-    $("me").textContent=r.me;$("to").textContent=r.to;
-    $("stepCode").hidden=true;$("stepMe").hidden=false;$("show").focus();
-  }
-  $("open").addEventListener("click",tryOpen);
-  $("code").addEventListener("keydown",function(e){if(e.key==="Enter")tryOpen();});
-  $("code").addEventListener("input",function(){$("err").textContent="";});
-  $("show").addEventListener("click",function(){$("secret").hidden=false;$("show").hidden=true;});
+function $(id){return document.getElementById(id);}
+var calm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var snow=$("snow");
+for(var s=0;s<(calm?0:34);s++){var f=document.createElement("span");f.className="flake";var size=2+Math.random()*5;f.style.width=size+"px";f.style.height=size+"px";f.style.left=(Math.random()*100)+"%";f.style.opacity=(0.35+Math.random()*0.6).toFixed(2);f.style.animationDuration=(9+Math.random()*12).toFixed(1)+"s";f.style.animationDelay=(-Math.random()*20).toFixed(1)+"s";snow.appendChild(f);}
+function fail(msg){$("err").textContent=msg;var c=$("code");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake");}
+function tryOpen(){var code=$("code").value.replace(/\D/g,"");if(!code){fail("Napiš kód, který ti přišel ve zprávě.");return;}var r=decryptWith(code);if(!r){fail("Tenhle kód nesedí. Zkontroluj ho a zkus to znovu.");return;}$("me").textContent=r.me;$("to").textContent=r.to;$("stepCode").hidden=true;$("stepMe").hidden=false;$("secret").hidden=true;$("show").hidden=false;}
+function confetti(){if(calm){return;}var box=$("burst"),cols=["#B8322A","#D9A441","#1B6B4A","#E8B95A","#CF4339"];box.innerHTML="";for(var i=0;i<42;i++){var p=document.createElement("i"),ang=Math.random()*Math.PI*2,dist=90+Math.random()*150;p.style.background=cols[i%cols.length];p.style.setProperty("--x",Math.round(Math.cos(ang)*dist)+"px");p.style.setProperty("--y",Math.round(Math.sin(ang)*dist-60)+"px");p.style.setProperty("--r",Math.round(Math.random()*720-360)+"deg");p.style.animationDelay=(Math.random()*0.12).toFixed(2)+"s";box.appendChild(p);}setTimeout(function(){box.innerHTML="";},1600);}
+$("open").addEventListener("click",tryOpen);
+$("code").addEventListener("keydown",function(e){if(e.key==="Enter"){tryOpen();}});
+$("code").addEventListener("input",function(){$("err").textContent="";});
+$("show").addEventListener("click",function(){$("secret").hidden=false;$("show").hidden=true;confetti();});
+$("close").addEventListener("click",function(){$("me").textContent="";$("to").textContent="";$("code").value="";$("stepMe").hidden=true;$("stepCode").hidden=false;});
+var fromLink=(location.hash||"").replace(/\D/g,"");
+if(fromLink){$("code").value=fromLink;tryOpen();}
 })();
 </script>
 </body>
